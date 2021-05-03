@@ -1,0 +1,226 @@
+module BooleanAlgebra
+
+  use list.List
+
+  type i
+  type b
+  val constant top : b (* TODO: *)
+  val constant bot : b (* TODO: *)
+  function (/*\) b b : b
+  function (\*/) b b : b
+  function neg b : b
+
+
+  (******algebra definition******)
+  function xor (x y : b) : b
+  = (x \*/ y) /*\ (neg (x /*\ y))
+
+  clone export algebrav2.BooleanRing with type t = b,
+                                          constant zero = bot,
+                                          constant one = top,
+                                          function (*) = (/*\),
+                                          function (+) = xor,
+                                          axiom .
+
+
+  (*****cpo definition******)
+  predicate (<=) (x y : b)
+  = (x \*/ y) = y
+
+  clone relationsv2.DistComplLattice with type t = b,
+                                          constant top = top,
+                                          constant bot = bot,
+                                          predicate rel = (<=),
+                                          function glb = (/*\),
+                                          function lub = (\*/),
+                                          axiom .
+
+  (* Lattice Boolean Ring Equivalence *)
+  lemma lattice_ring:
+    forall x y : b. (x <= y) <-> (x /*\ y) = x <-> (x \*/ y) = y
+
+
+  (******Properties******)
+
+  (*Commutativity*)
+
+  lemma comm_and:
+    forall x y : b. (x /*\ y) = (y /*\ x)
+
+  lemma comm_or:
+    forall x y : b. (x \*/ y) = (y \*/ x)
+
+  (*Distributivity*)
+
+  lemma dist_and:
+    forall x y z : b. (x /*\ (y \*/ z)) = ((x /*\ y) \*/ (x /*\ z))
+
+  lemma dist_or:
+    forall x y z : b. (x \*/ (y /*\ z)) = ((x \*/ y) /*\ (x \*/ z))
+
+  (*Identity*)
+
+  lemma ident_and:
+    forall x : b. (x /*\ top) = x
+
+  lemma ident_or:
+    forall x : b. (x \*/ bot) = x
+
+  (*Complement*)
+
+  lemma uniq_compl:
+    forall x y z : b. (neg x) = y /\ (neg x) = z -> y = z
+
+  lemma compl_and:
+    forall x : b. (x /*\ (neg x)) = bot
+
+  lemma compl_or:
+    forall x : b. (x \*/ (neg x)) = top
+
+  (*Idempotence*)
+
+  lemma idem_and:
+    forall x : b. (x /*\ x) = x
+
+  lemma idem_or:
+    forall x : b. (x \*/ x) = x
+
+  (*Boundedness*)
+
+  lemma boundbot:
+    forall x : b. bot <= x
+
+  lemma boundtop:
+    forall x : b. x <= top
+
+  lemma bound_and:
+    forall x : b. (x /*\ bot) = bot
+
+  lemma bound_or:
+    forall x : b. (x \*/ top) = top
+
+  (*Absorption*)
+
+  lemma absorp_and:
+    forall x y : b. (x /*\ (x \*/ y)) = x
+
+  lemma absorp_or:
+    forall x y : b. (x \*/ (x /*\ y)) = x
+
+  (*Associativity*)
+
+  lemma assoc_and:
+    forall x y z : b. (x /*\ (y /*\ z)) = ((x /*\ y) /*\ z)
+
+  lemma assoc_or:
+    forall x y z : b. (x \*/ (y \*/ z)) = ((x \*/ y) \*/ z)
+
+  (*DeMorgan's Laws*)
+
+  lemma demorgan_and:
+    forall x y : b. neg (x /*\ y) = (neg x) \*/ (neg y)
+
+  lemma demorgan_or:
+    forall x y : b. neg (x \*/ y) = (neg x) /*\ (neg y)
+
+  (*Negation*)
+
+  lemma negtop:
+    neg top = bot
+
+  lemma negbot:
+    neg bot = top
+
+  (*Double Negation*)
+
+  lemma double_neg:
+    forall x : b. neg (neg x) = x
+
+  (*Distributive and Lub*)
+
+  lemma dist_ord:
+    forall x y z : b. (x <= z) -> (x \*/ (y /*\ z)) = ((x \*/ y) /*\ z)
+
+   (* Implication function *)
+
+   function (->*) (x y : b) : b
+   = (neg x) \*/ y
+
+   (* Equivalence function *)
+
+   function _equiv (x y : b) : b
+   = ( x ->* y) /*\ (y ->* x)
+
+  (*Disjunctive implication*)
+
+  lemma disj_and:
+    forall x y : b. x = (x /*\ y) = top -> x = top
+
+  lemma disj_or:
+    forall x y : b. x = top -> (x \*/ y) = top
+
+  (*Modus Ponens*)
+
+  lemma modus_ponens:
+    forall x y: b. (x /*\ (x ->* y)) = top -> y = top
+
+  (*Modus Tollens*)
+
+  lemma modus_tollens:
+    forall x y : b. ((x ->* y) /*\ (neg y)) = top -> (neg x) = top
+
+  (*Implication*)
+
+  lemma implic:
+    forall x y : b. (x ->* y) = (neg x) \*/ y
+
+  (*Absurdity*)
+
+  lemma absur:
+    forall x y : b. (x ->* y) /*\ (x ->* (neg y)) = neg x
+
+  (*Disjunctive Syllogism*)
+
+  lemma disj_syl:
+    forall x y : b. ((x \*/ y) /*\ (neg x)) = top -> y = top
+
+  (*Implication chain*)
+
+  lemma impl_chain:
+    forall x y z : b. ((x ->* y) /*\ (y ->* z)) = top ->
+                      (x ->* z) = top
+
+  (*Implication Combinantion*)
+
+  lemma impl_comb:
+    forall x y z w : b. ((x ->* y) /*\ (z ->* w)) = top ->
+                        ((x /*\ z) ->* (y /*\ w)) = top
+
+  (*Currying*)
+
+  lemma currying:
+    forall x y z : b. ((x /*\ y) ->* z) = (x ->* (y ->* z))
+
+  (*Contrapositive*)
+
+  lemma contrapos:
+    forall x y : b. (x ->* y) = ((neg y) ->* (neg x))
+
+  goal g: top <> bot
+end
+
+module SwitchingAlgebra
+
+  clone export BooleanAlgebra with axiom .
+
+  axiom binary:
+    forall x : b. x = top \/ x = bot
+
+  lemma ifnottop_thenbot: forall t. t <> top -> t = bot
+
+  lemma ifnotbot_thentop: forall t. t <> bot -> t = top
+
+  val (=) (t1 t2: b) : bool
+  ensures { result <-> t1 = t2 } (*TODO*)
+
+end

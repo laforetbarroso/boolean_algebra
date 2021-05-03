@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE why3session PUBLIC "-//Why3//proof session v5//EN"
+"http://why3.lri.fr/why3session.dtd">
+<why3session shape_version="6">
+<prover id="0" name="Z3" version="4.8.6" timelimit="5" steplimit="0" memlimit="1000"/>
+<prover id="1" name="CVC4" version="1.7" timelimit="5" steplimit="0" memlimit="1000"/>
+<file format="whyml" proved="true">
+<path name=".."/><path name="relationsv2.mlw"/>
+<theory name="Lattice" proved="true">
+ <goal name="comm_meet" proved="true">
+ <proof prover="0"><result status="valid" time="0.04" steps="2760"/></proof>
+ </goal>
+ <goal name="comm_join" proved="true">
+ <proof prover="0"><result status="valid" time="0.04" steps="2961"/></proof>
+ </goal>
+ <goal name="assoc_meet" proved="true">
+ <proof prover="0"><result status="valid" time="0.03" steps="4484"/></proof>
+ </goal>
+ <goal name="assoc_join" proved="true">
+ <proof prover="0"><result status="valid" time="0.05" steps="4768"/></proof>
+ </goal>
+ <goal name="absorp_meet" proved="true">
+ <proof prover="1"><result status="valid" time="0.03" steps="1334"/></proof>
+ </goal>
+ <goal name="absorp_join" proved="true">
+ <proof prover="1"><result status="valid" time="0.03" steps="1412"/></proof>
+ </goal>
+ <goal name="idem_meet" proved="true">
+ <proof prover="1"><result status="valid" time="0.02" steps="909"/></proof>
+ </goal>
+ <goal name="idem_join" proved="true">
+ <proof prover="1"><result status="valid" time="0.02" steps="948"/></proof>
+ </goal>
+ <goal name="order" proved="true">
+ <proof prover="1"><result status="valid" time="0.03" steps="1153"/></proof>
+ </goal>
+</theory>
+<theory name="BoundedLattice" proved="true">
+ <goal name="ident_meet" proved="true">
+ <proof prover="1"><result status="valid" time="0.04" steps="2560"/></proof>
+ </goal>
+ <goal name="ident_join" proved="true">
+ <proof prover="1"><result status="valid" time="0.03" steps="2078"/></proof>
+ </goal>
+ <goal name="bound_glb" proved="true">
+ <proof prover="1"><result status="valid" time="0.02" steps="1225"/></proof>
+ </goal>
+ <goal name="bound_lub" proved="true">
+ <proof prover="1"><result status="valid" time="0.04" steps="1678"/></proof>
+ </goal>
+</theory>
+<theory name="DistributiveLattice" proved="true">
+ <goal name="dist_meet" proved="true">
+ <proof prover="1"><result status="valid" time="0.02" steps="1118"/></proof>
+ </goal>
+ <goal name="dist_join" proved="true">
+ <proof prover="1"><result status="valid" time="0.02" steps="1187"/></proof>
+ </goal>
+</theory>
+</file>
+</why3session>

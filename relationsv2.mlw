@@ -1,0 +1,142 @@
+module Lattice
+
+  clone export relations.PartialOrder with axiom .
+
+  function glb (x y : t) : t
+
+  axiom glb_infimum:
+    forall x y : t. rel (glb x y) x /\
+                    rel (glb x y) y /\
+                    (forall w : t. (rel w x) /\ (rel w y) -> (rel w (glb x y)))
+
+  function lub (x y : t) : t
+
+  axiom lub_supremum:
+    forall x y : t. rel x (lub x y) /\
+                    rel y (lub x y) /\
+                    (forall w : t. (rel x w) /\ (rel y w) -> (rel (lub x y) w))
+
+  (****** Properties ******)
+
+  (* Commutative *)
+
+  lemma comm_meet:
+    forall x y : t. (lub x y) = (lub y x)
+
+  lemma comm_join:
+    forall x y : t. (glb x y) = (glb y x)
+
+  (*Associativity*)
+
+  lemma assoc_meet:
+    forall x y z : t. (glb x (glb y z)) = (glb (glb x y) z)
+
+  lemma assoc_join:
+    forall x y z : t. (lub x (lub y z)) = (lub (lub x y) z)
+
+  (*Absorption*)
+
+  lemma absorp_meet:
+    forall x y : t. (glb x (lub x y)) = x
+
+  lemma absorp_join:
+    forall x y : t. (lub x (glb x y)) = x
+
+  (*Idempotence*)
+
+  lemma idem_meet:
+    forall x : t. (glb x x) = x
+
+  lemma idem_join:
+    forall x : t. (lub x x) = x
+
+  (* Order *)
+
+  lemma order:
+    forall x y : t. (lub x y) = x -> (glb x y) = y
+
+end
+
+module BoundedLattice
+
+  type t
+  constant bot : t
+  constant top : t
+
+  clone export Lattice with type t = t,
+                            axiom .
+
+  axiom lowerBoundZero :
+    forall x : t. rel bot x
+
+  axiom upperBoundOne :
+    forall x : t. rel x top
+
+  (****** Properties ******)
+
+  (* Identity *)
+
+  lemma ident_meet:
+    forall x : t. (glb x top) = x
+
+  lemma ident_join:
+    forall x : t. (lub x bot) = x
+
+  (*Boundedness*)
+
+  lemma bound_glb:
+    forall x : t. (glb x bot) = bot
+
+  lemma bound_lub:
+    forall x : t. (lub x top) = top
+
+end
+
+module DistributiveLattice
+
+  clone export Lattice with axiom .
+
+  axiom dl_dist_one :
+    forall a b c : t. lub a (glb b c) = glb (lub a b) (lub a c)
+
+  axiom dl_dist_two :
+    forall a b c : t. glb a (lub b c) = lub (glb a b) (glb a c)
+
+  (*Distributivity*)
+
+  lemma dist_meet:
+    forall x y z : t. (glb x (lub y z)) = (lub (glb x y) (glb x z))
+
+  lemma dist_join:
+    forall x y z : t. (lub x (glb y z)) = (glb (lub x y) (lub x z))
+
+end
+
+module ComplementedLattice
+
+  clone export BoundedLattice with axiom .
+
+  axiom cl_compl_top :
+    forall a : t. exists x : t. (lub a x) = top
+
+  axiom cl_compl_bot :
+    forall a : t. exists x : t. (glb a x) = bot
+
+end
+
+module DistComplLattice
+
+  clone export DistributiveLattice with axiom .
+
+  constant top : t
+  constant bot : t
+
+  clone ComplementedLattice with type t = t,
+                                 constant top = top,
+                                 constant bot = bot,
+                                 predicate rel = rel,
+                                 function glb = glb,
+                                 function lub = lub,
+                                 axiom .
+
+end

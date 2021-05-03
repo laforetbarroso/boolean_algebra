@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE why3session PUBLIC "-//Why3//proof session v5//EN"
+"http://why3.lri.fr/why3session.dtd">
+<why3session shape_version="6">
+<prover id="0" name="Eprover" version="2.5" timelimit="5" steplimit="0" memlimit="1000"/>
+<prover id="1" name="Alt-Ergo" version="2.4.0" timelimit="1" steplimit="0" memlimit="1000"/>
+<prover id="2" name="Yices" version="Yices" timelimit="5" steplimit="0" memlimit="1000"/>
+<prover id="3" name="Spass" version="3.7" timelimit="1" steplimit="0" memlimit="1000"/>
+<prover id="4" name="Z3" version="4.8.6" timelimit="1" steplimit="0" memlimit="1000"/>
+<prover id="5" name="CVC4" version="1.7" timelimit="1" steplimit="0" memlimit="1000"/>
+<file format="whyml" proved="true">
+<path name=".."/><path name="boolean_algebra.mlw"/>
+<theory name="BooleanAlgebra" proved="true">
+ <goal name="lattice_ring" proved="true">
+ <proof prover="5"><result status="valid" time="0.08" steps="6428"/></proof>
+ </goal>
+ <goal name="comm_and" proved="true">
+ <proof prover="5"><result status="valid" time="0.06" steps="4754"/></proof>
+ </goal>
+ <goal name="comm_or" proved="true">
+ <proof prover="5"><result status="valid" time="0.06" steps="4799"/></proof>
+ </goal>
+ <goal name="dist_and" proved="true">
+ <proof prover="5"><result status="valid" time="0.06" steps="4868"/></proof>
+ </goal>
+ <goal name="dist_or" proved="true">
+ <proof prover="5"><result status="valid" time="0.06" steps="4937"/></proof>
+ </goal>
+ <goal name="ident_and" proved="true">
+ <proof prover="5"><result status="valid" time="0.06" steps="4984"/></proof>
+ </goal>
+ <goal name="ident_or" proved="true">
+ <proof prover="5"><result status="valid" time="0.05" steps="5028"/></proof>
+ </goal>
+ <goal name="uniq_compl" proved="true">
+ <proof prover="5"><result status="valid" time="0.05" steps="4541"/></proof>
+ </goal>
+ <goal name="compl_and" proved="true">
+ <proof prover="5"><result status="valid" time="0.11" steps="8689"/></proof>
+ </goal>
+ <goal name="compl_or" proved="true">
+ <proof prover="3"><result status="valid" time="0.06"/></proof>
+ <proof prover="4"><result status="timeout" time="1.00" steps="413301"/></proof>
+ <proof prover="5"><result status="timeout" time="1.00" steps="43223"/></proof>
+ </goal>
+ <goal name="idem_and" proved="true">
+ <proof prover="5"><result status="valid" time="0.05" steps="5263"/></proof>
+ </goal>
+ <goal name="idem_or" proved="true">
+ <proof prover="5"><result status="valid" time="0.06" steps="5307"/></proof>
+ </goal>
+ <goal name="boundbot" proved="true">
+ <proof prover="5"><result status="valid" time="0.06" steps="5332"/></proof>
+ </goal>
+ <goal name="boundtop" proved="true">
+ <proof prover="5"><result status="valid" time="0.07" steps="5360"/></proof>
+ </goal>
+ <goal name="bound_and" proved="true">
+ <proof prover="5"><result status="valid" time="0.06" steps="5407"/></proof>
+ </goal>
+ <goal name="bound_or" proved="true">
+ <proof prover="5"><result status="valid" time="0.05" steps="5451"/></proof>
+ </goal>
+ <goal name="absorp_and" proved="true">
+ <proof prover="5"><result status="valid" time="0.05" steps="5505"/></proof>
+ </goal>
+ <goal name="absorp_or" proved="true">
+ <proof prover="5"><result status="valid" time="0.06" steps="5559"/></proof>
+ </goal>
+ <goal name="assoc_and" proved="true">
+ <proof prover="5"><result status="valid" time="0.06" steps="5618"/></proof>
+ </goal>
+ <goal name="assoc_or" proved="true">
+ <proof prover="5"><result status="valid" time="0.06" steps="5680"/></proof>
+ </goal>
+ <goal name="demorgan_and" proved="true">
+ <proof prover="1"><result status="highfailure" time="0.01"/></proof>
+ <proof prover="3"><result status="timeout" time="1.00"/></proof>
+ <proof prover="4"><result status="timeout" time="1.00" steps="704324"/></proof>
+ <proof prover="5"><result status="timeout" time="1.00" steps="64383"/></proof>
+ <transf name="split_vc" proved="true" >
+  <goal name="demorgan_and.0" proved="true">
+  <proof prover="1"><result status="highfailure" time="0.01"/></proof>
+  <proof prover="3"><result status="timeout" time="1.00"/></proof>
+  <proof prover="4"><result status="timeout" time="1.00" steps="713675"/></proof>
+  <proof prover="5" timelimit="5" memlimit="2000"><result status="valid" time="1.75" steps="139365"/></proof>
+  </goal>
+ </transf>
+ </goal>
+ <goal name="demorgan_or" proved="true">
+ <proof prover="0"><result status="timeout" time="5.00"/></proof>
+ <proof prover="1"><result status="highfailure" time="0.01"/></proof>
+ <proof prover="2"><result status="highfailure" time="0.00"/></proof>
+ <proof prover="3"><result status="timeout" time="1.00"/></proof>
+ <proof prover="4"><result status="timeout" time="1.00" steps="1025802"/></proof>
+ <proof prover="5"><result status="timeout" time="1.00" steps="70610"/></proof>
+ <transf name="split_vc" proved="true" >
+  <goal name="demorgan_or.0" proved="true">
+  <proof prover="1"><result status="highfailure" time="0.01"/></proof>
+  <proof prover="3" timelimit="5" memlimit="2000"><result status="valid" time="1.88"/></proof>
+  <proof prover="4" timelimit="5" memlimit="2000"><result status="timeout" time="5.00" steps="1117304"/></proof>
+  <proof prover="5" timelimit="5" memlimit="2000"><result status="timeout" time="5.00" steps="422506"/></proof>
+  </goal>
+ </transf>
+ </goal>
+ <goal name="negtop" proved="true">
+ <proof prover="5"><result status="valid" time="0.07" steps="5897"/></proof>
+ </goal>
+ <goal name="negbot" proved="true">
+ <proof prover="5"><result status="valid" time="0.07" steps="6095"/></proof>
+ </goal>
+ <goal name="double_neg" proved="true">
+ <proof prover="5"><result status="valid" time="0.17" steps="14675"/></proof>
+ </goal>
+ <goal name="dist_ord" proved="true">
+ <proof prover="5"><result status="valid" time="0.07" steps="6970"/></proof>
+ </goal>
+ <goal name="disj_and" proved="true">
+ <proof prover="5"><result status="valid" time="0.07" steps="6296"/></proof>
+ </goal>
+ <goal name="disj_or" proved="true">
+ <proof prover="5"><result status="valid" time="0.08" steps="6681"/></proof>
+ </goal>
+ <goal name="modus_ponens" proved="true">
+ <proof prover="5"><result status="valid" time="0.12" steps="8596"/></proof>
+ </goal>
+ <goal name="modus_tollens" proved="true">
+ <proof prover="5"><result status="valid" time="0.10" steps="7739"/></proof>
+ </goal>
+ <goal name="implic" proved="true">
+ <proof prover="5"><result status="valid" time="0.06" steps="6527"/></proof>
+ </goal>
+ <goal name="absur" proved="true">
+ <proof prover="5"><result status="valid" time="0.14" steps="11876"/></proof>
+ </goal>
+ <goal name="disj_syl" proved="true">
+ <proof prover="5"><result status="valid" time="0.10" steps="7417"/></proof>
+ </goal>
+ <goal name="impl_chain" proved="true">
+ <proof prover="5"><result status="valid" time="0.24" steps="21866"/></proof>
+ </goal>
+ <goal name="impl_comb" proved="true">
+ <proof prover="4"><result status="valid" time="0.38" steps="164956"/></proof>
+ <proof prover="5"><result status="timeout" time="1.00" steps="101716"/></proof>
+ </goal>
+ <goal name="currying" proved="true">
+ <proof prover="5"><result status="valid" time="0.09" steps="7670"/></proof>
+ </goal>
+ <goal name="contrapos" proved="true">
+ <proof prover="5"><result status="valid" time="0.10" steps="8161"/></proof>
+ </goal>
+</theory>
+</file>
+</why3session>

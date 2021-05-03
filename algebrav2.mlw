@@ -1,0 +1,202 @@
+module Invertibility
+
+  type t
+  function op t t : t
+  function inv t : t
+  constant unit : t
+
+  axiom Inv_def_l :
+
+      forall x:t. op (inv x) x = unit
+  axiom Inv_def_r :
+    forall x:t. op x (inv x) = unit
+
+end
+
+module Identity
+
+  type t
+  function op t t : t
+  constant unit : t
+
+  axiom Unit_def_l :
+    forall x:t. op unit x = x
+  axiom Unit_def_r :
+    forall x:t. op x unit = x
+
+end
+
+module Idempotence
+
+  type t
+  function op t t : t
+
+  axiom Idempotence :
+    forall x:t. op x x = x
+
+end
+
+module Quasigroup
+
+  clone export Invertibility with axiom Inv_def_l,
+                                  axiom Inv_def_r
+
+end
+
+module UnitalMagma
+
+  clone export Identity with axiom Unit_def_l,
+                             axiom Unit_def_r
+
+end
+
+module Loop
+
+  type t
+  constant unit : t
+  function op t t : t
+
+  clone export UnitalMagma with type t = t,
+                                constant unit = unit,
+                                function op = op,
+                                axiom Unit_def_l,
+                                axiom Unit_def_r
+
+  clone export Invertibility with type t =t,
+                                  constant unit=unit,
+                                  function op = op,
+                                  axiom Inv_def_l,
+                                  axiom Inv_def_r
+
+  end
+
+module Semigroup
+
+    clone export algebra.Assoc with axiom Assoc
+
+end
+
+module InverseSemigroup
+
+  clone export Semigroup with axiom Assoc
+
+  clone export Invertibility with type t = t,
+                                  function op = op,
+                                  axiom Inv_def_l,
+                                  axiom Inv_def_r
+
+end
+
+(* adapted from why3 algebra *)
+module Monoid
+
+  clone export Semigroup with axiom Assoc
+
+  clone export Identity with type t = t,
+                             function op = op,
+                             axiom Unit_def_l,
+                             axiom Unit_def_r
+
+end
+
+(* adapted from why3 algebra *)
+module Ring
+
+  type t
+  constant zero : t
+  function (+) t t : t
+  function (-_) t : t
+  function (*) t t : t
+
+  clone export algebra.CommutativeGroup with type t = t,
+                                             constant unit = zero,
+                                             function op = (+),
+                                             function inv = (-_),
+                                             axiom .
+
+  clone algebra.Assoc as MulAssoc with type t = t,
+                                       function op = (*),
+                                       axiom Assoc
+
+  axiom Mul_distr_l :
+    forall x y z : t. x * (y + z) = x * y + x * z
+
+  axiom Mul_distr_r :
+    forall x y z : t. (y + z) * x = y * x + z * x
+
+  (****** Properties ******)
+
+  (*Associativity*)
+  lemma assoc_sum:
+    forall x y z : t. x + (y + z) = (x + y) + z
+
+  lemma assoc_mul:
+    forall x y z : t. x * (y * z) = (x * y) * z
+
+  (*Commutativity Sum*)
+  lemma comm_sum:
+    forall x y : t. x + y = y + x
+
+  (*Distributivity*)
+
+  lemma dist_mul:
+    forall x y z : t. (x * (y + z)) = ((x * y) + (x * z))
+
+end
+
+(* adapted from why3 algebra *)
+module CommutativeRing
+
+  clone export algebra.Ring with axiom .
+
+  clone algebra.Comm as MulComm with type t = t,
+                                     function op = (*),
+                                     axiom Comm
+
+  meta AC function (*)
+
+  (****** Properties ******)
+
+  (*Commutativity Mul*)
+  lemma comm_mul:
+    forall x y : t. (x * y) = (y * x)
+
+end
+
+(* adapted from why3 algebra *)
+module UnitaryCommutativeRing
+
+  clone export algebra.CommutativeRing with axiom .
+
+  constant one : t
+
+  clone Identity as Unitary with type t = t,
+                                 function op = (*),
+                                 constant unit = one,
+                                 axiom .
+
+  axiom NonTrivialRing :
+    zero <> one
+
+end
+
+module BooleanRing
+
+  type t
+  function _ident (x : t) : t
+  = x
+
+  clone export UnitaryCommutativeRing with type t = t,
+                                           function (-_)=_ident,
+                                           axiom .
+
+  clone export Idempotence with type t = t,
+                                function op = (*),
+                                axiom .
+
+
+  (*Idempotence*)
+  lemma br_equivalent_law_1 :
+    forall a : t. a + a = zero
+
+end

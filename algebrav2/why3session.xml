@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE why3session PUBLIC "-//Why3//proof session v5//EN"
+"http://why3.lri.fr/why3session.dtd">
+<why3session shape_version="6">
+<prover id="0" name="CVC4" version="1.7" timelimit="5" steplimit="0" memlimit="1000"/>
+<file format="whyml" proved="true">
+<path name=".."/><path name="algebrav2.mlw"/>
+<theory name="Ring" proved="true">
+ <goal name="assoc_sum" proved="true">
+ <proof prover="0"><result status="valid" time="0.02" steps="534"/></proof>
+ </goal>
+ <goal name="assoc_mul" proved="true">
+ <proof prover="0"><result status="valid" time="0.02" steps="596"/></proof>
+ </goal>
+ <goal name="comm_sum" proved="true">
+ <proof prover="0"><result status="valid" time="0.02" steps="641"/></proof>
+ </goal>
+ <goal name="dist_mul" proved="true">
+ <proof prover="0"><result status="valid" time="0.02" steps="710"/></proof>
+ </goal>
+</theory>
+<theory name="CommutativeRing" proved="true">
+ <goal name="comm_mul" proved="true">
+ <proof prover="0"><result status="valid" time="0.02" steps="557"/></proof>
+ </goal>
+</theory>
+<theory name="BooleanRing" proved="true">
+ <goal name="br_equivalent_law_1" proved="true">
+ <proof prover="0"><result status="valid" time="0.02" steps="689"/></proof>
+ </goal>
+</theory>
+</file>
+</why3session>
