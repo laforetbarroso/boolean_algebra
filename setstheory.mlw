@@ -10,7 +10,7 @@ type boolset = fset b
 
 let rec ghost function eval_positive (s: boolset): b
   variant { cardinal s }
-= if is_empty s then neg bot
+= if is_empty s then top
   else let x = pick s in
     x /*\ eval_positive (remove x s)
 
@@ -19,7 +19,7 @@ let rec ghost function eval_negative (s: boolset) : b
   variant { cardinal s }
 = if is_empty s then bot
   else let x = pick s in
-    neg (x) \*/ eval_negative (remove x s)
+    neg x \*/ eval_negative (remove x s)
 
 
 let rec lemma neg_positive_isnegative (s: boolset)
@@ -33,11 +33,11 @@ let rec lemma neg_positive_isnegative (s: boolset)
 val predicate (==) (e1 e2: boolset) : bool
   ensures{result <-> e1 = e2}
 
-lemma eval_negative_add1: forall s x. eval_negative (add x s) = ((neg (x)) \*/ eval_negative s )
+lemma eval_negative_add1: forall s x. eval_negative (add x s) = ((neg x) \*/ eval_negative s )
 
 let rec lemma eval_negative_add (s: boolset) (x: b)
   variant{ cardinal s }
-  ensures{ eval_negative (add x s) = ((neg (x)) \*/ eval_negative s )}
+  ensures{ eval_negative (add x s) = ((neg x) \*/ eval_negative s )}
   = ()
   
 let rec lemma eval_positive_add (s: boolset) (x: b)
@@ -66,14 +66,14 @@ module PropositionalFormulaSet
   use import BoolSet as BoolSet
 
 
-  clone export boolean_algebra.SwitchingAlgebra with type b=b, type i=i, axiom .
+  (*clone export boolean_algebra.SwitchingAlgebra with type b=b, type i=i, axiom .*)
 
   val function eq_pos (x y: pliteral) : bool
     ensures { result <-> x = y }
 
   type pliteralset = fset pliteral
 
-  function cast_setPF_setB (fset pliteral) (i -> b) : fset b
+  function cast_setPF_setB pliteralset (i -> b) : fset b
 
   axiom cast_def_empty: forall s f. is_empty s -> cast_setPF_setB s f = empty
   axiom cast_def_add  : forall s f.
