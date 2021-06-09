@@ -3,18 +3,16 @@ module Hornify
   use import formula.ConjunctiveNormalForm as CNF 
   use import formula.Horn as Horn
   
-  use int.Int, setstheory.BoolSet, setstheory.PropositionalFormulaSet, option.Option
- 
-  use import boolean_algebra.SwitchingAlgebra as BI
+  use int.Int, boolean_algebra.SwitchingAlgebra, setstheory.BoolSet, setstheory.PropositionalFormulaSet, option.Option
   
   clone set.SetApp with type elt = pliteral
 
   exception MoreThanOnePositive
   
-  function eval_domain (phi: clause_cnf) (s: set) (p: option rightside) (f: i -> BI.b) : BI.b
+  function eval_domain (phi: clause_cnf) (s: set) (p: option rightside) (f: i -> b) : b
   = eval_clause_cnf phi f \*/ eval_negative s f \*/ eval_optionrightside p f
   
-  function eval_codomain (s: set) (p: option rightside) (f: i -> BI.b) : BI.b
+  function eval_codomain (s: set) (p: option rightside) (f: i -> b) : b
   = eval_negative s f \*/  eval_optionrightside p f
  
   (* Cast Functions *)
@@ -25,10 +23,6 @@ module Hornify
       | LBottom -> RProp bot
       | LVar x -> RVar x
     end
-    
-    
-  (* *)
-  
     
   let addLiterals (pl: pliteral) (nl: pliteral) (s: set) (p: option rightside) : (rs: set, rp: option rightside)
   requires{ p = None }
@@ -122,8 +116,5 @@ module Hornify
       | FClause_cnf phi1 -> HBasic (getBasicHorn phi1)
       | FAnd_cnf phi1 phi2 -> HAnd (hornify phi1) (hornify phi2)
   end
-  
-
-
   
 end
