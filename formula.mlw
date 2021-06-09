@@ -34,7 +34,6 @@ theory PropositionalFormula
   function eval (e : formula) (f : i -> b) : b =
     eval_recursive (assign e f)
 
-
 end
 
 theory ConjunctiveNormalForm

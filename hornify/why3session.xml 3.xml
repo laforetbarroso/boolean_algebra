@@ -2,15 +2,10 @@
 <!DOCTYPE why3session PUBLIC "-//Why3//proof session v5//EN"
 "http://why3.lri.fr/why3session.dtd">
 <why3session shape_version="6">
-<prover id="0" name="Yices" version="2.5.4" timelimit="60" steplimit="0" memlimit="1000"/>
-<prover id="1" name="Eprover" version="2.5" timelimit="60" steplimit="0" memlimit="1000"/>
 <prover id="2" name="Alt-Ergo" version="2.4.0" timelimit="1" steplimit="0" memlimit="1000"/>
-<prover id="3" name="CVC4" version="1.7" alternative="strings" timelimit="60" steplimit="0" memlimit="1000"/>
-<prover id="4" name="Z3" version="4.8.6" alternative="noBV" timelimit="60" steplimit="0" memlimit="1000"/>
 <prover id="5" name="Spass" version="3.7" timelimit="1" steplimit="0" memlimit="1000"/>
 <prover id="6" name="Z3" version="4.8.6" timelimit="1" steplimit="0" memlimit="1000"/>
 <prover id="7" name="CVC4" version="1.7" timelimit="1" steplimit="0" memlimit="1000"/>
-<prover id="8" name="Yices" version="Yices" timelimit="60" steplimit="0" memlimit="1000"/>
 <file format="whyml">
 <path name=".."/><path name="hornify.mlw"/>
 <theory name="Hornify">
@@ -155,22 +150,22 @@
   <goal name="hornify_aux&#39;vc.6" expl="postcondition">
   <proof prover="2"><result status="highfailure" time="0.01"/></proof>
   <proof prover="5"><result status="timeout" time="1.00"/></proof>
-  <proof prover="6"><result status="timeout" time="1.00" steps="873364"/></proof>
-  <proof prover="7"><result status="highfailure" time="0.13" steps="601"/></proof>
+  <proof prover="6"><result status="highfailure" time="0.75" steps="567505"/></proof>
+  <proof prover="7"><result status="highfailure" time="0.23" steps="601"/></proof>
   <transf name="split_vc" >
    <goal name="hornify_aux&#39;vc.6.0" expl="postcondition">
    <proof prover="2" timelimit="5" memlimit="2000"><result status="highfailure" time="0.01"/></proof>
    <proof prover="5" timelimit="5" memlimit="2000"><result status="timeout" time="5.00"/></proof>
-   <proof prover="6" timelimit="5" memlimit="2000"><result status="timeout" time="5.00" steps="2987798"/></proof>
-   <proof prover="7" timelimit="5" memlimit="2000"><result status="highfailure" time="0.18" steps="601"/></proof>
+   <proof prover="6" timelimit="5" memlimit="2000"><result status="highfailure" time="4.29" steps="2964750"/></proof>
+   <proof prover="7" timelimit="5" memlimit="2000"><result status="highfailure" time="0.21" steps="601"/></proof>
    <transf name="inline_goal" >
     <goal name="hornify_aux&#39;vc.6.0.0" expl="postcondition">
     <transf name="split_all_full" >
      <goal name="hornify_aux&#39;vc.6.0.0.0" expl="postcondition">
-     <proof prover="2" timelimit="30" memlimit="4000"><result status="highfailure" time="0.01"/></proof>
-     <proof prover="5" timelimit="30" memlimit="4000"><result status="timeout" time="30.00"/></proof>
-     <proof prover="6" timelimit="30" memlimit="4000"><result status="highfailure" time="26.44" steps="2357513"/></proof>
-     <proof prover="7" timelimit="30" memlimit="4000"><result status="highfailure" time="0.21" steps="637"/></proof>
+     <proof prover="2" timelimit="5" memlimit="2000"><result status="highfailure" time="0.01"/></proof>
+     <proof prover="5" timelimit="30" memlimit="4000"><undone/></proof>
+     <proof prover="6" timelimit="30" memlimit="4000"><result status="highfailure" time="23.26" steps="2335046"/></proof>
+     <proof prover="7" timelimit="30" memlimit="4000"><result status="highfailure" time="0.22" steps="637"/></proof>
      </goal>
     </transf>
     </goal>
@@ -240,31 +235,24 @@
   <proof prover="7"><result status="highfailure" time="0.20" steps="601"/></proof>
   </goal>
   <goal name="hornify_aux&#39;vc.22" expl="postcondition">
-  <proof prover="0"><result status="highfailure" time="0.01"/></proof>
-  <proof prover="1"><result status="timeout" time="60.00"/></proof>
   <proof prover="2"><result status="highfailure" time="0.01"/></proof>
   <proof prover="5"><result status="timeout" time="1.00"/></proof>
-  <proof prover="6"><result status="timeout" time="1.00" steps="789282"/></proof>
+  <proof prover="6"><result status="highfailure" time="0.58" steps="321911"/></proof>
   <proof prover="7"><result status="highfailure" time="0.18" steps="601"/></proof>
   <transf name="split_vc" >
    <goal name="hornify_aux&#39;vc.22.0" expl="postcondition">
    <proof prover="2" timelimit="5" memlimit="2000"><result status="highfailure" time="0.01"/></proof>
    <proof prover="5" timelimit="5" memlimit="2000"><result status="timeout" time="5.00"/></proof>
-   <proof prover="6" timelimit="5" memlimit="2000"><result status="timeout" time="5.00" steps="2978530"/></proof>
-   <proof prover="7" timelimit="5" memlimit="2000"><result status="highfailure" time="0.13" steps="601"/></proof>
+   <proof prover="6" timelimit="5" memlimit="2000"><result status="highfailure" time="4.29" steps="2964681"/></proof>
+   <proof prover="7" timelimit="5" memlimit="2000"><result status="highfailure" time="0.22" steps="601"/></proof>
    <transf name="inline_goal" >
     <goal name="hornify_aux&#39;vc.22.0.0" expl="postcondition">
     <transf name="split_all_full" >
      <goal name="hornify_aux&#39;vc.22.0.0.0" expl="postcondition">
-     <proof prover="0"><undone/></proof>
-     <proof prover="1"><result status="timeout" time="60.00"/></proof>
-     <proof prover="2" timelimit="30" memlimit="4000"><result status="highfailure" time="0.00"/></proof>
-     <proof prover="3"><result status="highfailure" time="0.18" steps="637"/></proof>
-     <proof prover="4"><result status="timeout" time="60.00"/></proof>
-     <proof prover="5" timelimit="30" memlimit="4000"><result status="timeout" time="30.00"/></proof>
-     <proof prover="6" timelimit="30" memlimit="4000"><result status="timeout" time="30.00" steps="2390690"/></proof>
-     <proof prover="7" timelimit="30" memlimit="4000"><result status="highfailure" time="0.18" steps="637"/></proof>
-     <proof prover="8"><result status="highfailure" time="0.00"/></proof>
+     <proof prover="2" timelimit="5" memlimit="2000"><result status="highfailure" time="0.01"/></proof>
+     <proof prover="5" timelimit="30" memlimit="4000"><undone/></proof>
+     <proof prover="6" timelimit="30" memlimit="4000"><result status="highfailure" time="23.25" steps="2334995"/></proof>
+     <proof prover="7" timelimit="30" memlimit="4000"><result status="highfailure" time="0.23" steps="637"/></proof>
      </goal>
     </transf>
     </goal>
@@ -306,7 +294,7 @@
      <goal name="hornify_aux&#39;vc.27.0.0.0" expl="postcondition">
      <proof prover="2" timelimit="5" memlimit="2000"><result status="highfailure" time="0.01"/></proof>
      <proof prover="5" timelimit="5" memlimit="2000"><result status="timeout" time="5.00"/></proof>
-     <proof prover="6" timelimit="30" memlimit="4000"><result status="failure" time="0.00"/></proof>
+     <proof prover="6" timelimit="30" memlimit="4000"><undone/></proof>
      <proof prover="7" timelimit="30" memlimit="4000"><result status="highfailure" time="0.24" steps="637"/></proof>
      </goal>
     </transf>
@@ -354,10 +342,10 @@
     <goal name="hornify_aux&#39;vc.34.0.0" expl="postcondition">
     <transf name="split_all_full" >
      <goal name="hornify_aux&#39;vc.34.0.0.0" expl="postcondition">
-     <proof prover="2" timelimit="30" memlimit="4000"><result status="highfailure" time="0.01"/></proof>
-     <proof prover="5" timelimit="30" memlimit="4000"><result status="timeout" time="30.00"/></proof>
-     <proof prover="6" timelimit="30" memlimit="4000"><result status="timeout" time="30.00" steps="3145548"/></proof>
-     <proof prover="7" timelimit="30" memlimit="4000"><result status="highfailure" time="0.15" steps="637"/></proof>
+     <proof prover="2" timelimit="5" memlimit="2000"><result status="highfailure" time="0.01"/></proof>
+     <proof prover="5" timelimit="5" memlimit="2000"><result status="timeout" time="4.36"/></proof>
+     <proof prover="6" timelimit="5" memlimit="2000"><result status="highfailure" time="3.97" steps="3032256"/></proof>
+     <proof prover="7" timelimit="30" memlimit="4000"><undone/></proof>
      </goal>
     </transf>
     </goal>
@@ -515,78 +503,22 @@
   <goal name="getBasicHorn&#39;vc.6" expl="postcondition">
   <proof prover="2" timelimit="5" memlimit="2000"><result status="highfailure" time="0.01"/></proof>
   <proof prover="5" timelimit="5" memlimit="2000"><result status="timeout" time="5.00"/></proof>
-  <proof prover="6" timelimit="5" memlimit="2000"><result status="timeout" time="5.00" steps="2550533"/></proof>
+  <proof prover="6" timelimit="5" memlimit="2000"><result status="timeout" time="5.00" steps="2518899"/></proof>
   <proof prover="7" timelimit="5" memlimit="2000"><result status="highfailure" time="0.21" steps="601"/></proof>
-  <transf name="compute_hyp" >
-   <goal name="getBasicHorn&#39;vc.6.0" expl="postcondition">
-   <transf name="simplify_computations" >
-    <goal name="getBasicHorn&#39;vc.6.0.0" expl="postcondition">
-    <proof prover="2"><result status="highfailure" time="0.01"/></proof>
-    <proof prover="5"><result status="timeout" time="1.00"/></proof>
-    <proof prover="6"><result status="timeout" time="1.00" steps="577521"/></proof>
-    <proof prover="7"><result status="highfailure" time="0.14" steps="605"/></proof>
-    <transf name="split_vc" >
-     <goal name="getBasicHorn&#39;vc.6.0.0.0" expl="postcondition">
-     <proof prover="2" timelimit="5" memlimit="2000"><result status="highfailure" time="0.01"/></proof>
-     <proof prover="5" timelimit="30" memlimit="4000"><result status="failure" time="0.00"/></proof>
-     <proof prover="6" timelimit="30" memlimit="4000"><result status="timeout" time="30.00" steps="16126137"/></proof>
-     <proof prover="7" timelimit="30" memlimit="4000"><result status="highfailure" time="0.16" steps="605"/></proof>
-     </goal>
-    </transf>
-    </goal>
-   </transf>
-   </goal>
-  </transf>
   <transf name="inline_goal" >
    <goal name="getBasicHorn&#39;vc.6.0" expl="postcondition">
-   <proof prover="2"><result status="highfailure" time="0.01"/></proof>
-   <proof prover="5"><result status="timeout" time="1.00"/></proof>
-   <proof prover="6"><result status="timeout" time="1.00" steps="688322"/></proof>
-   <proof prover="7"><result status="highfailure" time="0.20" steps="601"/></proof>
-   <transf name="compile_match" >
-    <goal name="getBasicHorn&#39;vc.6.0.0" expl="postcondition">
-    </goal>
-   </transf>
-   <transf name="compute_hyp" >
+   <transf name="split_all_full" >
     <goal name="getBasicHorn&#39;vc.6.0.0" expl="postcondition">
     <proof prover="2"><result status="highfailure" time="0.01"/></proof>
     <proof prover="5"><result status="timeout" time="1.00"/></proof>
-    <proof prover="6"><result status="timeout" time="1.00" steps="1071040"/></proof>
-    <proof prover="7"><result status="highfailure" time="0.17" steps="605"/></proof>
-    <transf name="compile_match" >
+    <proof prover="6"><result status="timeout" time="1.00" steps="1041413"/></proof>
+    <proof prover="7"><result status="highfailure" time="0.14" steps="637"/></proof>
+    <transf name="split_vc" >
      <goal name="getBasicHorn&#39;vc.6.0.0.0" expl="postcondition">
-     <proof prover="2" timelimit="30" memlimit="4000"><result status="highfailure" time="0.01"/></proof>
+     <proof prover="2" timelimit="30" memlimit="4000"><result status="highfailure" time="0.00"/></proof>
      <proof prover="5" timelimit="30" memlimit="4000"><result status="timeout" time="30.00"/></proof>
-     <proof prover="6" timelimit="30" memlimit="4000"><result status="timeout" time="30.00" steps="1233310"/></proof>
-     <proof prover="7" timelimit="30" memlimit="4000"><result status="highfailure" time="0.23" steps="605"/></proof>
-     </goal>
-    </transf>
-    </goal>
-   </transf>
-   <transf name="split_vc" >
-    <goal name="getBasicHorn&#39;vc.6.0.0" expl="postcondition">
-    <proof prover="2" timelimit="30" memlimit="4000"><result status="highfailure" time="0.01"/></proof>
-    <proof prover="5" timelimit="30" memlimit="4000"><result status="timeout" time="30.00"/></proof>
-    <proof prover="6" timelimit="30" memlimit="4000"><result status="timeout" time="30.00" steps="2412481"/></proof>
-    <proof prover="7" timelimit="30" memlimit="4000"><result status="highfailure" time="0.13" steps="601"/></proof>
-    <transf name="compile_match" >
-     <goal name="getBasicHorn&#39;vc.6.0.0.0" expl="postcondition">
-     <transf name="compute_hyp" >
-      <goal name="getBasicHorn&#39;vc.6.0.0.0.0" expl="postcondition">
-      <proof prover="2"><result status="highfailure" time="0.01"/></proof>
-      <proof prover="5"><result status="timeout" time="1.00"/></proof>
-      <proof prover="6"><result status="timeout" time="1.00" steps="1069579"/></proof>
-      <proof prover="7"><result status="highfailure" time="0.14" steps="605"/></proof>
-      <transf name="split_vc" >
-       <goal name="getBasicHorn&#39;vc.6.0.0.0.0.0" expl="postcondition">
-       <proof prover="2" timelimit="30" memlimit="4000"><result status="highfailure" time="0.01"/></proof>
-       <proof prover="5" timelimit="30" memlimit="4000"><result status="timeout" time="30.00"/></proof>
-       <proof prover="6" timelimit="30" memlimit="4000"><result status="timeout" time="30.00" steps="1552901"/></proof>
-       <proof prover="7" timelimit="30" memlimit="4000"><result status="highfailure" time="0.17" steps="605"/></proof>
-       </goal>
-      </transf>
-      </goal>
-     </transf>
+     <proof prover="6" timelimit="30" memlimit="4000"><result status="timeout" time="30.00" steps="2630300"/></proof>
+     <proof prover="7" timelimit="30" memlimit="4000"><result status="highfailure" time="0.17" steps="637"/></proof>
      </goal>
     </transf>
     </goal>
@@ -596,12 +528,12 @@
   </goal>
  </transf>
  </goal>
- <goal name="hornify&#39;vc" expl="VC for hornify" proved="true">
+ <goal name="hornify&#39;vc" expl="VC for hornify">
  <proof prover="2"><result status="highfailure" time="0.01"/></proof>
  <proof prover="5"><result status="timeout" time="1.00"/></proof>
  <proof prover="6"><result status="timeout" time="1.00" steps="607655"/></proof>
  <proof prover="7"><result status="highfailure" time="0.16" steps="601"/></proof>
- <transf name="split_vc" proved="true" >
+ <transf name="split_vc" >
   <goal name="hornify&#39;vc.0" expl="postcondition" proved="true">
   <proof prover="5"><result status="valid" time="0.16"/></proof>
   <proof prover="6"><result status="timeout" time="1.00" steps="685002"/></proof>
@@ -615,11 +547,11 @@
   <proof prover="6"><result status="valid" time="0.12" steps="142910"/></proof>
   <proof prover="7"><result status="highfailure" time="0.21" steps="594"/></proof>
   </goal>
-  <goal name="hornify&#39;vc.3" expl="postcondition" proved="true">
-  <proof prover="1"><result status="valid" time="0.58"/></proof>
-  <proof prover="2" timelimit="60"><result status="highfailure" time="0.01"/></proof>
-  <proof prover="6" timelimit="5"><result status="timeout" time="5.00" steps="735846"/></proof>
-  <proof prover="7" timelimit="5"><result status="highfailure" time="0.14" steps="601"/></proof>
+  <goal name="hornify&#39;vc.3" expl="postcondition">
+  <proof prover="2" timelimit="30" memlimit="4000"><result status="highfailure" time="0.01"/></proof>
+  <proof prover="5" timelimit="30" memlimit="4000"><result status="timeout" time="30.00"/></proof>
+  <proof prover="6" timelimit="30" memlimit="4000"><result status="timeout" time="30.00" steps="31257395"/></proof>
+  <proof prover="7" timelimit="30" memlimit="4000"><result status="highfailure" time="0.18" steps="601"/></proof>
   </goal>
  </transf>
  </goal>

@@ -169,7 +169,7 @@
      <goal name="hornify_aux&#39;vc.6.0.0.0" expl="postcondition">
      <proof prover="2" timelimit="30" memlimit="4000"><result status="highfailure" time="0.01"/></proof>
      <proof prover="5" timelimit="30" memlimit="4000"><result status="timeout" time="30.00"/></proof>
-     <proof prover="6" timelimit="30" memlimit="4000"><result status="highfailure" time="26.44" steps="2357513"/></proof>
+     <proof prover="6" timelimit="30" memlimit="4000"><result status="timeout" time="30.00" steps="2367215"/></proof>
      <proof prover="7" timelimit="30" memlimit="4000"><result status="highfailure" time="0.21" steps="637"/></proof>
      </goal>
     </transf>

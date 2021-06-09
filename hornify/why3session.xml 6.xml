@@ -153,24 +153,26 @@
   <proof prover="7"><result status="highfailure" time="0.21" steps="601"/></proof>
   </goal>
   <goal name="hornify_aux&#39;vc.6" expl="postcondition">
+  <proof prover="1"><result status="timeout" time="60.00"/></proof>
   <proof prover="2"><result status="highfailure" time="0.01"/></proof>
   <proof prover="5"><result status="timeout" time="1.00"/></proof>
-  <proof prover="6"><result status="timeout" time="1.00" steps="873364"/></proof>
-  <proof prover="7"><result status="highfailure" time="0.13" steps="601"/></proof>
+  <proof prover="6"><result status="timeout" time="1.00" steps="1105254"/></proof>
+  <proof prover="7"><result status="highfailure" time="0.20" steps="601"/></proof>
   <transf name="split_vc" >
    <goal name="hornify_aux&#39;vc.6.0" expl="postcondition">
-   <proof prover="2" timelimit="5" memlimit="2000"><result status="highfailure" time="0.01"/></proof>
+   <proof prover="2" timelimit="5" memlimit="2000"><result status="highfailure" time="0.00"/></proof>
    <proof prover="5" timelimit="5" memlimit="2000"><result status="timeout" time="5.00"/></proof>
-   <proof prover="6" timelimit="5" memlimit="2000"><result status="timeout" time="5.00" steps="2987798"/></proof>
-   <proof prover="7" timelimit="5" memlimit="2000"><result status="highfailure" time="0.18" steps="601"/></proof>
+   <proof prover="6" timelimit="5" memlimit="2000"><result status="timeout" time="5.00" steps="2992629"/></proof>
+   <proof prover="7" timelimit="5" memlimit="2000"><result status="highfailure" time="0.13" steps="601"/></proof>
    <transf name="inline_goal" >
     <goal name="hornify_aux&#39;vc.6.0.0" expl="postcondition">
     <transf name="split_all_full" >
      <goal name="hornify_aux&#39;vc.6.0.0.0" expl="postcondition">
+     <proof prover="1"><result status="timeout" time="60.00"/></proof>
      <proof prover="2" timelimit="30" memlimit="4000"><result status="highfailure" time="0.01"/></proof>
      <proof prover="5" timelimit="30" memlimit="4000"><result status="timeout" time="30.00"/></proof>
-     <proof prover="6" timelimit="30" memlimit="4000"><result status="highfailure" time="26.44" steps="2357513"/></proof>
-     <proof prover="7" timelimit="30" memlimit="4000"><result status="highfailure" time="0.21" steps="637"/></proof>
+     <proof prover="6" timelimit="30" memlimit="4000"><result status="timeout" time="30.00" steps="2389989"/></proof>
+     <proof prover="7" timelimit="30" memlimit="4000"><result status="highfailure" time="0.15" steps="637"/></proof>
      </goal>
     </transf>
     </goal>
@@ -244,7 +246,7 @@
   <proof prover="1"><result status="timeout" time="60.00"/></proof>
   <proof prover="2"><result status="highfailure" time="0.01"/></proof>
   <proof prover="5"><result status="timeout" time="1.00"/></proof>
-  <proof prover="6"><result status="timeout" time="1.00" steps="789282"/></proof>
+  <proof prover="6"><result status="timeout" time="1.00" steps="924288"/></proof>
   <proof prover="7"><result status="highfailure" time="0.18" steps="601"/></proof>
   <transf name="split_vc" >
    <goal name="hornify_aux&#39;vc.22.0" expl="postcondition">
