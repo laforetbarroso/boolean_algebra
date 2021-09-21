@@ -2,7 +2,266 @@
 <!DOCTYPE why3session PUBLIC "-//Why3//proof session v5//EN"
 "http://why3.lri.fr/why3session.dtd">
 <why3session shape_version="6">
+<prover id="11" name="Coq" version="8.12.2" timelimit="0" steplimit="0" memlimit="0"/>
 <file format="whyml" proved="true">
 <path name=".."/><path name="horn.mlw"/>
+<theory name="Converts" proved="true">
+ <goal name="convertRStoAF&#39;vc" expl="VC for convertRStoAF" proved="true">
+ <proof prover="11"><path name="horn_Converts_convertRStoAFqtvc_1.v"/><result status="valid" time="0.41"/></proof>
+ </goal>
+ <goal name="convertPLtoAF&#39;vc" expl="VC for convertPLtoAF" proved="true">
+ <proof prover="11"><path name="horn_Converts_convertPLtoAFqtvc_1.v"/><result status="valid" time="0.44"/></proof>
+ </goal>
+ <goal name="convertAFtoPL&#39;vc" expl="VC for convertAFtoPL" proved="true">
+ <proof prover="11"><path name="horn_Converts_convertAFtoPLqtvc_1.v"/><result status="valid" time="0.41"/></proof>
+ </goal>
+ <goal name="convertAFtoRS&#39;vc" expl="VC for convertAFtoRS" proved="true">
+ <proof prover="11"><path name="horn_Converts_convertAFtoRSqtvc_1.v"/><result status="valid" time="0.44"/></proof>
+ </goal>
+ <goal name="convertPLtoAF_evaluation" proved="true">
+ <proof prover="11"><path name="horn_Converts_convertPLtoAF_evaluation_1.v"/><result status="valid" time="0.41"/></proof>
+ </goal>
+ <goal name="convertAFtoPL_evaluation" proved="true">
+ <proof prover="11"><path name="horn_Converts_convertAFtoPL_evaluation_1.v"/><result status="valid" time="0.50"/></proof>
+ </goal>
+ <goal name="PLtoAF_AFtoPL" proved="true">
+ <proof prover="11"><path name="horn_Converts_PLtoAF_AFtoPL_1.v"/><result status="valid" time="0.41"/></proof>
+ </goal>
+ <goal name="RStoAF_AFtoRS" proved="true">
+ <proof prover="11"><path name="horn_Converts_RStoAF_AFtoRS_1.v"/><result status="valid" time="0.43"/></proof>
+ </goal>
+ <goal name="AFtoRS_RStoAF" proved="true">
+ <proof prover="11"><path name="horn_Converts_AFtoRS_RStoAF_1.v"/><result status="valid" time="0.40"/></proof>
+ </goal>
+</theory>
+<theory name="Eval" proved="true">
+ <goal name="eval_setconjunction_singleton" proved="true">
+ <proof prover="11"><path name="horn_Eval_eval_setconjunction_singleton_1.v"/><result status="valid" time="0.47"/></proof>
+ </goal>
+ <goal name="eval_commutes_add&#39;vc" expl="VC for eval_commutes_add" proved="true">
+ <proof prover="11"><path name="horn_Eval_eval_commutes_addqtvc_1.v"/><result status="valid" time="0.43"/></proof>
+ </goal>
+ <goal name="add_eval" proved="true">
+ <proof prover="11"><path name="horn_Eval_add_eval_1.v"/><result status="valid" time="0.44"/></proof>
+ </goal>
+ <goal name="eval_clauselist_top_is_conj_eval_clause_top" proved="true">
+ <proof prover="11"><path name="horn_Eval_eval_clauselist_top_is_conj_eval_clause_top_2.v"/><result status="valid" time="0.39"/></proof>
+ </goal>
+ <goal name="eval_clauselist_bot_is_conj_eval_clause_bot" proved="true">
+ <proof prover="11"><path name="horn_Eval_eval_clauselist_bot_is_conj_eval_clause_bot_1.v"/><result status="valid" time="0.42"/></proof>
+ </goal>
+ <goal name="all_x_top_then_eval_setconjunction_top&#39;vc" expl="VC for all_x_top_then_eval_setconjunction_top" proved="true">
+ <proof prover="11"><path name="horn_Eval_all_x_top_then_eval_setconjunction_topqtvc_1.v"/><result status="valid" time="0.42"/></proof>
+ </goal>
+ <goal name="forall_eval_af_bot_exists_eval_af_bot&#39;vc" expl="VC for forall_eval_af_bot_exists_eval_af_bot" proved="true">
+ <proof prover="11"><path name="horn_Eval_forall_eval_af_bot_exists_eval_af_botqtvc_1.v"/><result status="valid" time="0.42"/></proof>
+ </goal>
+ <goal name="eval_cl_bot_then_exists_eval_clause_bot&#39;vc" expl="VC for eval_cl_bot_then_exists_eval_clause_bot" proved="true">
+ <proof prover="11"><path name="horn_Eval_eval_cl_bot_then_exists_eval_clause_botqtvc_1.v"/><result status="valid" time="0.41"/></proof>
+ </goal>
+ <goal name="eval_append" proved="true">
+ <proof prover="11"><path name="horn_Eval_eval_append_1.v"/><result status="valid" time="0.46"/></proof>
+ </goal>
+</theory>
+<theory name="SAT" proved="true">
+ <goal name="rs_unsat_then_not_sat" proved="true">
+ <proof prover="11"><path name="horn_SAT_rs_unsat_then_not_sat_1.v"/><result status="valid" time="0.45"/></proof>
+ </goal>
+ <goal name="af_unsat_then_not_sat" proved="true">
+ <proof prover="11"><path name="horn_SAT_af_unsat_then_not_sat_1.v"/><result status="valid" time="0.47"/></proof>
+ </goal>
+ <goal name="set_unsat_then_not_sat" proved="true">
+ <proof prover="11"><path name="horn_SAT_set_unsat_then_not_sat_1.v"/><result status="valid" time="0.40"/></proof>
+ </goal>
+ <goal name="all_set_without_bot_eval_set&#39;vc" expl="VC for all_set_without_bot_eval_set" proved="true">
+ <proof prover="11"><path name="horn_SAT_all_set_without_bot_eval_setqtvc_2.v"/><result status="valid" time="0.43"/></proof>
+ </goal>
+ <goal name="bot_not_in_set_then_sat_set&#39;vc" expl="VC for bot_not_in_set_then_sat_set" proved="true">
+ <proof prover="11"><path name="horn_SAT_bot_not_in_set_then_sat_setqtvc_1.v"/><result status="valid" time="0.42"/></proof>
+ </goal>
+ <goal name="subset_of_satisfiable_set&#39;vc" expl="VC for subset_of_satisfiable_set" proved="true">
+ <proof prover="11"><path name="horn_SAT_subset_of_satisfiable_setqtvc_1.v"/><result status="valid" time="0.44"/></proof>
+ </goal>
+ <goal name="satisfiable_clause" proved="true">
+ <proof prover="11"><path name="horn_SAT_satisfiable_clause_1.v"/><result status="valid" time="0.41"/></proof>
+ </goal>
+ <goal name="sublist_is_satisfiable_clauselist" proved="true">
+ <proof prover="11"><path name="horn_SAT_sublist_is_satisfiable_clauselist_1.v"/><result status="valid" time="0.47"/></proof>
+ </goal>
+ <goal name="sat_cl_bot_right" proved="true">
+ <proof prover="11"><path name="horn_SAT_sat_cl_bot_right_1.v"/><result status="valid" time="0.42"/></proof>
+ </goal>
+ <goal name="sat_cl_bot_left" proved="true">
+ <proof prover="11"><path name="horn_SAT_sat_cl_bot_left_1.v"/><result status="valid" time="0.48"/></proof>
+ </goal>
+ <goal name="not_unsat_set_sat_set" proved="true">
+ <proof prover="11"><path name="horn_SAT_not_unsat_set_sat_set_1.v"/><result status="valid" time="0.44"/></proof>
+ </goal>
+ <goal name="not_unsat_clause_sat_clause" proved="true">
+ <proof prover="11"><path name="horn_SAT_not_unsat_clause_sat_clause_1.v"/><result status="valid" time="0.42"/></proof>
+ </goal>
+ <goal name="not_unsat_sat" proved="true">
+ <proof prover="11"><path name="horn_SAT_not_unsat_sat_1.v"/><result status="valid" time="0.41"/></proof>
+ </goal>
+ <goal name="not_sat_unsat" proved="true">
+ <proof prover="11"><path name="horn_SAT_not_sat_unsat_1.v"/><result status="valid" time="0.43"/></proof>
+ </goal>
+ <goal name="unsat_then_bot" proved="true">
+ <proof prover="11"><path name="horn_SAT_unsat_then_bot_1.v"/><result status="valid" time="0.48"/></proof>
+ </goal>
+ <goal name="is_unsat_then_p_is_bot" proved="true">
+ <proof prover="11"><path name="horn_SAT_is_unsat_then_p_is_bot_1.v"/><result status="valid" time="0.48"/></proof>
+ </goal>
+ <goal name="unsat_permut" proved="true">
+ <proof prover="11"><path name="horn_SAT_unsat_permut_1.v"/><result status="valid" time="0.44"/></proof>
+ </goal>
+</theory>
+<theory name="ListPlus" proved="true">
+ <goal name="sublist&#39;vc" expl="VC for sublist" proved="true">
+ <proof prover="11"><path name="horn_ListPlus_sublistqtvc_1.v"/><result status="valid" time="0.38"/></proof>
+ </goal>
+ <goal name="equality_is_equal_list&#39;vc" expl="VC for equality_is_equal_list" proved="true">
+ <proof prover="11"><path name="horn_ListPlus_equality_is_equal_listqtvc_1.v"/><result status="valid" time="0.42"/></proof>
+ </goal>
+ <goal name="is_equal_list_reflexive&#39;vc" expl="VC for is_equal_list_reflexive" proved="true">
+ <proof prover="11"><path name="horn_ListPlus_is_equal_list_reflexiveqtvc_1.v"/><result status="valid" time="0.37"/></proof>
+ </goal>
+ <goal name="is_equal_list_commutative&#39;vc" expl="VC for is_equal_list_commutative" proved="true">
+ <proof prover="11"><path name="horn_ListPlus_is_equal_list_commutativeqtvc_1.v"/><result status="valid" time="0.38"/></proof>
+ </goal>
+ <goal name="tuple_equality&#39;vc" expl="VC for tuple_equality" proved="true">
+ <proof prover="11"><path name="horn_ListPlus_tuple_equalityqtvc_1.v"/><result status="valid" time="0.44"/></proof>
+ </goal>
+ <goal name="permut_ref" proved="true">
+ <proof prover="11"><path name="horn_ListPlus_permut_ref_1.v"/><result status="valid" time="0.38"/></proof>
+ </goal>
+ <goal name="permut_trans" proved="true">
+ <proof prover="11"><path name="horn_ListPlus_permut_trans_1.v"/><result status="valid" time="0.40"/></proof>
+ </goal>
+ <goal name="permut_cl1_cl2" proved="true">
+ <proof prover="11"><path name="horn_ListPlus_permut_cl1_cl2_1.v"/><result status="valid" time="0.39"/></proof>
+ </goal>
+ <goal name="concat_with_element" proved="true">
+ <proof prover="11"><path name="horn_ListPlus_concat_with_element_1.v"/><result status="valid" time="0.40"/></proof>
+ </goal>
+ <goal name="num_occ_permut_concat&#39;vc" expl="VC for num_occ_permut_concat" proved="true">
+ <proof prover="11"><path name="horn_ListPlus_num_occ_permut_concatqtvc_1.v"/><result status="valid" time="0.41"/></proof>
+ </goal>
+ <goal name="num_occ_concat&#39;vc" expl="VC for num_occ_concat" proved="true">
+ <proof prover="11"><path name="horn_ListPlus_num_occ_concatqtvc_1.v"/><result status="valid" time="0.40"/></proof>
+ </goal>
+ <goal name="num_occ_1_plus_tail&#39;vc" expl="VC for num_occ_1_plus_tail" proved="true">
+ <proof prover="11"><path name="horn_ListPlus_num_occ_1_plus_tailqtvc_1.v"/><result status="valid" time="0.41"/></proof>
+ </goal>
+ <goal name="num_occ_permut_list&#39;vc" expl="VC for num_occ_permut_list" proved="true">
+ <proof prover="11"><path name="horn_ListPlus_num_occ_permut_listqtvc_1.v"/><result status="valid" time="0.43"/></proof>
+ </goal>
+ <goal name="permut_list_permut_sublist&#39;vc" expl="VC for permut_list_permut_sublist" proved="true">
+ <proof prover="11"><path name="horn_ListPlus_permut_list_permut_sublistqtvc_1.v"/><result status="valid" time="0.47"/></proof>
+ </goal>
+</theory>
+<theory name="RemoveFromList" proved="true">
+ <goal name="removeFromList_numocc" proved="true">
+ <proof prover="11"><path name="horn_RemoveFromList_removeFromList_numocc_1.v"/><result status="valid" time="0.39"/></proof>
+ </goal>
+ <goal name="removeFromList_numocc_not_elem" proved="true">
+ <proof prover="11"><path name="horn_RemoveFromList_removeFromList_numocc_not_elem_1.v"/><result status="valid" time="0.41"/></proof>
+ </goal>
+ <goal name="removeFromList_length" proved="true">
+ <proof prover="11"><path name="horn_RemoveFromList_removeFromList_length_1.v"/><result status="valid" time="0.40"/></proof>
+ </goal>
+ <goal name="removeFromList_concat_not_mem_l1" proved="true">
+ <proof prover="11"><path name="horn_RemoveFromList_removeFromList_concat_not_mem_l1_1.v"/><result status="valid" time="0.40"/></proof>
+ </goal>
+ <goal name="removeFromList_concat" proved="true">
+ <proof prover="11"><path name="horn_RemoveFromList_removeFromList_concat_1.v"/><result status="valid" time="0.42"/></proof>
+ </goal>
+ <goal name="removeFromList_permut" proved="true">
+ <proof prover="11"><path name="horn_RemoveFromList_removeFromList_permut_1.v"/><result status="valid" time="0.42"/></proof>
+ </goal>
+ <goal name="removeFromList_permut_concat" proved="true">
+ <proof prover="11"><path name="horn_RemoveFromList_removeFromList_permut_concat_1.v"/><result status="valid" time="0.40"/></proof>
+ </goal>
+ <goal name="removeFromList_elem_not_in_list" proved="true">
+ <proof prover="11"><path name="horn_RemoveFromList_removeFromList_elem_not_in_list_1.v"/><result status="valid" time="0.40"/></proof>
+ </goal>
+ <goal name="removeFromList_sublist" proved="true">
+ <proof prover="11"><path name="horn_RemoveFromList_removeFromList_sublist_1.v"/><result status="valid" time="0.43"/></proof>
+ </goal>
+</theory>
+<theory name="FindOneSubset" proved="true">
+ <goal name="findOneSubset_if_only_if_some" proved="true">
+ <proof prover="11"><path name="horn_FindOneSubset_findOneSubset_if_only_if_some_1.v"/><result status="valid" time="0.39"/></proof>
+ </goal>
+ <goal name="findOneSubset_mem_subset" proved="true">
+ <proof prover="11"><path name="horn_FindOneSubset_findOneSubset_mem_subset_1.v"/><result status="valid" time="0.39"/></proof>
+ </goal>
+ <goal name="findOneSubset_nil" proved="true">
+ <proof prover="11"><path name="horn_FindOneSubset_findOneSubset_nil_1.v"/><result status="valid" time="0.40"/></proof>
+ </goal>
+ <goal name="findOneSubset_notsubset" proved="true">
+ <proof prover="11"><path name="horn_FindOneSubset_findOneSubset_notsubset_1.v"/><result status="valid" time="0.39"/></proof>
+ </goal>
+</theory>
+<theory name="SetOfSymbols" proved="true">
+ <goal name="if_mem_then_subset_set_smb" proved="true">
+ <proof prover="11"><path name="horn_SetOfSymbols_if_mem_then_subset_set_smb_1.v"/><result status="valid" time="0.80"/></proof>
+ </goal>
+ <goal name="subset_set_smb_clauselist" proved="true">
+ <proof prover="11"><path name="horn_SetOfSymbols_subset_set_smb_clauselist_1.v"/><result status="valid" time="0.43"/></proof>
+ </goal>
+ <goal name="sublist_subset_set_smb" proved="true">
+ <proof prover="11"><path name="horn_SetOfSymbols_sublist_subset_set_smb_1.v"/><result status="valid" time="0.83"/></proof>
+ </goal>
+</theory>
+<theory name="Horn_Logic" proved="true">
+ <goal name="algorithmA_spec&#39;vc" expl="VC for algorithmA_spec" proved="true">
+ <proof prover="11"><path name="horn_Horn_Logic_algorithmA_specqtvc_2.v"/><result status="valid" time="1.08"/></proof>
+ </goal>
+ <goal name="permutacoes&#39;vc" expl="VC for permutacoes" proved="true">
+ <proof prover="11"><path name="horn_Horn_Logic_permutacoesqtvc_2.v"/><result status="valid" time="1.08"/></proof>
+ </goal>
+ <goal name="monotone_algA&#39;vc" expl="VC for monotone_algA" proved="true">
+ <proof prover="11"><path name="horn_Horn_Logic_monotone_algAqtvc_1.v"/><result status="valid" time="1.12"/></proof>
+ </goal>
+ <goal name="smb&#39;vc" expl="VC for smb" proved="true">
+ <proof prover="11"><path name="horn_Horn_Logic_smbqtvc_1.v"/><result status="valid" time="1.02"/></proof>
+ </goal>
+ <goal name="unsat_cl_mem_ABot_in_algorithmA&#39;vc" expl="VC for unsat_cl_mem_ABot_in_algorithmA" proved="true">
+ <proof prover="11"><path name="horn_Horn_Logic_unsat_cl_mem_ABot_in_algorithmAqtvc_5.v"/><result status="valid" time="1.05"/></proof>
+ </goal>
+ <goal name="not_mem_ABot_then_cl_sat&#39;vc" expl="VC for not_mem_ABot_then_cl_sat" proved="true">
+ <proof prover="11"><path name="horn_Horn_Logic_not_mem_ABot_then_cl_satqtvc_1.v"/><result status="valid" time="1.04"/></proof>
+ </goal>
+ <goal name="sat_cl_not_ABot_in_algorithmA&#39;vc" expl="VC for sat_cl_not_ABot_in_algorithmA" proved="true">
+ <proof prover="11"><path name="horn_Horn_Logic_sat_cl_not_ABot_in_algorithmAqtvc_1.v"/><result status="valid" time="1.16"/></proof>
+ </goal>
+ <goal name="mem_ABot_then_cl_unsat&#39;vc" expl="VC for mem_ABot_then_cl_unsat" proved="true">
+ <proof prover="11"><path name="horn_Horn_Logic_mem_ABot_then_cl_unsatqtvc_1.v"/><result status="valid" time="1.03"/></proof>
+ </goal>
+ <goal name="horn_logic&#39;vc" expl="VC for horn_logic" proved="true">
+ <proof prover="11"><path name="horn_Horn_Logic_horn_logicqtvc_1.v"/><result status="valid" time="1.02"/></proof>
+ </goal>
+ <goal name="horn_sat_completeness" proved="true">
+ <proof prover="11"><path name="horn_Horn_Logic_horn_sat_completeness_1.v"/><result status="valid" time="1.03"/></proof>
+ </goal>
+ <goal name="horn_unsat_completeness" proved="true">
+ <proof prover="11"><path name="horn_Horn_Logic_horn_unsat_completeness_1.v"/><result status="valid" time="1.03"/></proof>
+ </goal>
+</theory>
+<theory name="Horn" proved="true">
+ <goal name="length_equal_listset_to_list_fset" proved="true">
+ <proof prover="11"><path name="horn_Horn_length_equal_listset_to_list_fset_1.v"/><result status="valid" time="1.10"/></proof>
+ </goal>
+ <goal name="removeFromList_prog&#39;vc" expl="VC for removeFromList_prog" proved="true">
+ <proof prover="11"><path name="horn_Horn_removeFromList_progqtvc_3.v"/><result status="valid" time="1.15"/></proof>
+ </goal>
+ <goal name="algorithmA&#39;vc" expl="VC for algorithmA" proved="true">
+ <proof prover="11"><path name="horn_Horn_algorithmAqtvc_12.v"/><result status="valid" time="1.24"/></proof>
+ </goal>
+ <goal name="horn&#39;vc" expl="VC for horn" proved="true">
+ <proof prover="11"><path name="horn_Horn_hornqtvc_1.v"/><result status="valid" time="1.05"/></proof>
+ </goal>
+</theory>
 </file>
 </why3session>

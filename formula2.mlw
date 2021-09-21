@@ -1,0 +1,52 @@
+theory PropositionalFormula
+
+  use boolean_algebra.SwitchingAlgebra
+  use list.List
+
+  type formula =
+    | Prop b
+    | Var i
+    | Neg formula
+    | And formula formula
+    | Or formula formula
+    | Impl formula formula
+
+  function eval (e : formula) (f : i -> b) : b
+   = match e with
+    | Prop b -> b
+    | Var i -> f i
+    | Neg e1 -> neg (eval e1 f)
+    | And e1 e2 -> (eval e1 f) /*\ (eval e2 f)
+    | Or e1 e2 -> (eval e1 f) \*/ (eval e2 f)
+    | Impl e1 e2 -> (eval e1 f) ->* (eval e2 f)
+    end
+  
+  predicate equiv (f1 f2 : formula) 
+   = forall v : i -> b. eval f1 v = eval f2 v
+
+  lemma demorgan: 
+    forall phi1 phi2 : formula. equiv (Neg (And phi1 phi2)) (Or (Neg phi1) (Neg phi2))
+
+  type atom =
+    | B b
+    | I i
+    | Ni i
+
+  type cnf_clause = list atom
+
+  type cnf = list cnf_clause 
+
+  function eval_cnf_clause (e : cnf_clause) (f : i -> b) : b =
+    match e with
+    | Nil -> bot
+    | Cons (B b) tl -> b \*/ (eval_cnf_clause tl f)
+    | Cons (I i) tl -> (f i) \*/ (eval_cnf_clause tl f)
+    | Cons (Ni i) tl -> (neg (f i)) \*/ (eval_cnf_clause tl f)
+    end
+
+   function eval_cnf (e : cnf) (f : i -> b) : b =
+    match e with
+    | Nil -> top
+    | Cons hd tl -> (eval_cnf_clause hd f) /*\ (eval_cnf tl f)
+    end
+end

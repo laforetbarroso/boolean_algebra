@@ -715,6 +715,8 @@ Theorem convertRStoAF'vc :
       ((t = top) -> (result = ATop)) /\ (~ (t = top) -> (result = ABot))
   | RVar x => (result = (AVar x))
   end.
+(* Why3 intros phi result h1. *)
 
 auto.
+
 

@@ -61,7 +61,7 @@ module T
     variant{ phi }
     ensures{ forall f. eval phi f = eval_wi result f }
   = match phi with
-    | Prop t -> if t = bot then L_wi (LBottom)
+    | Prop t -> if t == bot then L_wi (LBottom)
                 else FNeg_wi (L_wi LBottom)
     | Var i ->  L_wi (LVar i)
     | Neg phi1 -> FNeg_wi (impl_free phi1)
@@ -107,6 +107,8 @@ module T
     ensures{ (forall f. eval phi f = eval_formula_cnf result f)}
   = cnfc (nnfc (impl_free phi))
 
+  (*lemma correcao:
+    forall phi : formula. forall f. eval phi f = eval_formula_cnf (t phi) f*)
 end
 
 module T_CPS

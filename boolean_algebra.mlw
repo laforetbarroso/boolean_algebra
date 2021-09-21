@@ -4,8 +4,8 @@ module BooleanAlgebra
 
   type i
   type b
-  val constant top : b (* TODO: *)
-  val constant bot : b (* TODO: *)
+  val constant top : b 
+  val constant bot : b 
   function (/*\) b b : b
   function (\*/) b b : b
   function neg b : b
@@ -21,8 +21,8 @@ module BooleanAlgebra
                                           function (*) = (/*\),
                                           function (+) = xor,
                                           axiom .
-
-
+                                         
+  
   (*****cpo definition******)
   predicate (<=) (x y : b)
   = (x \*/ y) = y
@@ -220,7 +220,9 @@ module SwitchingAlgebra
 
   lemma ifnotbot_thentop: forall t. t <> bot -> t = top
 
-  val (=) (t1 t2: b) : bool
-  ensures { result <-> t1 = t2 } (*TODO*)
+  val (==) (t1 t2: b) : bool
+  ensures { result <-> t1 = t2 }
+  
+  goal g : forall a b c : b. (a /*\ b /*\ c = top) -> (b /*\ c = top)
 
 end

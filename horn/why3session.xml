@@ -7,7 +7,7 @@
 <path name=".."/><path name="horn.mlw"/>
 <theory name="Converts" proved="true">
  <goal name="convertRStoAF&#39;vc" expl="VC for convertRStoAF" proved="true">
- <proof prover="11"><path name="horn_Converts_convertRStoAFqtvc_1.v"/><result status="valid" time="0.41"/></proof>
+ <proof prover="11"><path name="horn_Converts_convertRStoAFqtvc_3.v"/><result status="valid" time="0.63"/></proof>
  </goal>
  <goal name="convertPLtoAF&#39;vc" expl="VC for convertPLtoAF" proved="true">
  <proof prover="11"><path name="horn_Converts_convertPLtoAFqtvc_1.v"/><result status="valid" time="0.44"/></proof>

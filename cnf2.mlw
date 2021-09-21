@@ -1,0 +1,167 @@
+module Aux
+
+  use formula2.PropositionalFormula
+  use int.Int, list.List
+  
+  let rec function size (phi: formula) : int
+    ensures{ result >= 0 } 
+  = match phi with
+    | Neg phi1 -> 1 + size phi1
+    | And phi1 phi2 | Or phi1 phi2 | Impl phi1 phi2 ->
+      1 + size phi1 + size phi2
+    | _ -> 1
+    end
+  
+  let rec function size_cnf_clause (phi: cnf_clause) : int
+    ensures{ result >= 0 }
+  = match phi with
+    | Nil -> 0
+    | Cons hd tl -> 1 + size_cnf_clause tl
+    end
+  
+  let rec function size_cnf (phi: cnf) : int
+    ensures{ result >= 0 }
+  = match phi with
+    | Nil -> 0
+    | Cons hd tl -> 1 + size_cnf tl
+    end
+  
+  predicate is_impl_free (phi: formula)
+  = match phi with
+  | Prop t -> True
+  | Var i -> True
+  | Neg phi1 -> is_impl_free phi1
+  | Or phi1 phi2 | And phi1 phi2 -> 
+    is_impl_free phi1 /\ is_impl_free phi2
+  | Impl phi1 phi2 -> False
+  end
+  
+  predicate is_nnfc (phi: formula)
+  = match phi with
+  | Prop t -> True
+  | Var i -> True
+  | Neg (Prop t) -> True
+  | Neg (Var i) -> True
+  | Neg _ -> False
+  | Or phi1 phi2 | And phi1 phi2 -> 
+    is_nnfc phi1 /\ is_nnfc phi2
+  | Impl phi1 phi2 -> False
+  end
+  
+  lemma nnfc_is_implfree:
+    forall phi: formula. is_nnfc phi -> is_impl_free phi 
+  
+  predicate is_cnf (phi: formula)
+  = match phi with
+  | Prop t -> True
+  | Var i -> True
+  | Neg (Prop t) -> True
+  | Neg (Var i) -> True
+  | Neg _ -> False
+  | Impl _ _ -> False
+  | And phi1 phi2 -> is_cnf phi1 /\ is_cnf phi2
+  | Or (And _ _ ) _ | Or _ (And _ _) -> False
+  | Or phi1 phi2 -> is_cnf phi1 /\ is_cnf phi2
+  end
+  
+  lemma cnf_is_nnfc:
+    forall phi: formula. is_cnf phi -> is_nnfc phi 
+  
+end
+
+module T
+
+  use boolean_algebra.SwitchingAlgebra, formula2.PropositionalFormula,Aux 
+  use int.Int, list.List, list.Append
+
+  let rec function impl_free (phi: formula) : formula
+    variant{ size phi }
+    ensures{ forall v. eval phi v = eval result v /\ is_impl_free result}
+  = match phi with
+    | Prop t -> Prop t
+    | Var i -> Var i
+    | Neg phi1 -> Neg (impl_free phi1)
+    | Or phi1 phi2 -> Or (impl_free phi1) (impl_free phi2)
+    | And phi1 phi2 -> And (impl_free phi1) (impl_free phi2)
+    | Impl phi1 phi2 -> Or (Neg (impl_free phi1)) (impl_free phi2)
+    end
+
+  let rec function nnfc (phi: formula)
+    requires{ is_impl_free phi }
+    variant{ size phi }
+    ensures{ (forall v. eval phi v = eval result v) /\ is_impl_free phi /\ is_nnfc result }
+  = match phi with
+    | Neg (Neg phi1) -> nnfc phi1
+    | Neg (And phi1 phi2) -> Or (nnfc (Neg phi1)) (nnfc (Neg phi2))
+    | Neg (Or phi1 phi2) -> And (nnfc (Neg phi1)) (nnfc (Neg phi2))
+    | And phi1 phi2 -> And (nnfc phi1) (nnfc phi2)
+    | Or phi1 phi2 -> Or (nnfc phi1) (nnfc phi2)
+    | _ -> phi
+  end
+
+  let rec function distr (phi1 phi2: formula)
+    requires{ is_impl_free phi1 /\ is_impl_free phi2 /\ is_nnfc phi1 /\ is_nnfc phi2 /\ is_cnf phi1 /\ is_cnf phi2}
+    variant{ size phi1 + size phi2 }
+    ensures{ (forall v. ((eval phi1 v \*/ eval phi2 v) = eval result v)) /\ is_impl_free result /\ is_nnfc result /\ is_cnf result }
+  = match phi1, phi2 with
+    | And phi11 phi12, phi2 -> And (distr phi11 phi2) (distr phi12 phi2)
+    | phi1, And phi21 phi22 -> And (distr phi1 phi21) (distr phi1 phi22)
+    | _ , _ -> Or phi1 phi2
+    end
+    
+  
+  let rec function cnfc (phi: formula)
+    requires{ is_impl_free phi /\ is_nnfc phi }
+    variant{ phi }
+    ensures{ (forall v. eval phi v = eval result v) /\ is_impl_free phi /\ is_nnfc result /\ is_cnf result }
+  = match phi with
+    | Or phi1 phi2 -> distr (cnfc phi1) (cnfc phi2)
+    | And phi1 phi2 -> And (cnfc phi1) (cnfc phi2)
+    | _ -> phi
+  end
+  
+  let function t (phi: formula) : formula
+    ensures{ forall v. eval phi v = eval result v /\ is_impl_free result /\ is_nnfc result /\ is_cnf result }
+  = cnfc (nnfc (impl_free phi))
+  
+  let rec function to_cnf_aux (phi: formula) : cnf_clause
+    variant{size phi}
+  = match phi with
+    | Prop b -> Cons (B b) Nil
+    | Var i -> Cons (I i) Nil
+    | Neg (Var i)  -> Cons (Ni i) Nil
+    | Or phi1 phi2 -> (to_cnf_aux phi1) ++ (to_cnf_aux phi2)
+    | _ -> Nil 
+    end
+    
+  let rec function to_cnf (phi: formula) : cnf
+    requires{ is_impl_free phi /\ is_nnfc phi /\ is_cnf phi }
+    variant{size phi}
+    ensures{ forall f. eval phi f = eval_cnf result f }
+  = match phi with
+    | And phi1 phi2 -> (to_cnf phi1) ++ (to_cnf phi2)
+    | _ -> Cons (to_cnf_aux phi) Nil
+    end
+  
+  let rec function to_formula_aux (phi: cnf_clause) : formula
+    variant{ size_cnf_clause phi }
+    ensures{ is_cnf result }
+  = match phi with
+    | Nil -> Prop bot
+    | Cons (B b) Nil -> Prop b
+    | Cons (I i) Nil -> Var i
+    | Cons (Ni i) Nil -> Neg (Var i)
+    | Cons (B b) tl -> Or (Prop b) (to_formula_aux tl)
+    | Cons (I i) tl -> Or (Var i) (to_formula_aux tl)
+    | Cons (Ni i) tl -> Or (Neg (Var i)) (to_formula_aux tl)
+    end
+   
+  let rec function to_formula (phi: cnf) : formula
+    variant{ size_cnf phi }
+    ensures{ forall f. eval_cnf phi f = eval result f /\ is_cnf result }
+  = match phi with
+    | Nil -> Prop top
+    | Cons hd Nil -> (to_formula_aux hd)
+    | Cons hd tl -> And (to_formula_aux hd) (to_formula tl)
+    end
+ end

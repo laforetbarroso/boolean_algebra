@@ -3,7 +3,11 @@
 "http://why3.lri.fr/why3session.dtd">
 <why3session shape_version="6">
 <prover id="0" name="CVC4" version="1.7" timelimit="5" steplimit="0" memlimit="1000"/>
-<file format="whyml" proved="true">
+<prover id="1" name="Alt-Ergo" version="2.4.0" timelimit="5" steplimit="0" memlimit="1000"/>
+<prover id="2" name="CVC4" version="1.8" timelimit="5" steplimit="0" memlimit="1000"/>
+<prover id="3" name="Spass" version="3.7" timelimit="5" steplimit="0" memlimit="1000"/>
+<prover id="4" name="Z3" version="4.8.6" timelimit="1" steplimit="0" memlimit="1000"/>
+<file format="whyml">
 <path name=".."/><path name="algebrav2.mlw"/>
 <theory name="Ring" proved="true">
  <goal name="assoc_sum" proved="true">
@@ -24,9 +28,26 @@
  <proof prover="0"><result status="valid" time="0.02" steps="557"/></proof>
  </goal>
 </theory>
-<theory name="BooleanRing" proved="true">
- <goal name="br_equivalent_law_1" proved="true">
+<theory name="UnitaryCommutativeRing">
+ <goal name="br_equivalent_law_1">
+ <proof prover="1" timelimit="1"><result status="timeout" time="1.00"/></proof>
+ <proof prover="2" timelimit="1"><result status="unknown" time="0.02" steps="681"/></proof>
+ <proof prover="3" timelimit="1"><result status="timeout" time="1.00"/></proof>
+ <proof prover="4"><result status="timeout" time="1.00" steps="711239"/></proof>
+ <transf name="split_vc" >
+  <goal name="br_equivalent_law_1.0">
+  <proof prover="1" memlimit="2000"><result status="timeout" time="5.00"/></proof>
+  <proof prover="2" memlimit="2000"><result status="unknown" time="0.02" steps="647"/></proof>
+  <proof prover="3" memlimit="2000"><result status="timeout" time="5.00"/></proof>
+  <proof prover="4" timelimit="30" memlimit="4000"><undone/></proof>
+  </goal>
+ </transf>
+ </goal>
+</theory>
+<theory name="BooleanRing">
+ <goal name="br_equivalent_law_1">
  <proof prover="0"><result status="valid" time="0.02" steps="689"/></proof>
+ <proof prover="4"><undone/></proof>
  </goal>
 </theory>
 </file>

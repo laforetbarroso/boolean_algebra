@@ -1,7 +1,5 @@
 module BoolSet
 
-
-
 use int.Int, formula.PropositionalFormula, boolean_algebra.SwitchingAlgebra
 
 use import set.Fset as Set
@@ -39,13 +37,13 @@ let rec lemma eval_negative_add (s: boolset) (x: b)
   variant{ cardinal s }
   ensures{ eval_negative (add x s) = ((neg x) \*/ eval_negative s )}
   = ()
-  
+
 let rec lemma eval_positive_add (s: boolset) (x: b)
   variant{ cardinal s }
   ensures{ eval_positive (add x s) = ((x) /*\ eval_positive s ) }
   = ()
-  
-  
+
+
 lemma eval_positive_abso: forall s x. x = bot -> (eval_positive (add x s) = bot)
 
 lemma eval_negative_abso: forall s x. x = bot -> (eval_negative (add x s) = top)
@@ -53,7 +51,6 @@ lemma eval_negative_abso: forall s x. x = bot -> (eval_negative (add x s) = top)
 lemma eval_positive_neutral: forall s x. x = top -> (eval_positive (add x s) = eval_positive s)
 
 lemma eval_negative_neutral: forall s x. x = top -> (eval_negative (add x s) = eval_negative s)
-
 
 end
 
@@ -64,9 +61,6 @@ module PropositionalFormulaSet
   use formula.PropositionalFormula, formula.Horn, boolean_algebra.SwitchingAlgebra, formula.ConjunctiveNormalForm
 
   use import BoolSet as BoolSet
-
-
-  (*clone export boolean_algebra.SwitchingAlgebra with type b=b, type i=i, axiom .*)
 
   val function eq_pos (x y: pliteral) : bool
     ensures { result <-> x = y }
@@ -79,7 +73,7 @@ module PropositionalFormulaSet
   axiom cast_def_add  : forall s f.
     not (is_empty s) -> forall x. mem x s ->
     cast_setPF_setB s f = add (eval_pliteral x f) (cast_setPF_setB (remove x s) f)
-    
+
   let rec lemma cast_commutes_add
     (s: pliteralset) (x: pliteral) (f: i -> b)
     variant { cardinal (add x s) }
@@ -93,7 +87,7 @@ module PropositionalFormulaSet
 
   let rec ghost function eval_negative (s: fset pliteral) (f: i -> b) : b
   = BoolSet.eval_negative (cast_setPF_setB s f)
-  
+
   let rec ghost function eval_positive (s: fset pliteral) (f: i -> b) : b
   = BoolSet.eval_positive (cast_setPF_setB s f)
 
@@ -103,21 +97,21 @@ module PropositionalFormulaSet
     = if cardinal s > 0 then
         let x = pick s in
           neg_positive_isNegative (remove x s) f
-  
+
     let rec lemma eval_negative_add (s: pliteralset) (f: i -> b) (x: pliteral)
     variant{ cardinal s }
     ensures{ eval_negative (add x s) f =
              ((neg ( eval_pliteral x f)) \*/ eval_negative s f ) }
     = ()
-    
+
 
   let rec lemma eval_positive_add (s: pliteralset) (f: i -> b) (x: pliteral)
     variant{ cardinal s }
     ensures{ eval_positive (add x s) f =
              (( eval_pliteral x f) /*\ eval_positive s f ) }
     = ()
-    
-    
+
+
   lemma eval_positive_abso: forall s x f. (eval_pliteral x f) = bot -> (eval_positive (add x s) f = bot)
 
   lemma eval_negative_abso: forall s x f. (eval_pliteral x f) = bot -> (eval_negative (add x s) f = top)
