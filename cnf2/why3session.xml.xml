@@ -2,105 +2,154 @@
 <!DOCTYPE why3session PUBLIC "-//Why3//proof session v5//EN"
 "http://why3.lri.fr/why3session.dtd">
 <why3session shape_version="6">
-<prover id="0" name="Eprover" version="2.5" timelimit="1200" steplimit="0" memlimit="8192"/>
-<prover id="1" name="Alt-Ergo" version="2.4.0" timelimit="1" steplimit="0" memlimit="1000"/>
-<prover id="2" name="CVC4" version="1.8" timelimit="1" steplimit="0" memlimit="1000"/>
-<prover id="3" name="Spass" version="3.7" timelimit="1" steplimit="0" memlimit="1000"/>
-<prover id="4" name="Z3" version="4.8.6" timelimit="1" steplimit="0" memlimit="1000"/>
-<prover id="5" name="Coq" version="8.12.2" timelimit="0" steplimit="0" memlimit="0"/>
-<file format="whyml">
+<prover id="0" name="Yices" version="2.5.4" timelimit="1200" steplimit="0" memlimit="8192"/>
+<prover id="1" name="CVC4" version="1.8" timelimit="1200" steplimit="0" memlimit="8192"/>
+<prover id="2" name="Spass" version="3.7" timelimit="1" steplimit="0" memlimit="1000"/>
+<prover id="3" name="Z3" version="4.8.6" timelimit="1" steplimit="0" memlimit="1000"/>
+<prover id="4" name="Eprover" version="2.6" timelimit="1200" steplimit="0" memlimit="8192"/>
+<prover id="5" name="Alt-Ergo" version="2.4.0" timelimit="1" steplimit="0" memlimit="1000"/>
+<prover id="6" name="Coq" version="8.13.2" timelimit="0" steplimit="0" memlimit="0"/>
+<file format="whyml" proved="true">
 <path name=".."/><path name="cnf2.mlw"/>
-<theory name="Aux" proved="true">
- <goal name="size&#39;vc" expl="VC for size" proved="true">
- <proof prover="4"><result status="valid" time="0.05" steps="64479"/></proof>
+<theory name="Aux">
+ <goal name="size&#39;vc" expl="VC for size">
+ <proof prover="1" timelimit="1" memlimit="1000"><result status="valid" time="0.24" steps="18058"/></proof>
+ <proof prover="2"><result status="timeout" time="1.00"/></proof>
+ <proof prover="3"><result status="timeout" time="1.00" steps="1213906"/></proof>
  </goal>
- <goal name="size_cnf_clause&#39;vc" expl="VC for size_cnf_clause" proved="true">
- <proof prover="4"><result status="valid" time="0.05" steps="66966"/></proof>
+ <goal name="size_cnf_clause&#39;vc" expl="VC for size_cnf_clause">
+ <proof prover="1" obsolete="true"><result status="valid" time="0.23" steps="15726"/></proof>
+ <proof prover="2"><result status="valid" time="0.55"/></proof>
+ <proof prover="3"><result status="timeout" time="1.00" steps="1053061"/></proof>
  </goal>
- <goal name="size_cnf&#39;vc" expl="VC for size_cnf" proved="true">
- <proof prover="4"><result status="valid" time="0.05" steps="71103"/></proof>
+ <goal name="size_cnf&#39;vc" expl="VC for size_cnf">
+ <proof prover="1" timelimit="1" memlimit="1000" obsolete="true"><result status="valid" time="0.25" steps="18204"/></proof>
+ <proof prover="2"><result status="valid" time="0.66"/></proof>
+ <proof prover="3"><result status="timeout" time="1.00" steps="1216766"/></proof>
  </goal>
- <goal name="nnfc_is_implfree" proved="true">
- <proof prover="5"><path name="cnf2_Aux_nnfc_is_implfree_3.v"/><result status="valid" time="0.57"/></proof>
+ <goal name="nnfc_is_implfree">
+ <proof prover="6"><path name="cnf2_Aux_nnfc_is_implfree_1.v"/><result status="valid" time="0.49"/></proof>
  </goal>
- <goal name="cnf_is_nnfc" proved="true">
- <proof prover="5"><path name="cnf2_Aux_cnf_is_nnfc_1.v"/><result status="valid" time="0.66"/></proof>
+ <goal name="cnf_clause_is_implfree">
+ <proof prover="6"><path name="cnf2_Aux_cnf_clause_is_implfree_1.v"/><result status="valid" time="0.48"/></proof>
+ </goal>
+ <goal name="cnf_clause_is_nnfc">
+ <proof prover="6"><path name="cnf2_Aux_cnf_clause_is_nnfc_1.v"/><result status="valid" time="0.47"/></proof>
+ </goal>
+ <goal name="cnf_clause_is_cnf">
+ <transf name="split_vc" >
+  <goal name="cnf_clause_is_cnf.0">
+  <transf name="compute_hyp" >
+   <goal name="cnf_clause_is_cnf.0.0">
+   <proof prover="2"><result status="valid" time="0.40"/></proof>
+   </goal>
+  </transf>
+  </goal>
+ </transf>
+ </goal>
+ <goal name="cnf_is_implfree">
+ <proof prover="6"><path name="cnf2_Aux_cnf_is_implfree_1.v"/><result status="valid" time="0.46"/></proof>
+ </goal>
+ <goal name="cnf_is_nnfc">
+ <proof prover="6"><path name="cnf2_Aux_cnf_is_nnfc_1.v"/><result status="valid" time="0.47"/></proof>
+ </goal>
+ <goal name="cnf_clause">
+ <proof prover="1"><result status="valid" time="0.26" steps="20809"/></proof>
+ <proof prover="3"><result status="valid" time="0.11" steps="94052"/></proof>
  </goal>
 </theory>
 <theory name="T">
- <goal name="impl_free&#39;vc" expl="VC for impl_free" proved="true">
- <transf name="split_vc" proved="true" >
-  <goal name="impl_free&#39;vc.0" expl="variant decrease" proved="true">
-  <proof prover="4"><result status="valid" time="0.10" steps="110594"/></proof>
+ <goal name="impl_free&#39;vc" expl="VC for impl_free">
+ <transf name="split_vc" >
+  <goal name="impl_free&#39;vc.0" expl="variant decrease">
+  <proof prover="1" timelimit="1" memlimit="1000"><result status="valid" time="0.34" steps="23338"/></proof>
+  <proof prover="2"><result status="timeout" time="0.75"/></proof>
+  <proof prover="3"><result status="highfailure" time="0.73" steps="989221"/></proof>
   </goal>
-  <goal name="impl_free&#39;vc.1" expl="variant decrease" proved="true">
-  <proof prover="4"><result status="valid" time="0.10" steps="116939"/></proof>
+  <goal name="impl_free&#39;vc.1" expl="variant decrease">
+  <proof prover="1" timelimit="1" memlimit="1000"><result status="valid" time="0.40" steps="27526"/></proof>
+  <proof prover="2"><result status="timeout" time="0.72"/></proof>
+  <proof prover="3"><result status="highfailure" time="0.72" steps="963192"/></proof>
   </goal>
-  <goal name="impl_free&#39;vc.2" expl="variant decrease" proved="true">
-  <proof prover="4"><result status="valid" time="0.09" steps="117351"/></proof>
+  <goal name="impl_free&#39;vc.2" expl="variant decrease">
+  <proof prover="1" timelimit="1" memlimit="1000"><result status="valid" time="0.41" steps="27615"/></proof>
+  <proof prover="2"><result status="timeout" time="0.74"/></proof>
+  <proof prover="3"><result status="highfailure" time="0.72" steps="962838"/></proof>
   </goal>
-  <goal name="impl_free&#39;vc.3" expl="variant decrease" proved="true">
-  <proof prover="4"><result status="valid" time="0.12" steps="116335"/></proof>
+  <goal name="impl_free&#39;vc.3" expl="variant decrease">
+  <proof prover="1" timelimit="1" memlimit="1000"><result status="valid" time="0.41" steps="27220"/></proof>
+  <proof prover="2"><result status="timeout" time="0.77"/></proof>
+  <proof prover="3"><result status="highfailure" time="0.64" steps="866054"/></proof>
   </goal>
-  <goal name="impl_free&#39;vc.4" expl="variant decrease" proved="true">
-  <proof prover="4"><result status="valid" time="0.12" steps="116747"/></proof>
+  <goal name="impl_free&#39;vc.4" expl="variant decrease">
+  <proof prover="1" timelimit="1" memlimit="1000"><result status="valid" time="0.40" steps="27309"/></proof>
+  <proof prover="2"><result status="timeout" time="0.75"/></proof>
+  <proof prover="3"><result status="highfailure" time="0.68" steps="941305"/></proof>
   </goal>
-  <goal name="impl_free&#39;vc.5" expl="variant decrease" proved="true">
-  <proof prover="4"><result status="valid" time="0.12" steps="109990"/></proof>
+  <goal name="impl_free&#39;vc.5" expl="variant decrease">
+  <proof prover="1" timelimit="1" memlimit="1000"><result status="valid" time="0.40" steps="27786"/></proof>
+  <proof prover="2"><result status="timeout" time="0.71"/></proof>
+  <proof prover="3"><result status="highfailure" time="0.74" steps="982077"/></proof>
   </goal>
-  <goal name="impl_free&#39;vc.6" expl="variant decrease" proved="true">
-  <proof prover="4"><result status="valid" time="0.08" steps="110402"/></proof>
+  <goal name="impl_free&#39;vc.6" expl="variant decrease">
+  <proof prover="1" timelimit="1" memlimit="1000"><result status="valid" time="0.42" steps="27875"/></proof>
+  <proof prover="2"><result status="timeout" time="0.73"/></proof>
+  <proof prover="3"><result status="highfailure" time="0.73" steps="971394"/></proof>
   </goal>
-  <goal name="impl_free&#39;vc.7" expl="postcondition" proved="true">
-  <transf name="split_vc" proved="true" >
-   <goal name="impl_free&#39;vc.7.0" expl="postcondition" proved="true">
-   <transf name="split_vc" proved="true" >
-    <goal name="impl_free&#39;vc.7.0.0" expl="postcondition" proved="true">
-    <proof prover="4"><result status="valid" time="0.04" steps="23455"/></proof>
+  <goal name="impl_free&#39;vc.7" expl="postcondition">
+  <transf name="split_vc" >
+   <goal name="impl_free&#39;vc.7.0" expl="postcondition">
+   <transf name="split_vc" >
+    <goal name="impl_free&#39;vc.7.0.0" expl="postcondition">
+    <proof prover="3"><result status="valid" time="0.07" steps="23715"/></proof>
     </goal>
-    <goal name="impl_free&#39;vc.7.0.1" expl="postcondition" proved="true">
-    <proof prover="4"><result status="valid" time="0.05" steps="23455"/></proof>
+    <goal name="impl_free&#39;vc.7.0.1" expl="postcondition">
+    <proof prover="3"><result status="valid" time="0.07" steps="23715"/></proof>
     </goal>
-    <goal name="impl_free&#39;vc.7.0.2" expl="postcondition" proved="true">
-    <proof prover="3"><result status="valid" time="0.12"/></proof>
-    <proof prover="4"><result status="timeout" time="1.00" steps="822223"/></proof>
+    <goal name="impl_free&#39;vc.7.0.2" expl="postcondition">
+    <proof prover="2"><result status="valid" time="0.11"/></proof>
+    <proof prover="3"><result status="highfailure" time="0.72" steps="775943"/></proof>
     </goal>
-    <goal name="impl_free&#39;vc.7.0.3" expl="postcondition" proved="true">
-    <proof prover="2"><result status="valid" time="0.29" steps="25702"/></proof>
-    <proof prover="3"><result status="timeout" time="1.00"/></proof>
-    <proof prover="4"><result status="timeout" time="1.00" steps="819260"/></proof>
+    <goal name="impl_free&#39;vc.7.0.3" expl="postcondition">
+    <proof prover="1" timelimit="1" memlimit="1000"><result status="valid" time="0.37" steps="24254"/></proof>
+    <proof prover="2"><result status="timeout" time="0.68"/></proof>
+    <proof prover="3"><result status="highfailure" time="0.67" steps="890553"/></proof>
     </goal>
-    <goal name="impl_free&#39;vc.7.0.4" expl="postcondition" proved="true">
-    <proof prover="2"><result status="valid" time="0.27" steps="25896"/></proof>
-    <proof prover="3"><result status="timeout" time="1.00"/></proof>
-    <proof prover="4"><result status="timeout" time="1.00" steps="1326049"/></proof>
+    <goal name="impl_free&#39;vc.7.0.4" expl="postcondition">
+    <proof prover="1" timelimit="1" memlimit="1000"><result status="valid" time="0.37" steps="24198"/></proof>
+    <proof prover="2"><result status="timeout" time="0.71"/></proof>
+    <proof prover="3"><result status="highfailure" time="0.67" steps="879917"/></proof>
     </goal>
-    <goal name="impl_free&#39;vc.7.0.5" expl="postcondition" proved="true">
-    <proof prover="2"><result status="valid" time="0.30" steps="27490"/></proof>
-    <proof prover="3"><result status="timeout" time="1.00"/></proof>
-    <proof prover="4"><result status="timeout" time="1.00" steps="887097"/></proof>
+    <goal name="impl_free&#39;vc.7.0.5" expl="postcondition">
+    <proof prover="1" timelimit="1" memlimit="1000"><result status="valid" time="0.50" steps="31716"/></proof>
+    <proof prover="2"><result status="timeout" time="0.63"/></proof>
+    <proof prover="3"><result status="highfailure" time="0.68" steps="856314"/></proof>
     </goal>
    </transf>
    </goal>
-   <goal name="impl_free&#39;vc.7.1" expl="postcondition" proved="true">
-   <transf name="split_vc" proved="true" >
-    <goal name="impl_free&#39;vc.7.1.0" expl="postcondition" proved="true">
-    <proof prover="4"><result status="valid" time="0.08" steps="99480"/></proof>
+   <goal name="impl_free&#39;vc.7.1" expl="postcondition">
+   <transf name="split_vc" >
+    <goal name="impl_free&#39;vc.7.1.0" expl="postcondition">
+    <proof prover="3"><result status="valid" time="0.11" steps="99758"/></proof>
     </goal>
-    <goal name="impl_free&#39;vc.7.1.1" expl="postcondition" proved="true">
-    <proof prover="4"><result status="valid" time="0.09" steps="99480"/></proof>
+    <goal name="impl_free&#39;vc.7.1.1" expl="postcondition">
+    <proof prover="3"><result status="valid" time="0.11" steps="99758"/></proof>
     </goal>
-    <goal name="impl_free&#39;vc.7.1.2" expl="postcondition" proved="true">
-    <proof prover="4"><result status="valid" time="0.35" steps="491019"/></proof>
+    <goal name="impl_free&#39;vc.7.1.2" expl="postcondition">
+    <proof prover="2"><result status="valid" time="0.08"/></proof>
+    <proof prover="3"><result status="highfailure" time="0.68" steps="729011"/></proof>
     </goal>
-    <goal name="impl_free&#39;vc.7.1.3" expl="postcondition" proved="true">
-    <proof prover="4"><result status="valid" time="0.37" steps="515178"/></proof>
+    <goal name="impl_free&#39;vc.7.1.3" expl="postcondition">
+    <proof prover="2"><result status="valid" time="0.21"/></proof>
+    <proof prover="3"><result status="highfailure" time="0.69" steps="752381"/></proof>
     </goal>
-    <goal name="impl_free&#39;vc.7.1.4" expl="postcondition" proved="true">
-    <proof prover="4"><result status="valid" time="0.40" steps="567827"/></proof>
+    <goal name="impl_free&#39;vc.7.1.4" expl="postcondition">
+    <proof prover="2"><result status="valid" time="0.21"/></proof>
+    <proof prover="3"><result status="highfailure" time="0.69" steps="754457"/></proof>
     </goal>
-    <goal name="impl_free&#39;vc.7.1.5" expl="postcondition" proved="true">
-    <proof prover="4"><result status="valid" time="0.37" steps="524043"/></proof>
+    <goal name="impl_free&#39;vc.7.1.5" expl="postcondition">
+    <proof prover="2"><result status="valid" time="0.21"/></proof>
+    <proof prover="3"><result status="highfailure" time="0.71" steps="789272"/></proof>
     </goal>
    </transf>
    </goal>
@@ -108,270 +157,129 @@
   </goal>
  </transf>
  </goal>
- <goal name="nnfc&#39;vc" expl="VC for nnfc" proved="true">
- <transf name="split_vc" proved="true" >
-  <goal name="nnfc&#39;vc.0" expl="variant decrease" proved="true">
-  <proof prover="4"><result status="valid" time="0.08" steps="104987"/></proof>
+ <goal name="nnfc&#39;vc" expl="VC for nnfc">
+ <transf name="split_vc" >
+  <goal name="nnfc&#39;vc.0" expl="variant decrease">
+  <proof prover="3"><result status="valid" time="0.12" steps="111047"/></proof>
   </goal>
-  <goal name="nnfc&#39;vc.1" expl="precondition" proved="true">
-  <proof prover="4"><result status="valid" time="0.11" steps="103151"/></proof>
+  <goal name="nnfc&#39;vc.1" expl="precondition">
+  <proof prover="3"><result status="valid" time="0.12" steps="104037"/></proof>
   </goal>
-  <goal name="nnfc&#39;vc.2" expl="variant decrease" proved="true">
-  <proof prover="4"><result status="valid" time="0.07" steps="110710"/></proof>
+  <goal name="nnfc&#39;vc.2" expl="variant decrease">
+  <proof prover="3"><result status="valid" time="0.11" steps="113435"/></proof>
   </goal>
-  <goal name="nnfc&#39;vc.3" expl="precondition" proved="true">
-  <proof prover="1" obsolete="true"><result status="highfailure" time="0.01"/></proof>
-  <proof prover="2" obsolete="true"><result status="timeout" time="1.00" steps="64307"/></proof>
-  <proof prover="3" obsolete="true"><result status="timeout" time="1.00"/></proof>
-  <proof prover="4" obsolete="true"><result status="timeout" time="1.00" steps="735594"/></proof>
-  <transf name="split_vc" proved="true" >
-   <goal name="nnfc&#39;vc.3.0" expl="precondition" proved="true">
-   <proof prover="1" obsolete="true"><result status="highfailure" time="0.01"/></proof>
-   <proof prover="2" obsolete="true"><result status="timeout" time="1.00" steps="51856"/></proof>
-   <proof prover="3" obsolete="true"><result status="timeout" time="0.62"/></proof>
-   <proof prover="4" obsolete="true"><result status="highfailure" time="0.49" steps="620369"/></proof>
-   <transf name="split_vc" proved="true" >
-    <goal name="nnfc&#39;vc.3.0.0" expl="precondition" proved="true">
-    <proof prover="2"><result status="valid" time="0.39" steps="25916"/></proof>
-    <proof prover="3" obsolete="true"><result status="timeout" time="0.45"/></proof>
-    <proof prover="4" obsolete="true"><result status="highfailure" time="0.36" steps="475323"/></proof>
-    </goal>
-    <goal name="nnfc&#39;vc.18.0.2" expl="postcondition">
-    <proof prover="2" obsolete="true"><result status="valid" time="0.50" steps="31406"/></proof>
-    <proof prover="3" obsolete="true"><result status="timeout" time="0.38"/></proof>
-    <proof prover="4" obsolete="true"><result status="highfailure" time="0.35" steps="507633"/></proof>
-    </goal>
-    <goal name="nnfc&#39;vc.18.0.6" expl="postcondition">
-    <proof prover="4" obsolete="true"><result status="valid" time="0.07" steps="24023"/></proof>
-    </goal>
+  <goal name="nnfc&#39;vc.3" expl="precondition">
+  <proof prover="3"><result status="valid" time="0.12" steps="104437"/></proof>
+  </goal>
+  <goal name="nnfc&#39;vc.4" expl="variant decrease">
+  <proof prover="3"><result status="valid" time="0.13" steps="115679"/></proof>
+  </goal>
+  <goal name="nnfc&#39;vc.5" expl="precondition">
+  <proof prover="3"><result status="valid" time="0.12" steps="105797"/></proof>
+  </goal>
+  <goal name="nnfc&#39;vc.6" expl="variant decrease">
+  <proof prover="3"><result status="valid" time="0.13" steps="113471"/></proof>
+  </goal>
+  <goal name="nnfc&#39;vc.7" expl="precondition">
+  <proof prover="3"><result status="valid" time="0.12" steps="104499"/></proof>
+  </goal>
+  <goal name="nnfc&#39;vc.8" expl="variant decrease">
+  <proof prover="3"><result status="valid" time="0.11" steps="115717"/></proof>
+  </goal>
+  <goal name="nnfc&#39;vc.9" expl="precondition">
+  <proof prover="3"><result status="valid" time="0.11" steps="105859"/></proof>
+  </goal>
+  <goal name="nnfc&#39;vc.10" expl="variant decrease">
+  <proof prover="3"><result status="valid" time="0.12" steps="111657"/></proof>
+  </goal>
+  <goal name="nnfc&#39;vc.11" expl="precondition">
+  <proof prover="3"><result status="valid" time="0.11" steps="102498"/></proof>
+  </goal>
+  <goal name="nnfc&#39;vc.12" expl="variant decrease">
+  <proof prover="3"><result status="valid" time="0.11" steps="112074"/></proof>
+  </goal>
+  <goal name="nnfc&#39;vc.13" expl="precondition">
+  <proof prover="3"><result status="valid" time="0.12" steps="102920"/></proof>
+  </goal>
+  <goal name="nnfc&#39;vc.14" expl="variant decrease">
+  <proof prover="3"><result status="valid" time="0.12" steps="111670"/></proof>
+  </goal>
+  <goal name="nnfc&#39;vc.15" expl="precondition">
+  <proof prover="3"><result status="valid" time="0.11" steps="102560"/></proof>
+  </goal>
+  <goal name="nnfc&#39;vc.16" expl="variant decrease">
+  <proof prover="3"><result status="valid" time="0.11" steps="112087"/></proof>
+  </goal>
+  <goal name="nnfc&#39;vc.17" expl="precondition">
+  <proof prover="3"><result status="valid" time="0.11" steps="102982"/></proof>
+  </goal>
+  <goal name="nnfc&#39;vc.18" expl="postcondition">
+  <transf name="split_vc" >
+   <goal name="nnfc&#39;vc.18.0" expl="postcondition">
+   <transf name="split_vc" >
     <goal name="nnfc&#39;vc.18.0.0" expl="postcondition">
-    <proof prover="3" obsolete="true"><result status="valid" time="0.17"/></proof>
-    <proof prover="4" obsolete="true"><result status="highfailure" time="0.39" steps="535887"/></proof>
+    <proof prover="3"><result status="valid" time="0.14" steps="136830"/></proof>
     </goal>
     <goal name="nnfc&#39;vc.18.0.1" expl="postcondition">
-    <proof prover="2" obsolete="true"><result status="valid" time="0.48" steps="30338"/></proof>
-    <proof prover="3" obsolete="true"><result status="timeout" time="0.36"/></proof>
-    <proof prover="4" obsolete="true"><result status="highfailure" time="0.36" steps="521120"/></proof>
+    <proof prover="1" timelimit="1" memlimit="1000"><result status="valid" time="0.53" steps="32842"/></proof>
+    <proof prover="2"><result status="timeout" time="0.77"/></proof>
+    <proof prover="3"><result status="highfailure" time="0.73" steps="821837"/></proof>
     </goal>
-    <goal name="nnfc&#39;vc.18.0.4" expl="postcondition">
-    <proof prover="2" obsolete="true"><result status="valid" time="0.39" steps="26107"/></proof>
-    <proof prover="3" obsolete="true"><result status="timeout" time="0.42"/></proof>
-    <proof prover="4" obsolete="true"><result status="highfailure" time="0.35" steps="481466"/></proof>
+    <goal name="nnfc&#39;vc.18.0.2" expl="postcondition">
+    <proof prover="1" timelimit="1" memlimit="1000"><result status="valid" time="0.50" steps="32202"/></proof>
+    <proof prover="2"><result status="timeout" time="1.00"/></proof>
+    <proof prover="3"><result status="highfailure" time="0.73" steps="770319"/></proof>
     </goal>
     <goal name="nnfc&#39;vc.18.0.3" expl="postcondition">
-    <proof prover="4" obsolete="true"><result status="valid" time="0.06" steps="24064"/></proof>
+    <proof prover="3"><result status="valid" time="0.06" steps="24530"/></proof>
     </goal>
-   </transf>
-   </goal>
-   <goal name="nnfc&#39;vc.18.2" expl="postcondition">
-   <proof prover="1" obsolete="true"><result status="highfailure" time="0.01"/></proof>
-   <proof prover="2" obsolete="true"><result status="timeout" time="1.00" steps="45761"/></proof>
-   <proof prover="3" obsolete="true"><result status="timeout" time="0.68"/></proof>
-   <proof prover="4" obsolete="true"><result status="highfailure" time="0.50" steps="647664"/></proof>
-   <transf name="split_vc" >
-    <goal name="nnfc&#39;vc.18.2.0" expl="postcondition">
-    <proof prover="4" obsolete="true"><result status="valid" time="0.06" steps="7498"/></proof>
+    <goal name="nnfc&#39;vc.18.0.4" expl="postcondition">
+    <proof prover="1" timelimit="1" memlimit="1000"><result status="valid" time="0.38" steps="24641"/></proof>
+    <proof prover="2"><result status="timeout" time="1.00"/></proof>
+    <proof prover="3"><result status="highfailure" time="0.70" steps="932607"/></proof>
     </goal>
-    <goal name="nnfc&#39;vc.18.2.1" expl="postcondition">
-    <proof prover="4" obsolete="true"><result status="valid" time="0.12" steps="107815"/></proof>
+    <goal name="nnfc&#39;vc.18.0.5" expl="postcondition">
+    <proof prover="1" timelimit="1" memlimit="1000"><result status="valid" time="0.30" steps="24697"/></proof>
+    <proof prover="2"><result status="timeout" time="1.00"/></proof>
+    <proof prover="3"><result status="highfailure" time="0.71" steps="971427"/></proof>
     </goal>
-    <goal name="nnfc&#39;vc.18.2.2" expl="postcondition">
-    <proof prover="4" obsolete="true"><result status="valid" time="0.12" steps="107813"/></proof>
-    </goal>
-    <goal name="nnfc&#39;vc.18.2.3" expl="postcondition">
-    <proof prover="4" obsolete="true"><result status="valid" time="0.13" steps="112548"/></proof>
-    </goal>
-    <goal name="nnfc&#39;vc.18.2.4" expl="postcondition">
-    <proof prover="4" obsolete="true"><result status="valid" time="0.11" steps="102055"/></proof>
-    </goal>
-    <goal name="nnfc&#39;vc.18.2.5" expl="postcondition">
-    <proof prover="4" obsolete="true"><result status="valid" time="0.12" steps="109697"/></proof>
-    </goal>
-    <goal name="nnfc&#39;vc.18.2.6" expl="postcondition">
-    <proof prover="4" obsolete="true"><result status="valid" time="0.13" steps="111815"/></proof>
+    <goal name="nnfc&#39;vc.18.0.6" expl="postcondition">
+    <proof prover="3"><result status="valid" time="0.07" steps="24489"/></proof>
     </goal>
    </transf>
    </goal>
    <goal name="nnfc&#39;vc.18.1" expl="postcondition">
-   <proof prover="4" obsolete="true"><result status="valid" time="0.06" steps="8089"/></proof>
+   <proof prover="3"><result status="valid" time="0.06" steps="8235"/></proof>
    </goal>
-  </transf>
-  </goal>
-  <goal name="nnfc&#39;vc.4" expl="variant decrease" proved="true">
-  <proof prover="4"><result status="valid" time="0.10" steps="111371"/></proof>
-  </goal>
-  <goal name="nnfc&#39;vc.5" expl="precondition" proved="true">
-  <proof prover="4"><result status="valid" time="0.12" steps="104512"/></proof>
-  </goal>
-  <goal name="nnfc&#39;vc.6" expl="variant decrease" proved="true">
-  <proof prover="4"><result status="valid" time="0.10" steps="116034"/></proof>
-  </goal>
-  <goal name="nnfc&#39;vc.7" expl="precondition" proved="true">
-  <proof prover="4"><result status="valid" time="0.11" steps="107233"/></proof>
-  </goal>
-  <goal name="nnfc&#39;vc.8" expl="variant decrease" proved="true">
-  <proof prover="4"><result status="valid" time="0.11" steps="117362"/></proof>
-  </goal>
-  <goal name="nnfc&#39;vc.9" expl="precondition" proved="true">
-  <proof prover="4"><result status="valid" time="0.09" steps="108314"/></proof>
-  </goal>
-  <goal name="nnfc&#39;vc.10" expl="variant decrease" proved="true">
-  <proof prover="4"><result status="valid" time="0.11" steps="110401"/></proof>
-  </goal>
-  <goal name="nnfc&#39;vc.11" expl="precondition" proved="true">
-  <proof prover="4"><result status="valid" time="0.12" steps="102146"/></proof>
-  </goal>
-  <goal name="nnfc&#39;vc.12" expl="variant decrease" proved="true">
-  <proof prover="4"><result status="valid" time="0.11" steps="110816"/></proof>
-  </goal>
-  <goal name="nnfc&#39;vc.13" expl="precondition" proved="true">
-  <proof prover="4"><result status="valid" time="0.09" steps="102563"/></proof>
-  </goal>
-  <goal name="nnfc&#39;vc.14" expl="variant decrease" proved="true">
-  <transf name="split_vc" proved="true" >
-   <goal name="nnfc&#39;vc.14.0" expl="variant decrease" proved="true">
-   <transf name="split_vc" proved="true" >
-    <goal name="nnfc&#39;vc.14.0.0" expl="variant decrease" proved="true">
-    <proof prover="4"><result status="valid" time="0.11" steps="105994"/></proof>
+   <goal name="nnfc&#39;vc.18.2" expl="postcondition">
+   <proof prover="0" obsolete="true"><result status="failure" time="0.00"/></proof>
+   <proof prover="1" obsolete="true"><result status="failure" time="0.00"/></proof>
+   <proof prover="2" timelimit="1200" memlimit="8192" obsolete="true"><result status="failure" time="0.00"/></proof>
+   <proof prover="3" timelimit="1200" memlimit="8192" obsolete="true"><result status="failure" time="0.00"/></proof>
+   <proof prover="4" obsolete="true"><result status="failure" time="0.00"/></proof>
+   <transf name="split_vc" >
+    <goal name="nnfc&#39;vc.18.2.0" expl="postcondition">
+    <proof prover="3"><result status="valid" time="0.06" steps="7644"/></proof>
     </goal>
-    <goal name="nnfc&#39;vc.18.1.2" expl="postcondition">
-    <proof prover="4"><result status="valid" time="0.09" steps="106467"/></proof>
+    <goal name="nnfc&#39;vc.18.2.1" expl="postcondition">
+    <proof prover="3"><result status="valid" time="0.12" steps="106411"/></proof>
     </goal>
-    <goal name="nnfc&#39;vc.18.1.4" expl="postcondition">
-    <proof prover="4"><result status="valid" time="0.10" steps="101931"/></proof>
+    <goal name="nnfc&#39;vc.18.2.2" expl="postcondition">
+    <proof prover="3"><result status="valid" time="0.12" steps="106401"/></proof>
     </goal>
-    <goal name="nnfc&#39;vc.18.1.1" expl="postcondition">
-    <proof prover="4"><result status="valid" time="0.08" steps="106469"/></proof>
+    <goal name="nnfc&#39;vc.18.2.3" expl="postcondition">
+    <proof prover="2"><result status="valid" time="0.12"/></proof>
+    <proof prover="3"><result status="highfailure" time="0.77" steps="739403"/></proof>
     </goal>
-    <goal name="nnfc&#39;vc.5.0.0" expl="precondition">
-    <proof prover="4" obsolete="true"><result status="valid" time="0.05" steps="103395"/></proof>
+    <goal name="nnfc&#39;vc.18.2.4" expl="postcondition">
+    <proof prover="3"><result status="valid" time="0.11" steps="103594"/></proof>
     </goal>
-    <goal name="nnfc&#39;vc.18.1.5" expl="postcondition">
-    <proof prover="4"><result status="valid" time="0.11" steps="109573"/></proof>
+    <goal name="nnfc&#39;vc.18.2.5" expl="postcondition">
+    <proof prover="3"><result status="valid" time="0.11" steps="103728"/></proof>
     </goal>
-    <goal name="nnfc&#39;vc.18.1.6" expl="postcondition">
-    <proof prover="4"><result status="valid" time="0.09" steps="111815"/></proof>
-    </goal>
-   </transf>
-   </goal>
-   <goal name="nnfc&#39;vc.14.1" expl="variant decrease" proved="true">
-   <transf name="split_vc" proved="true" >
-    <goal name="nnfc&#39;vc.14.1.0" expl="variant decrease" proved="true">
-    <proof prover="4"><result status="valid" time="0.06" steps="108074"/></proof>
-    </goal>
-    <goal name="nnfc&#39;vc.18.0.5" expl="postcondition">
-    <proof prover="2"><result status="valid" time="0.21" steps="25988"/></proof>
-    <proof prover="3"><result status="timeout" time="1.00"/></proof>
-    <proof prover="4"><result status="timeout" time="1.00" steps="826827"/></proof>
-    </goal>
-    <goal name="nnfc&#39;vc.18.0.4" expl="postcondition">
-    <proof prover="2"><result status="valid" time="0.29" steps="26092"/></proof>
-    <proof prover="3"><result status="timeout" time="1.00"/></proof>
-    <proof prover="4"><result status="highfailure" time="0.74" steps="825225"/></proof>
-    </goal>
-    <goal name="nnfc&#39;vc.18.0.1" expl="postcondition">
-    <proof prover="2"><result status="valid" time="0.46" steps="30103"/></proof>
-    <proof prover="3"><result status="timeout" time="1.00"/></proof>
-    <proof prover="4"><result status="highfailure" time="0.75" steps="909451"/></proof>
-    </goal>
-    <goal name="nnfc&#39;vc.18.0.0" expl="postcondition">
-    <proof prover="3"><result status="valid" time="0.15"/></proof>
-    <proof prover="4"><result status="highfailure" time="0.76" steps="791019"/></proof>
-    </goal>
-    <goal name="nnfc&#39;vc.18.0.2" expl="postcondition">
-    <proof prover="2"><result status="valid" time="0.46" steps="31169"/></proof>
-    <proof prover="3"><result status="timeout" time="1.00"/></proof>
-    <proof prover="4"><result status="highfailure" time="0.76" steps="866895"/></proof>
-    </goal>
-    <goal name="nnfc&#39;vc.18.0.3" expl="postcondition">
-    <proof prover="4"><result status="valid" time="0.06" steps="24064"/></proof>
-    </goal>
-   </transf>
-   </goal>
-  </transf>
-  </goal>
-  <goal name="nnfc&#39;vc.15" expl="precondition" proved="true">
-  <proof prover="4"><result status="valid" time="0.09" steps="105943"/></proof>
-  </goal>
-  <goal name="nnfc&#39;vc.16" expl="variant decrease" proved="true">
-  <proof prover="4"><result status="valid" time="0.09" steps="108702"/></proof>
-  </goal>
-  <goal name="nnfc&#39;vc.17" expl="precondition" proved="true">
-  <proof prover="4"><result status="valid" time="0.10" steps="106360"/></proof>
-  </goal>
-  <goal name="nnfc&#39;vc.18" expl="postcondition" proved="true">
-  <proof prover="1"><result status="highfailure" time="0.01"/></proof>
-  <proof prover="2"><result status="timeout" time="1.00" steps="98013"/></proof>
-  <proof prover="3"><result status="timeout" time="1.00"/></proof>
-  <proof prover="4"><result status="timeout" time="1.00" steps="848700"/></proof>
-  <transf name="split_vc" proved="true" >
-   <goal name="nnfc&#39;vc.18.0" expl="postcondition" proved="true">
-   <proof prover="1"><result status="highfailure" time="0.01"/></proof>
-   <proof prover="2"><result status="timeout" time="1.00" steps="77121"/></proof>
-   <proof prover="3"><result status="timeout" time="1.00"/></proof>
-   <proof prover="4"><result status="timeout" time="1.00" steps="822926"/></proof>
-   <transf name="split_vc" proved="true" >
-    <goal name="nnfc&#39;vc.18.0.0" expl="postcondition" proved="true">
-    <proof prover="3"><result status="valid" time="0.15"/></proof>
-    <proof prover="4"><result status="highfailure" time="0.77" steps="871957"/></proof>
-    </goal>
-    <goal name="nnfc&#39;vc.18.0.1" expl="postcondition" proved="true">
-    <proof prover="2"><result status="valid" time="0.42" steps="28380"/></proof>
-    <proof prover="3"><result status="timeout" time="0.79"/></proof>
-    <proof prover="4"><result status="highfailure" time="0.76" steps="1179454"/></proof>
-    </goal>
-    <goal name="nnfc&#39;vc.18.0.2" expl="postcondition" proved="true">
-    <proof prover="2"><result status="valid" time="0.48" steps="32054"/></proof>
-    <proof prover="3"><result status="timeout" time="0.79"/></proof>
-    <proof prover="4"><result status="highfailure" time="0.75" steps="1252944"/></proof>
-    </goal>
-    <goal name="nnfc&#39;vc.18.0.3" expl="postcondition" proved="true">
-    <proof prover="4"><result status="valid" time="0.06" steps="24270"/></proof>
-    </goal>
-    <goal name="nnfc&#39;vc.18.0.4" expl="postcondition" proved="true">
-    <proof prover="2"><result status="valid" time="0.37" steps="26313"/></proof>
-    <proof prover="3"><result status="timeout" time="1.00"/></proof>
-    <proof prover="4"><result status="highfailure" time="0.73" steps="1126642"/></proof>
-    </goal>
-    <goal name="nnfc&#39;vc.18.0.5" expl="postcondition" proved="true">
-    <proof prover="2"><result status="valid" time="0.24" steps="26121"/></proof>
-    <proof prover="3"><result status="timeout" time="1.00"/></proof>
-    <proof prover="4"><result status="highfailure" time="0.64" steps="872496"/></proof>
-    </goal>
-    <goal name="nnfc&#39;vc.18.0.6" expl="postcondition" proved="true">
-    <proof prover="4"><result status="valid" time="0.06" steps="24229"/></proof>
-    </goal>
-   </transf>
-   </goal>
-   <goal name="nnfc&#39;vc.18.1" expl="postcondition" proved="true">
-   <proof prover="4"><result status="valid" time="0.05" steps="8147"/></proof>
-   </goal>
-   <goal name="nnfc&#39;vc.18.2" expl="postcondition" proved="true">
-   <proof prover="1"><result status="highfailure" time="0.01"/></proof>
-   <proof prover="2"><result status="unknown" time="0.67" steps="52538"/></proof>
-   <proof prover="3"><result status="timeout" time="1.00"/></proof>
-   <proof prover="4"><result status="timeout" time="1.00" steps="1524709"/></proof>
-   <transf name="split_vc" proved="true" >
-    <goal name="nnfc&#39;vc.18.2.0" expl="postcondition" proved="true">
-    <proof prover="4"><result status="valid" time="0.04" steps="7556"/></proof>
-    </goal>
-    <goal name="nnfc&#39;vc.18.2.1" expl="postcondition" proved="true">
-    <proof prover="4"><result status="valid" time="0.09" steps="108931"/></proof>
-    </goal>
-    <goal name="nnfc&#39;vc.18.2.2" expl="postcondition" proved="true">
-    <proof prover="4"><result status="valid" time="0.11" steps="108935"/></proof>
-    </goal>
-    <goal name="nnfc&#39;vc.18.2.3" expl="postcondition" proved="true">
-    <proof prover="4"><result status="valid" time="0.12" steps="113629"/></proof>
-    </goal>
-    <goal name="nnfc&#39;vc.18.2.4" expl="postcondition" proved="true">
-    <proof prover="4"><result status="valid" time="0.11" steps="103200"/></proof>
-    </goal>
-    <goal name="nnfc&#39;vc.18.2.5" expl="postcondition" proved="true">
-    <proof prover="4"><result status="valid" time="0.11" steps="110796"/></proof>
-    </goal>
-    <goal name="nnfc&#39;vc.18.2.6" expl="postcondition" proved="true">
-    <proof prover="4"><result status="valid" time="0.10" steps="112920"/></proof>
+    <goal name="nnfc&#39;vc.18.2.6" expl="postcondition">
+    <proof prover="2"><result status="valid" time="0.08"/></proof>
+    <proof prover="3"><result status="highfailure" time="0.69" steps="910348"/></proof>
     </goal>
    </transf>
    </goal>
@@ -379,295 +287,153 @@
   </goal>
  </transf>
  </goal>
- <goal name="distr&#39;vc" expl="VC for distr" proved="true">
- <transf name="split_vc" proved="true" >
-  <goal name="distr&#39;vc.0" expl="variant decrease" proved="true">
-  <proof prover="4"><result status="valid" time="0.13" steps="159944"/></proof>
+ <goal name="distr&#39;vc" expl="VC for distr">
+ <transf name="split_vc" >
+  <goal name="distr&#39;vc.0" expl="variant decrease">
+  <proof prover="3"><result status="valid" time="0.24" steps="280977"/></proof>
   </goal>
-  <goal name="distr&#39;vc.1" expl="precondition" proved="true">
-  <proof prover="4"><result status="valid" time="0.11" steps="112117"/></proof>
+  <goal name="distr&#39;vc.1" expl="precondition">
+  <proof prover="3"><result status="valid" time="0.11" steps="112602"/></proof>
   </goal>
-  <goal name="distr&#39;vc.2" expl="variant decrease" proved="true">
-  <proof prover="4"><result status="valid" time="0.09" steps="164239"/></proof>
+  <goal name="distr&#39;vc.2" expl="variant decrease">
+  <proof prover="3"><result status="valid" time="0.26" steps="291026"/></proof>
   </goal>
-  <goal name="distr&#39;vc.3" expl="precondition" proved="true">
-  <proof prover="4"><result status="valid" time="0.11" steps="113664"/></proof>
+  <goal name="distr&#39;vc.3" expl="precondition">
+  <proof prover="3"><result status="valid" time="0.12" steps="114157"/></proof>
   </goal>
-  <goal name="distr&#39;vc.4" expl="variant decrease" proved="true">
-  <transf name="split_vc" proved="true" >
-   <goal name="distr&#39;vc.4.0" expl="variant decrease" proved="true">
-   <proof prover="4"><result status="valid" time="0.06" steps="112561"/></proof>
-   </goal>
-   <goal name="distr&#39;vc.4.1" expl="variant decrease" proved="true">
-   <proof prover="4"><result status="valid" time="0.12" steps="124051"/></proof>
-   </goal>
-   <goal name="distr&#39;vc.7.5" expl="precondition">
-   <proof prover="1" obsolete="true"><result status="highfailure" time="0.01"/></proof>
-   <proof prover="2" obsolete="true"><result status="timeout" time="1.00" steps="53534"/></proof>
-   <proof prover="3" obsolete="true"><result status="timeout" time="1.00"/></proof>
-   <proof prover="4" obsolete="true"><result status="timeout" time="1.00" steps="557777"/></proof>
+  <goal name="distr&#39;vc.4" expl="variant decrease">
+  <proof prover="1" timelimit="1" memlimit="1000" obsolete="true"><result status="valid" time="0.51" steps="34409"/></proof>
+  <proof prover="3"><result status="valid" time="0.62" steps="749302"/></proof>
+  </goal>
+  <goal name="distr&#39;vc.5" expl="precondition">
+  <proof prover="3"><result status="valid" time="0.12" steps="113018"/></proof>
+  </goal>
+  <goal name="distr&#39;vc.6" expl="variant decrease">
+  <proof prover="1" timelimit="1" memlimit="1000" obsolete="true"><result status="valid" time="0.51" steps="34538"/></proof>
+  <proof prover="3"><result status="valid" time="0.68" steps="785649"/></proof>
+  </goal>
+  <goal name="distr&#39;vc.7" expl="precondition">
+  <proof prover="3"><result status="valid" time="0.11" steps="114534"/></proof>
+  </goal>
+  <goal name="distr&#39;vc.8" expl="variant decrease">
+  <proof prover="1" timelimit="1" memlimit="1000" obsolete="true"><result status="valid" time="0.50" steps="34419"/></proof>
+  <proof prover="3"><result status="valid" time="0.61" steps="749304"/></proof>
+  </goal>
+  <goal name="distr&#39;vc.9" expl="precondition">
+  <proof prover="3"><result status="valid" time="0.11" steps="113016"/></proof>
+  </goal>
+  <goal name="distr&#39;vc.10" expl="variant decrease">
+  <proof prover="1" timelimit="1" memlimit="1000"><result status="valid" time="0.51" steps="34532"/></proof>
+  <proof prover="2"><result status="timeout" time="0.74"/></proof>
+  <proof prover="3"><result status="highfailure" time="0.66" steps="785657"/></proof>
+  </goal>
+  <goal name="distr&#39;vc.11" expl="precondition">
+  <proof prover="3"><result status="valid" time="0.11" steps="114532"/></proof>
+  </goal>
+  <goal name="distr&#39;vc.12" expl="postcondition">
+  <transf name="split_vc" >
+   <goal name="distr&#39;vc.12.0" expl="postcondition">
    <transf name="split_vc" >
-    <goal name="distr&#39;vc.7.5.0" expl="precondition">
-    <proof prover="2" obsolete="true"><result status="valid" time="0.37" steps="28181"/></proof>
-    <proof prover="3" obsolete="true"><result status="timeout" time="1.00"/></proof>
-    <proof prover="4" obsolete="true"><result status="valid" time="0.12" steps="112619"/></proof>
-    </goal>
-    <goal name="distr&#39;vc.12.0.2" expl="postcondition">
-    <proof prover="2"><result status="valid" time="0.42" steps="30241"/></proof>
-    <proof prover="3"><result status="timeout" time="1.00"/></proof>
-    <proof prover="4"><undone/></proof>
-    </goal>
     <goal name="distr&#39;vc.12.0.0" expl="postcondition">
-    <proof prover="2"><result status="valid" time="0.41" steps="29878"/></proof>
-    <proof prover="3"><result status="timeout" time="0.78"/></proof>
-    <proof prover="4"><undone/></proof>
-    </goal>
-    <goal name="distr&#39;vc.12.0.3" expl="postcondition">
-    <proof prover="2"><result status="valid" time="0.27" steps="26178"/></proof>
-    <proof prover="3"><result status="timeout" time="1.00"/></proof>
-    <proof prover="4"><undone/></proof>
-    </goal>
-   </transf>
-   </goal>
-   <goal name="distr&#39;vc.7.3" expl="precondition">
-   <proof prover="4" obsolete="true"><result status="valid" time="0.12" steps="112632"/></proof>
-   </goal>
-   <goal name="distr&#39;vc.7.0" expl="precondition">
-   <proof prover="4" obsolete="true"><result status="valid" time="0.06" steps="8059"/></proof>
-   </goal>
-   <goal name="distr&#39;vc.7.4" expl="precondition">
-   <proof prover="1" obsolete="true"><result status="highfailure" time="0.01"/></proof>
-   <proof prover="2" obsolete="true"><result status="timeout" time="1.00" steps="82442"/></proof>
-   <proof prover="3" obsolete="true"><result status="timeout" time="1.00"/></proof>
-   <proof prover="4" obsolete="true"><result status="timeout" time="1.00" steps="1482586"/></proof>
-   <transf name="split_vc" >
-    <goal name="distr&#39;vc.7.4.0" expl="precondition">
-    <proof prover="4" obsolete="true"><result status="valid" time="0.12" steps="8059"/></proof>
-    </goal>
-    <goal name="distr&#39;vc.12.1.3" expl="postcondition">
-    <proof prover="4"><undone/></proof>
-    </goal>
-    <goal name="distr&#39;vc.12.1.1" expl="postcondition">
-    <proof prover="4"><undone/></proof>
-    </goal>
-    <goal name="distr&#39;vc.12.1.0" expl="postcondition">
-    <proof prover="4"><undone/></proof>
-    </goal>
-   </transf>
-   </goal>
-  </transf>
-  </goal>
-  <goal name="distr&#39;vc.5" expl="precondition" proved="true">
-  <proof prover="4"><result status="valid" time="0.11" steps="112598"/></proof>
-  </goal>
-  <goal name="distr&#39;vc.6" expl="variant decrease" proved="true">
-  <proof prover="4"><result status="valid" time="0.09" steps="153177"/></proof>
-  </goal>
-  <goal name="distr&#39;vc.7" expl="precondition" proved="true">
-  <proof prover="4"><result status="valid" time="0.10" steps="114109"/></proof>
-  </goal>
-  <goal name="distr&#39;vc.8" expl="variant decrease" proved="true">
-  <proof prover="4"><result status="valid" time="0.10" steps="148855"/></proof>
-  </goal>
-  <goal name="distr&#39;vc.9" expl="precondition" proved="true">
-  <proof prover="4"><result status="valid" time="0.12" steps="112596"/></proof>
-  </goal>
-  <goal name="distr&#39;vc.10" expl="variant decrease" proved="true">
-  <proof prover="4"><result status="valid" time="0.11" steps="153185"/></proof>
-  </goal>
-  <goal name="distr&#39;vc.11" expl="precondition" proved="true">
-  <proof prover="1" obsolete="true"><result status="highfailure" time="0.01"/></proof>
-  <proof prover="2" obsolete="true"><result status="timeout" time="1.00" steps="53625"/></proof>
-  <proof prover="3" obsolete="true"><result status="timeout" time="1.00"/></proof>
-  <proof prover="4" obsolete="true"><result status="timeout" time="1.00" steps="1022830"/></proof>
-  <transf name="split_vc" proved="true" >
-   <goal name="distr&#39;vc.11.0" expl="precondition" proved="true">
-   <proof prover="1" obsolete="true"><result status="highfailure" time="0.01"/></proof>
-   <proof prover="2" obsolete="true"><result status="timeout" time="1.00" steps="47467"/></proof>
-   <proof prover="3" obsolete="true"><result status="timeout" time="0.62"/></proof>
-   <proof prover="4" obsolete="true"><result status="highfailure" time="0.60" steps="549415"/></proof>
-   <transf name="split_vc" proved="true" >
-    <goal name="distr&#39;vc.11.0.0" expl="precondition" proved="true">
-    <proof prover="2"><result status="valid" time="0.37" steps="26762"/></proof>
-    <proof prover="3" obsolete="true"><result status="timeout" time="0.60"/></proof>
-    <proof prover="4" obsolete="true"><result status="highfailure" time="0.51" steps="538006"/></proof>
+    <proof prover="1" timelimit="1" memlimit="1000"><result status="valid" time="0.42" steps="28435"/></proof>
+    <proof prover="2"><result status="timeout" time="1.00"/></proof>
+    <proof prover="3"><result status="highfailure" time="0.68" steps="816108"/></proof>
     </goal>
     <goal name="distr&#39;vc.12.0.1" expl="postcondition">
-    <proof prover="2" obsolete="true"><result status="valid" time="0.40" steps="28393"/></proof>
-    <proof prover="3" obsolete="true"><result status="timeout" time="0.59"/></proof>
-    <proof prover="4" obsolete="true"><result status="highfailure" time="0.43" steps="453214"/></proof>
+    <proof prover="1" timelimit="1" memlimit="1000"><result status="valid" time="0.39" steps="26976"/></proof>
+    <proof prover="2"><result status="timeout" time="1.00"/></proof>
+    <proof prover="3"><result status="highfailure" time="0.67" steps="801263"/></proof>
     </goal>
-    <goal name="distr&#39;vc.12.0.0" expl="postcondition">
-    <proof prover="2" obsolete="true"><result status="valid" time="0.42" steps="29669"/></proof>
-    <proof prover="3" obsolete="true"><result status="timeout" time="0.53"/></proof>
-    <proof prover="4" obsolete="true"><result status="highfailure" time="0.48" steps="520873"/></proof>
+    <goal name="distr&#39;vc.12.0.2" expl="postcondition">
+    <proof prover="1" timelimit="1" memlimit="1000"><result status="valid" time="0.43" steps="29178"/></proof>
+    <proof prover="2"><result status="timeout" time="1.00"/></proof>
+    <proof prover="3"><result status="highfailure" time="0.63" steps="753063"/></proof>
     </goal>
     <goal name="distr&#39;vc.12.0.3" expl="postcondition">
-    <proof prover="2" obsolete="true"><result status="valid" time="0.31" steps="26221"/></proof>
-    <proof prover="3" obsolete="true"><result status="timeout" time="0.64"/></proof>
-    <proof prover="4" obsolete="true"><result status="highfailure" time="0.50" steps="523297"/></proof>
+    <proof prover="2"><result status="valid" time="0.12"/></proof>
+    <proof prover="3"><result status="highfailure" time="0.75" steps="935324"/></proof>
     </goal>
    </transf>
    </goal>
-   <goal name="distr&#39;vc.11.1" expl="precondition" proved="true">
-   <proof prover="1" obsolete="true"><result status="highfailure" time="0.01"/></proof>
-   <proof prover="2" obsolete="true"><result status="timeout" time="1.00" steps="53430"/></proof>
-   <proof prover="3" obsolete="true"><result status="timeout" time="0.65"/></proof>
-   <proof prover="4" obsolete="true"><result status="highfailure" time="0.65" steps="977566"/></proof>
-   <transf name="split_vc" proved="true" >
-    <goal name="distr&#39;vc.11.1.0" expl="precondition" proved="true">
-    <proof prover="4"><result status="valid" time="0.12" steps="8117"/></proof>
-    </goal>
-    <goal name="distr&#39;vc.12.3.0" expl="postcondition">
-    <proof prover="4" obsolete="true"><result status="valid" time="0.12" steps="113921"/></proof>
-    </goal>
-    <goal name="distr&#39;vc.12.3.3" expl="postcondition">
-    <proof prover="4" obsolete="true"><result status="valid" time="0.21" steps="220567"/></proof>
-    </goal>
-    <goal name="distr&#39;vc.12.3.1" expl="postcondition">
-    <proof prover="4" obsolete="true"><result status="valid" time="0.12" steps="114336"/></proof>
-    </goal>
-   </transf>
-   </goal>
-   <goal name="distr&#39;vc.11.2" expl="precondition" proved="true">
-   <proof prover="4"><result status="valid" time="0.07" steps="113754"/></proof>
-   </goal>
-   <goal name="distr&#39;vc.11.3" expl="precondition" proved="true">
-   <proof prover="4"><result status="valid" time="0.03" steps="8117"/></proof>
-   </goal>
-   <goal name="distr&#39;vc.11.4" expl="precondition" proved="true">
-   <proof prover="1" obsolete="true"><result status="highfailure" time="0.01"/></proof>
-   <proof prover="2" obsolete="true"><result status="timeout" time="1.00" steps="53584"/></proof>
-   <proof prover="3" obsolete="true"><result status="timeout" time="0.64"/></proof>
-   <proof prover="4" obsolete="true"><result status="highfailure" time="0.63" steps="923109"/></proof>
-   <transf name="split_vc" proved="true" >
-    <goal name="distr&#39;vc.11.4.0" expl="precondition" proved="true">
-    <proof prover="4"><result status="valid" time="0.12" steps="113741"/></proof>
-    </goal>
-    <goal name="distr&#39;vc.12.2.3" expl="postcondition">
-    <proof prover="4" obsolete="true"><result status="valid" time="0.12" steps="115692"/></proof>
-    </goal>
-    <goal name="distr&#39;vc.12.2.1" expl="postcondition">
-    <proof prover="4" obsolete="true"><result status="valid" time="0.12" steps="114349"/></proof>
-    </goal>
-    <goal name="distr&#39;vc.12.2.0" expl="postcondition">
-    <proof prover="4" obsolete="true"><result status="valid" time="0.12" steps="113934"/></proof>
-    </goal>
-   </transf>
-   </goal>
-   <goal name="distr&#39;vc.11.5" expl="precondition" proved="true">
-   <proof prover="1" obsolete="true"><result status="highfailure" time="0.01"/></proof>
-   <proof prover="2" obsolete="true"><result status="timeout" time="1.00" steps="54174"/></proof>
-   <proof prover="3" obsolete="true"><result status="timeout" time="0.60"/></proof>
-   <proof prover="4" obsolete="true"><result status="highfailure" time="0.62" steps="901024"/></proof>
-   <transf name="split_vc" proved="true" >
-    <goal name="distr&#39;vc.11.5.0" expl="precondition" proved="true">
-    <proof prover="4"><result status="valid" time="0.12" steps="8117"/></proof>
-    </goal>
+   <goal name="distr&#39;vc.12.1" expl="postcondition">
+   <transf name="split_vc" >
     <goal name="distr&#39;vc.12.1.0" expl="postcondition">
-    <proof prover="4" obsolete="true"><result status="valid" time="0.12" steps="113935"/></proof>
+    <proof prover="3"><result status="valid" time="0.11" steps="115586"/></proof>
     </goal>
     <goal name="distr&#39;vc.12.1.1" expl="postcondition">
-    <proof prover="4" obsolete="true"><result status="valid" time="0.12" steps="114350"/></proof>
+    <proof prover="3"><result status="valid" time="0.12" steps="115917"/></proof>
+    </goal>
+    <goal name="distr&#39;vc.12.1.2" expl="postcondition">
+    <proof prover="3"><result status="valid" time="0.11" steps="115917"/></proof>
     </goal>
     <goal name="distr&#39;vc.12.1.3" expl="postcondition">
-    <proof prover="4" obsolete="true"><result status="valid" time="0.12" steps="115691"/></proof>
+    <proof prover="3"><result status="valid" time="0.11" steps="113413"/></proof>
     </goal>
    </transf>
    </goal>
-  </transf>
-  </goal>
-  <goal name="distr&#39;vc.12" expl="postcondition" proved="true">
-  <proof prover="1"><result status="highfailure" time="0.01"/></proof>
-  <proof prover="2"><result status="timeout" time="1.00" steps="58305"/></proof>
-  <proof prover="3"><result status="timeout" time="1.00"/></proof>
-  <proof prover="4"><result status="timeout" time="1.00" steps="1749704"/></proof>
-  <transf name="split_vc" proved="true" >
-   <goal name="distr&#39;vc.12.0" expl="postcondition" proved="true">
-   <proof prover="1"><result status="highfailure" time="0.01"/></proof>
-   <proof prover="2"><result status="timeout" time="1.00" steps="50020"/></proof>
-   <proof prover="3"><result status="timeout" time="1.00"/></proof>
-   <proof prover="4"><result status="timeout" time="1.00" steps="560476"/></proof>
-   <transf name="split_vc" proved="true" >
-    <goal name="distr&#39;vc.12.0.0" expl="postcondition" proved="true">
-    <proof prover="2"><result status="valid" time="0.40" steps="29889"/></proof>
-    <proof prover="3"><result status="timeout" time="1.00"/></proof>
-    <proof prover="4"><result status="highfailure" time="0.77" steps="726375"/></proof>
+   <goal name="distr&#39;vc.12.2" expl="postcondition">
+   <transf name="split_vc" >
+    <goal name="distr&#39;vc.12.2.0" expl="postcondition">
+    <proof prover="3"><result status="valid" time="0.11" steps="115572"/></proof>
     </goal>
-    <goal name="distr&#39;vc.12.0.1" expl="postcondition" proved="true">
-    <proof prover="2"><result status="valid" time="0.38" steps="28545"/></proof>
-    <proof prover="3"><result status="timeout" time="1.00"/></proof>
-    <proof prover="4"><result status="highfailure" time="0.74" steps="853030"/></proof>
+    <goal name="distr&#39;vc.12.2.1" expl="postcondition">
+    <proof prover="3"><result status="valid" time="0.11" steps="115903"/></proof>
     </goal>
-    <goal name="distr&#39;vc.12.0.2" expl="postcondition" proved="true">
-    <proof prover="2"><result status="valid" time="0.42" steps="30283"/></proof>
-    <proof prover="3"><result status="timeout" time="1.00"/></proof>
-    <proof prover="4"><result status="highfailure" time="0.75" steps="673191"/></proof>
+    <goal name="distr&#39;vc.12.2.2" expl="postcondition">
+    <proof prover="3"><result status="valid" time="0.11" steps="115903"/></proof>
     </goal>
-    <goal name="distr&#39;vc.12.0.3" expl="postcondition" proved="true">
-    <proof prover="2"><result status="valid" time="0.19" steps="26339"/></proof>
-    <proof prover="3"><result status="timeout" time="1.00"/></proof>
-    <proof prover="4"><result status="highfailure" time="0.61" steps="529372"/></proof>
+    <goal name="distr&#39;vc.12.2.3" expl="postcondition">
+    <proof prover="3"><result status="valid" time="0.12" steps="113399"/></proof>
     </goal>
    </transf>
    </goal>
-   <goal name="distr&#39;vc.12.1" expl="postcondition" proved="true">
-   <proof prover="1"><result status="highfailure" time="0.01"/></proof>
-   <proof prover="2"><result status="timeout" time="1.00" steps="62181"/></proof>
-   <proof prover="3"><result status="timeout" time="1.00"/></proof>
-   <proof prover="4"><result status="timeout" time="1.00" steps="1308622"/></proof>
-   <transf name="split_vc" proved="true" >
-    <goal name="distr&#39;vc.12.1.0" expl="postcondition" proved="true">
-    <proof prover="4"><result status="valid" time="0.12" steps="115103"/></proof>
+   <goal name="distr&#39;vc.12.3" expl="postcondition">
+   <transf name="split_vc" >
+    <goal name="distr&#39;vc.12.3.0" expl="postcondition">
+    <proof prover="3"><result status="valid" time="0.11" steps="115560"/></proof>
     </goal>
-    <goal name="distr&#39;vc.12.1.1" expl="postcondition" proved="true">
-    <proof prover="4"><result status="valid" time="0.12" steps="115495"/></proof>
+    <goal name="distr&#39;vc.12.3.1" expl="postcondition">
+    <proof prover="3"><result status="valid" time="0.11" steps="115891"/></proof>
     </goal>
-    <goal name="distr&#39;vc.12.1.2" expl="postcondition" proved="true">
-    <proof prover="4"><result status="valid" time="0.12" steps="115495"/></proof>
+    <goal name="distr&#39;vc.12.3.2" expl="postcondition">
+    <proof prover="3"><result status="valid" time="0.11" steps="115891"/></proof>
     </goal>
-    <goal name="distr&#39;vc.12.1.3" expl="postcondition" proved="true">
-    <proof prover="4"><result status="valid" time="0.12" steps="116790"/></proof>
-    </goal>
-   </transf>
-   </goal>
-   <goal name="distr&#39;vc.12.2" expl="postcondition" proved="true">
-   <proof prover="1"><result status="highfailure" time="0.01"/></proof>
-   <proof prover="2"><result status="timeout" time="1.00" steps="62169"/></proof>
-   <proof prover="3"><result status="timeout" time="1.00"/></proof>
-   <proof prover="4"><result status="highfailure" time="0.75" steps="1213066"/></proof>
-   <transf name="split_vc" proved="true" >
-    <goal name="distr&#39;vc.12.2.0" expl="postcondition" proved="true">
-    <proof prover="4"><result status="valid" time="0.12" steps="115102"/></proof>
-    </goal>
-    <goal name="distr&#39;vc.12.2.1" expl="postcondition" proved="true">
-    <proof prover="4"><result status="valid" time="0.12" steps="115494"/></proof>
-    </goal>
-    <goal name="distr&#39;vc.12.2.2" expl="postcondition" proved="true">
-    <proof prover="4"><result status="valid" time="0.12" steps="115494"/></proof>
-    </goal>
-    <goal name="distr&#39;vc.12.2.3" expl="postcondition" proved="true">
-    <proof prover="4"><result status="valid" time="0.12" steps="116791"/></proof>
-    </goal>
-   </transf>
-   </goal>
-   <goal name="distr&#39;vc.12.3" expl="postcondition" proved="true">
-   <proof prover="1"><result status="highfailure" time="0.01"/></proof>
-   <proof prover="2"><result status="timeout" time="1.00" steps="66579"/></proof>
-   <proof prover="3"><result status="timeout" time="1.00"/></proof>
-   <proof prover="4"><result status="timeout" time="1.00" steps="1377832"/></proof>
-   <transf name="split_vc" proved="true" >
-    <goal name="distr&#39;vc.12.3.0" expl="postcondition" proved="true">
-    <proof prover="4"><result status="valid" time="0.12" steps="115089"/></proof>
-    </goal>
-    <goal name="distr&#39;vc.12.3.1" expl="postcondition" proved="true">
-    <proof prover="4"><result status="valid" time="0.11" steps="115481"/></proof>
-    </goal>
-    <goal name="distr&#39;vc.12.3.2" expl="postcondition" proved="true">
-    <proof prover="4"><result status="valid" time="0.11" steps="115481"/></proof>
-    </goal>
-    <goal name="distr&#39;vc.12.3.3" expl="postcondition" proved="true">
-    <proof prover="4"><result status="valid" time="0.23" steps="283484"/></proof>
+    <goal name="distr&#39;vc.12.3.3" expl="postcondition">
+    <transf name="compute_hyp" >
+     <goal name="distr&#39;vc.12.3.3.0" expl="postcondition">
+     <transf name="split_vc" >
+      <goal name="distr&#39;vc.12.3.3.0.0" expl="postcondition">
+      <proof prover="3"><result status="valid" time="0.11" steps="115164"/></proof>
+      </goal>
+      <goal name="distr&#39;vc.12.3.3.0.1" expl="postcondition">
+      <proof prover="2" timelimit="1200" memlimit="8192"><undone/></proof>
+      <transf name="compute_hyp" >
+       <goal name="distr&#39;vc.12.3.3.0.1.0" expl="postcondition">
+       <proof prover="2"><result status="valid" time="0.46"/></proof>
+       <proof prover="3"><result status="timeout" time="1.00" steps="1847943"/></proof>
+       </goal>
+      </transf>
+      </goal>
+      <goal name="distr&#39;vc.12.3.3.0.2" expl="postcondition">
+      <transf name="compute_hyp" >
+       <goal name="distr&#39;vc.12.3.3.0.2.0" expl="postcondition">
+       <proof prover="2"><result status="valid" time="0.47"/></proof>
+       <proof prover="3"><result status="timeout" time="1.00" steps="1868027"/></proof>
+       </goal>
+      </transf>
+      </goal>
+      <goal name="distr&#39;vc.12.3.3.0.3" expl="postcondition">
+      <proof prover="3"><result status="valid" time="0.12" steps="114098"/></proof>
+      </goal>
+      <goal name="distr&#39;vc.12.3.3.0.4" expl="postcondition">
+      <proof prover="3"><result status="valid" time="0.11" steps="114098"/></proof>
+      </goal>
+      <goal name="distr&#39;vc.12.3.3.0.5" expl="postcondition">
+      <proof prover="3"><result status="valid" time="0.11" steps="113893"/></proof>
+      </goal>
+     </transf>
+     </goal>
+    </transf>
     </goal>
    </transf>
    </goal>
@@ -675,225 +441,88 @@
   </goal>
  </transf>
  </goal>
- <goal name="cnfc&#39;vc" expl="VC for cnfc" proved="true">
- <proof prover="1" obsolete="true"><result status="highfailure" time="0.01"/></proof>
- <proof prover="2" obsolete="true"><result status="timeout" time="1.00" steps="60460"/></proof>
- <proof prover="3" obsolete="true"><result status="timeout" time="1.00"/></proof>
- <proof prover="4" obsolete="true"><result status="timeout" time="1.00" steps="637019"/></proof>
- <transf name="split_vc" proved="true" >
-  <goal name="cnfc&#39;vc.0" expl="variant decrease" proved="true">
-  <proof prover="4"><result status="valid" time="0.11" steps="279147"/></proof>
+ <goal name="cnfc&#39;vc" expl="VC for cnfc">
+ <transf name="split_vc" >
+  <goal name="cnfc&#39;vc.0" expl="variant decrease">
+  <proof prover="2"><result status="valid" time="0.17"/></proof>
+  <proof prover="3"><result status="highfailure" time="0.64" steps="983896"/></proof>
   </goal>
-  <goal name="cnfc&#39;vc.1" expl="precondition" proved="true">
-  <proof prover="1" obsolete="true"><result status="highfailure" time="0.01"/></proof>
-  <proof prover="2" obsolete="true"><result status="timeout" time="1.00" steps="56330"/></proof>
-  <proof prover="3" obsolete="true"><result status="timeout" time="1.00"/></proof>
-  <proof prover="4" obsolete="true"><result status="highfailure" time="0.77" steps="849055"/></proof>
-  <transf name="split_vc" proved="true" >
-   <goal name="cnfc&#39;vc.1.0" expl="precondition" proved="true">
-   <proof prover="1" obsolete="true"><result status="highfailure" time="0.01"/></proof>
-   <proof prover="2" obsolete="true"><result status="timeout" time="1.00" steps="50710"/></proof>
-   <proof prover="3" obsolete="true"><result status="timeout" time="0.71"/></proof>
-   <proof prover="4" obsolete="true"><result status="highfailure" time="0.69" steps="878986"/></proof>
-   <transf name="split_vc" proved="true" >
-    <goal name="cnfc&#39;vc.1.0.0" expl="precondition" proved="true">
-    <proof prover="2"><result status="valid" time="0.44" steps="30348"/></proof>
-    <proof prover="3" obsolete="true"><result status="timeout" time="0.68"/></proof>
-    <proof prover="4" obsolete="true"><result status="highfailure" time="0.53" steps="602166"/></proof>
+  <goal name="cnfc&#39;vc.1" expl="precondition">
+  <proof prover="3"><result status="valid" time="0.12" steps="139901"/></proof>
+  </goal>
+  <goal name="cnfc&#39;vc.2" expl="variant decrease">
+  <proof prover="2"><result status="valid" time="0.17"/></proof>
+  <proof prover="3"><result status="highfailure" time="0.78" steps="1177080"/></proof>
+  </goal>
+  <goal name="cnfc&#39;vc.3" expl="precondition">
+  <proof prover="3"><result status="valid" time="0.12" steps="141304"/></proof>
+  </goal>
+  <goal name="cnfc&#39;vc.4" expl="precondition">
+  <proof prover="3"><result status="valid" time="0.12" steps="142663"/></proof>
+  </goal>
+  <goal name="cnfc&#39;vc.5" expl="variant decrease">
+  <proof prover="2"><result status="valid" time="0.16"/></proof>
+  <proof prover="3"><result status="timeout" time="1.00" steps="1263373"/></proof>
+  </goal>
+  <goal name="cnfc&#39;vc.6" expl="precondition">
+  <proof prover="3"><result status="valid" time="0.12" steps="136532"/></proof>
+  </goal>
+  <goal name="cnfc&#39;vc.7" expl="variant decrease">
+  <proof prover="2"><result status="valid" time="0.17"/></proof>
+  <proof prover="3"><result status="highfailure" time="0.77" steps="1174169"/></proof>
+  </goal>
+  <goal name="cnfc&#39;vc.8" expl="precondition">
+  <proof prover="3"><result status="valid" time="0.11" steps="137935"/></proof>
+  </goal>
+  <goal name="cnfc&#39;vc.9" expl="postcondition">
+  <transf name="split_vc" >
+   <goal name="cnfc&#39;vc.9.0" expl="postcondition">
+   <transf name="split_vc" >
+    <goal name="cnfc&#39;vc.9.0.0" expl="postcondition">
+    <proof prover="1" timelimit="1" memlimit="1000"><result status="valid" time="0.45" steps="30874"/></proof>
+    <proof prover="2"><result status="timeout" time="1.00"/></proof>
+    <proof prover="3"><result status="timeout" time="1.00" steps="1350693"/></proof>
     </goal>
     <goal name="cnfc&#39;vc.9.0.1" expl="postcondition">
-    <proof prover="2" obsolete="true"><result status="valid" time="0.43" steps="31868"/></proof>
-    <proof prover="3" obsolete="true"><result status="timeout" time="0.67"/></proof>
-    <proof prover="4" obsolete="true"><result status="highfailure" time="0.58" steps="1027215"/></proof>
+    <proof prover="1" timelimit="1" memlimit="1000"><result status="valid" time="0.45" steps="30666"/></proof>
+    <proof prover="2"><result status="timeout" time="1.00"/></proof>
+    <proof prover="3"><result status="timeout" time="1.00" steps="1399188"/></proof>
     </goal>
     <goal name="cnfc&#39;vc.9.0.2" expl="postcondition">
-    <proof prover="4" obsolete="true"><result status="valid" time="0.07" steps="31012"/></proof>
-    </goal>
-   </transf>
-   </goal>
-   <goal name="cnfc&#39;vc.1.1" expl="precondition" proved="true">
-   <proof prover="1" obsolete="true"><result status="highfailure" time="0.01"/></proof>
-   <proof prover="2" obsolete="true"><result status="timeout" time="1.00" steps="50371"/></proof>
-   <proof prover="3" obsolete="true"><result status="timeout" time="0.66"/></proof>
-   <proof prover="4" obsolete="true"><result status="highfailure" time="0.78" steps="1160998"/></proof>
-   <transf name="split_vc" proved="true" >
-    <goal name="cnfc&#39;vc.1.1.0" expl="precondition" proved="true">
-    <proof prover="4"><result status="valid" time="0.08" steps="139765"/></proof>
-    </goal>
-    <goal name="cnfc&#39;vc.9.2.0" expl="postcondition">
-    <proof prover="4" obsolete="true"><result status="valid" time="0.06" steps="9529"/></proof>
-    </goal>
-    <goal name="cnfc&#39;vc.9.2.1" expl="postcondition">
-    <proof prover="4" obsolete="true"><result status="valid" time="0.13" steps="137823"/></proof>
-    </goal>
-   </transf>
-   </goal>
-   <goal name="cnfc&#39;vc.9.3" expl="postcondition">
-   <proof prover="1" obsolete="true"><result status="highfailure" time="0.01"/></proof>
-   <proof prover="2" obsolete="true"><result status="timeout" time="1.00" steps="46943"/></proof>
-   <proof prover="3" obsolete="true"><result status="timeout" time="0.66"/></proof>
-   <proof prover="4" obsolete="true"><result status="highfailure" time="0.68" steps="1082528"/></proof>
-   <transf name="split_vc" >
-    <goal name="cnfc&#39;vc.9.3.0" expl="postcondition">
-    <proof prover="4" obsolete="true"><result status="valid" time="0.06" steps="9529"/></proof>
-    </goal>
-    <goal name="cnfc&#39;vc.9.3.1" expl="postcondition">
-    <proof prover="4" obsolete="true"><result status="valid" time="0.13" steps="137810"/></proof>
-    </goal>
-    <goal name="cnfc&#39;vc.9.3.2" expl="postcondition">
-    <proof prover="1" timelimit="30" memlimit="4000" obsolete="true"><result status="highfailure" time="0.01"/></proof>
-    <proof prover="2" timelimit="30" memlimit="4000" obsolete="true"><result status="unknown" time="1.00" steps="69288"/></proof>
-    <proof prover="3" timelimit="30" memlimit="4000" obsolete="true"><result status="timeout" time="24.86"/></proof>
-    <proof prover="4" timelimit="30" memlimit="4000" obsolete="true"><result status="highfailure" time="25.36" steps="38346127"/></proof>
-    <transf name="compute_hyp" >
-     <goal name="cnfc&#39;vc.9.3.2.0" expl="postcondition">
-     <proof prover="4" obsolete="true"><result status="valid" time="0.33" steps="437239"/></proof>
-     </goal>
-    </transf>
+    <proof prover="3"><result status="valid" time="0.06" steps="31478"/></proof>
     </goal>
    </transf>
    </goal>
    <goal name="cnfc&#39;vc.9.1" expl="postcondition">
-   <proof prover="4" obsolete="true"><result status="valid" time="0.06" steps="9774"/></proof>
+   <proof prover="3"><result status="valid" time="0.06" steps="9920"/></proof>
    </goal>
-  </transf>
-  </goal>
-  <goal name="cnfc&#39;vc.2" expl="variant decrease" proved="true">
-  <transf name="split_vc" proved="true" >
-   <goal name="cnfc&#39;vc.2.0" expl="variant decrease" proved="true">
-   <proof prover="4"><result status="valid" time="0.13" steps="149211"/></proof>
-   </goal>
-   <goal name="cnfc&#39;vc.2.1" expl="variant decrease" proved="true">
-   <proof prover="4"><result status="valid" time="0.13" steps="149211"/></proof>
-   </goal>
-   <goal name="cnfc&#39;vc.2.2" expl="variant decrease" proved="true">
-   <transf name="split_vc" proved="true" >
-    <goal name="cnfc&#39;vc.2.2.0" expl="variant decrease" proved="true">
-    <proof prover="4"><result status="valid" time="0.08" steps="149861"/></proof>
+   <goal name="cnfc&#39;vc.9.2" expl="postcondition">
+   <transf name="split_vc" >
+    <goal name="cnfc&#39;vc.9.2.0" expl="postcondition">
+    <proof prover="3"><result status="valid" time="0.05" steps="9675"/></proof>
     </goal>
-    <goal name="cnfc&#39;vc.5.0.0" expl="variant decrease">
-    <proof prover="2" obsolete="true"><result status="valid" time="0.34" steps="31449"/></proof>
-    <proof prover="3" obsolete="true"><result status="timeout" time="1.00"/></proof>
-    <proof prover="4" obsolete="true"><result status="valid" time="0.13" steps="139519"/></proof>
+    <goal name="cnfc&#39;vc.9.2.1" expl="postcondition">
+    <proof prover="3"><result status="valid" time="0.13" steps="139370"/></proof>
     </goal>
-    <goal name="cnfc&#39;vc.9.0.1" expl="postcondition">
-    <proof prover="2"><result status="valid" time="0.36" steps="31698"/></proof>
-    <proof prover="3"><result status="timeout" time="1.00"/></proof>
-    <proof prover="4"><undone/></proof>
+    <goal name="cnfc&#39;vc.9.2.2" expl="postcondition">
+    <proof prover="3"><result status="valid" time="0.08" steps="54973"/></proof>
     </goal>
    </transf>
    </goal>
-   <goal name="cnfc&#39;vc.2.3" expl="variant decrease" proved="true">
-   <transf name="split_vc" proved="true" >
-    <goal name="cnfc&#39;vc.2.3.0" expl="variant decrease" proved="true">
-    <proof prover="4"><result status="valid" time="0.08" steps="149616"/></proof>
+   <goal name="cnfc&#39;vc.9.3" expl="postcondition">
+   <transf name="split_vc" >
+    <goal name="cnfc&#39;vc.9.3.0" expl="postcondition">
+    <proof prover="3"><result status="valid" time="0.06" steps="9675"/></proof>
     </goal>
-    <goal name="cnfc&#39;vc.5.1.0" expl="variant decrease">
-    <proof prover="4"><undone/></proof>
+    <goal name="cnfc&#39;vc.9.3.1" expl="postcondition">
+    <proof prover="3"><result status="valid" time="0.13" steps="139358"/></proof>
     </goal>
-    <goal name="cnfc&#39;vc.9.1.2" expl="postcondition">
-    <proof prover="0"><result status="failure" time="0.00"/></proof>
+    <goal name="cnfc&#39;vc.9.3.2" expl="postcondition">
     <transf name="compute_hyp" >
-     <goal name="cnfc&#39;vc.9.1.2.0" expl="postcondition">
-     <proof prover="4"><undone/></proof>
-     </goal>
-    </transf>
-    </goal>
-   </transf>
-   </goal>
-   <goal name="cnfc&#39;vc.2.4" expl="variant decrease" proved="true">
-   <proof prover="4"><result status="valid" time="0.13" steps="152137"/></proof>
-   </goal>
-   <goal name="cnfc&#39;vc.2.5" expl="variant decrease" proved="true">
-   <proof prover="4"><result status="valid" time="0.13" steps="144952"/></proof>
-   </goal>
-  </transf>
-  </goal>
-  <goal name="cnfc&#39;vc.3" expl="precondition" proved="true">
-  <proof prover="4"><result status="valid" time="0.19" steps="144626"/></proof>
-  </goal>
-  <goal name="cnfc&#39;vc.4" expl="precondition" proved="true">
-  <proof prover="4"><result status="valid" time="0.15" steps="146018"/></proof>
-  </goal>
-  <goal name="cnfc&#39;vc.5" expl="variant decrease" proved="true">
-  <proof prover="4"><result status="valid" time="0.28" steps="389992"/></proof>
-  </goal>
-  <goal name="cnfc&#39;vc.6" expl="precondition" proved="true">
-  <proof prover="4"><result status="valid" time="0.11" steps="136119"/></proof>
-  </goal>
-  <goal name="cnfc&#39;vc.7" expl="variant decrease" proved="true">
-  <proof prover="4"><result status="valid" time="0.30" steps="414731"/></proof>
-  </goal>
-  <goal name="cnfc&#39;vc.8" expl="precondition" proved="true">
-  <proof prover="4"><result status="valid" time="0.19" steps="137517"/></proof>
-  </goal>
-  <goal name="cnfc&#39;vc.9" expl="postcondition" proved="true">
-  <proof prover="1"><result status="highfailure" time="0.00"/></proof>
-  <proof prover="2"><result status="timeout" time="1.00" steps="72442"/></proof>
-  <proof prover="3"><result status="timeout" time="1.00"/></proof>
-  <proof prover="4"><result status="timeout" time="1.00" steps="1269998"/></proof>
-  <transf name="split_vc" proved="true" >
-   <goal name="cnfc&#39;vc.9.0" expl="postcondition" proved="true">
-   <proof prover="1"><result status="highfailure" time="0.01"/></proof>
-   <proof prover="2"><result status="timeout" time="1.00" steps="64016"/></proof>
-   <proof prover="3"><result status="timeout" time="1.00"/></proof>
-   <proof prover="4"><result status="timeout" time="1.00" steps="902026"/></proof>
-   <transf name="split_vc" proved="true" >
-    <goal name="cnfc&#39;vc.9.0.0" expl="postcondition" proved="true">
-    <proof prover="2"><result status="valid" time="0.37" steps="32053"/></proof>
-    <proof prover="3"><result status="timeout" time="1.00"/></proof>
-    <proof prover="4"><result status="timeout" time="1.00" steps="619810"/></proof>
-    </goal>
-    <goal name="cnfc&#39;vc.9.0.1" expl="postcondition" proved="true">
-    <proof prover="2"><result status="valid" time="0.38" steps="32074"/></proof>
-    <proof prover="3"><result status="timeout" time="1.00"/></proof>
-    <proof prover="4"><result status="timeout" time="1.00" steps="1405380"/></proof>
-    </goal>
-    <goal name="cnfc&#39;vc.9.0.2" expl="postcondition" proved="true">
-    <proof prover="4"><result status="valid" time="0.07" steps="31218"/></proof>
-    </goal>
-   </transf>
-   </goal>
-   <goal name="cnfc&#39;vc.9.1" expl="postcondition" proved="true">
-   <proof prover="4"><result status="valid" time="0.05" steps="9832"/></proof>
-   </goal>
-   <goal name="cnfc&#39;vc.9.2" expl="postcondition" proved="true">
-   <proof prover="1"><result status="highfailure" time="0.01"/></proof>
-   <proof prover="2"><result status="timeout" time="1.00" steps="57235"/></proof>
-   <proof prover="3"><result status="timeout" time="1.00"/></proof>
-   <proof prover="4"><result status="timeout" time="1.00" steps="1573748"/></proof>
-   <transf name="split_vc" proved="true" >
-    <goal name="cnfc&#39;vc.9.2.0" expl="postcondition" proved="true">
-    <proof prover="4"><result status="valid" time="0.04" steps="9587"/></proof>
-    </goal>
-    <goal name="cnfc&#39;vc.9.2.1" expl="postcondition" proved="true">
-    <proof prover="4"><result status="valid" time="0.08" steps="138968"/></proof>
-    </goal>
-    <goal name="cnfc&#39;vc.9.2.2" expl="postcondition" proved="true">
-    <proof prover="4"><result status="valid" time="0.06" steps="54341"/></proof>
-    </goal>
-   </transf>
-   </goal>
-   <goal name="cnfc&#39;vc.9.3" expl="postcondition" proved="true">
-   <proof prover="1"><result status="highfailure" time="0.01"/></proof>
-   <proof prover="2"><result status="unknown" time="0.79" steps="57076"/></proof>
-   <proof prover="3"><result status="timeout" time="1.00"/></proof>
-   <proof prover="4"><result status="timeout" time="1.00" steps="1531096"/></proof>
-   <transf name="split_vc" proved="true" >
-    <goal name="cnfc&#39;vc.9.3.0" expl="postcondition" proved="true">
-    <proof prover="4"><result status="valid" time="0.04" steps="9587"/></proof>
-    </goal>
-    <goal name="cnfc&#39;vc.9.3.1" expl="postcondition" proved="true">
-    <proof prover="4"><result status="valid" time="0.11" steps="138955"/></proof>
-    </goal>
-    <goal name="cnfc&#39;vc.9.3.2" expl="postcondition" proved="true">
-    <proof prover="1" timelimit="30" memlimit="4000"><result status="highfailure" time="0.01"/></proof>
-    <proof prover="2" timelimit="30" memlimit="4000"><result status="unknown" time="1.30" steps="69406"/></proof>
-    <proof prover="3" timelimit="30" memlimit="4000"><result status="timeout" time="30.00"/></proof>
-    <proof prover="4" timelimit="30" memlimit="4000"><result status="timeout" time="30.00" steps="46168148"/></proof>
-    <transf name="compute_hyp" proved="true" >
-     <goal name="cnfc&#39;vc.9.3.2.0" expl="postcondition" proved="true">
-     <proof prover="4"><result status="valid" time="0.29" steps="628387"/></proof>
+     <goal name="cnfc&#39;vc.9.3.2.0" expl="postcondition">
+     <proof prover="1" timelimit="1" memlimit="1000" obsolete="true"><result status="valid" time="0.67" steps="40657"/></proof>
+     <proof prover="2"><result status="valid" time="0.62"/></proof>
+     <proof prover="3"><result status="highfailure" time="0.79" steps="1212185"/></proof>
      </goal>
     </transf>
     </goal>
@@ -903,221 +532,280 @@
   </goal>
  </transf>
  </goal>
- <goal name="t&#39;vc" expl="VC for t" proved="true">
- <proof prover="4"><result status="valid" time="0.35" steps="523256"/></proof>
+ <goal name="t&#39;vc" expl="VC for t">
+ <proof prover="1" obsolete="true"><result status="valid" time="0.43" steps="30093"/></proof>
+ <proof prover="2"><result status="valid" time="0.10"/></proof>
+ <proof prover="3"><result status="timeout" time="1.00" steps="1959094"/></proof>
  </goal>
- <goal name="to_cnf_aux&#39;vc" expl="VC for to_cnf_aux" proved="true">
- <proof prover="4"><result status="valid" time="0.09" steps="164618"/></proof>
+ <goal name="to_cnf_aux&#39;vc" expl="VC for to_cnf_aux">
+ <transf name="split_vc" >
+  <goal name="to_cnf_aux&#39;vc.0" expl="unreachable point">
+  <proof prover="2"><result status="valid" time="0.33"/></proof>
+  <proof prover="3"><result status="highfailure" time="0.67" steps="1097616"/></proof>
+  </goal>
+  <goal name="to_cnf_aux&#39;vc.1" expl="variant decrease">
+  <proof prover="3"><result status="valid" time="0.15" steps="175880"/></proof>
+  </goal>
+  <goal name="to_cnf_aux&#39;vc.2" expl="precondition">
+  <proof prover="3"><result status="valid" time="0.13" steps="145591"/></proof>
+  </goal>
+  <goal name="to_cnf_aux&#39;vc.3" expl="variant decrease">
+  <proof prover="3"><result status="valid" time="0.15" steps="176127"/></proof>
+  </goal>
+  <goal name="to_cnf_aux&#39;vc.4" expl="precondition">
+  <proof prover="3"><result status="valid" time="0.13" steps="145839"/></proof>
+  </goal>
+  <goal name="to_cnf_aux&#39;vc.5" expl="unreachable point">
+  <proof prover="2"><result status="valid" time="0.12"/></proof>
+  <proof prover="3"><result status="timeout" time="1.00" steps="1479802"/></proof>
+  </goal>
+  <goal name="to_cnf_aux&#39;vc.6" expl="postcondition">
+  <transf name="split_vc" >
+   <goal name="to_cnf_aux&#39;vc.6.0" expl="postcondition">
+   <proof prover="4"><result status="valid" time="0.10"/></proof>
+   </goal>
+   <goal name="to_cnf_aux&#39;vc.6.1" expl="postcondition">
+   <proof prover="1" timelimit="1" memlimit="1000"><result status="valid" time="0.57" steps="38635"/></proof>
+   </goal>
+   <goal name="to_cnf_aux&#39;vc.6.2" expl="postcondition">
+   <proof prover="1" timelimit="30" memlimit="4000"><result status="failure" time="0.00"/></proof>
+   <proof prover="2" timelimit="30" memlimit="4000"><result status="timeout" time="30.00"/></proof>
+   <proof prover="3" timelimit="30" memlimit="4000"><result status="highfailure" time="26.77" steps="40256055"/></proof>
+   <proof prover="5" timelimit="5" memlimit="2000"><result status="highfailure" time="0.01"/></proof>
+   <transf name="compute_hyp" >
+    <goal name="to_cnf_aux&#39;vc.6.2.0" expl="postcondition">
+    <proof prover="1" timelimit="1" memlimit="1000"><result status="valid" time="0.47" steps="42377"/></proof>
+    <proof prover="2"><result status="timeout" time="1.00"/></proof>
+    <proof prover="3"><result status="timeout" time="1.00" steps="552034"/></proof>
+    </goal>
+   </transf>
+   </goal>
+   <goal name="to_cnf_aux&#39;vc.6.3" expl="postcondition">
+   <proof prover="1" timelimit="1" memlimit="1000"><result status="valid" time="1.21" steps="58291"/></proof>
+   </goal>
+   <goal name="to_cnf_aux&#39;vc.6.4" expl="postcondition">
+   <proof prover="6"><path name="cnf2_T_to_cnf_auxqtvc_1.v"/><result status="valid" time="0.49"/></proof>
+   </goal>
+  </transf>
+  </goal>
+ </transf>
  </goal>
  <goal name="to_cnf&#39;vc" expl="VC for to_cnf">
- <proof prover="1"><result status="highfailure" time="0.01"/></proof>
- <proof prover="2"><result status="timeout" time="1.00" steps="90338"/></proof>
- <proof prover="3"><result status="timeout" time="1.00"/></proof>
- <proof prover="4"><result status="timeout" time="1.00" steps="2172484"/></proof>
  <transf name="split_vc" >
-  <goal name="to_cnf&#39;vc.0" expl="variant decrease" proved="true">
-  <proof prover="4"><result status="valid" time="0.13" steps="160818"/></proof>
+  <goal name="to_cnf&#39;vc.0" expl="variant decrease">
+  <proof prover="3"><result status="valid" time="0.09" steps="177596"/></proof>
   </goal>
-  <goal name="to_cnf&#39;vc.1" expl="precondition" proved="true">
-  <proof prover="4"><result status="valid" time="0.12" steps="145988"/></proof>
+  <goal name="to_cnf&#39;vc.1" expl="precondition">
+  <proof prover="3"><result status="valid" time="0.10" steps="142975"/></proof>
   </goal>
-  <goal name="to_cnf&#39;vc.2" expl="variant decrease" proved="true">
-  <proof prover="4"><result status="valid" time="0.12" steps="161066"/></proof>
+  <goal name="to_cnf&#39;vc.2" expl="variant decrease">
+  <proof prover="3"><result status="valid" time="0.15" steps="177843"/></proof>
   </goal>
-  <goal name="to_cnf&#39;vc.3" expl="precondition" proved="true">
-  <proof prover="4"><result status="valid" time="0.12" steps="146236"/></proof>
+  <goal name="to_cnf&#39;vc.3" expl="precondition">
+  <proof prover="3"><result status="valid" time="0.13" steps="143223"/></proof>
   </goal>
-  <goal name="to_cnf&#39;vc.4" expl="postcondition">
-  <proof prover="1"><result status="highfailure" time="0.01"/></proof>
-  <proof prover="2"><result status="timeout" time="1.00" steps="79146"/></proof>
-  <proof prover="3"><result status="timeout" time="1.00"/></proof>
-  <proof prover="4"><result status="timeout" time="1.00" steps="1358667"/></proof>
+  <goal name="to_cnf&#39;vc.4" expl="precondition">
   <transf name="split_vc" >
-   <goal name="to_cnf&#39;vc.4.0" expl="postcondition">
-   <proof prover="1" timelimit="30" memlimit="4000"><result status="highfailure" time="0.01"/></proof>
-   <proof prover="2" timelimit="30" memlimit="4000"><result status="timeout" time="30.00" steps="162471"/></proof>
-   <proof prover="3" timelimit="30" memlimit="4000"><result status="timeout" time="30.00"/></proof>
-   <proof prover="4" timelimit="30" memlimit="4000"><result status="timeout" time="30.00" steps="44646208"/></proof>
+   <goal name="to_cnf&#39;vc.4.0" expl="precondition">
+   <proof prover="3"><result status="valid" time="0.05" steps="10032"/></proof>
    </goal>
-   <goal name="to_cnf&#39;vc.4.1" expl="postcondition">
-   <proof prover="1" timelimit="30" memlimit="4000"><result status="highfailure" time="0.00"/></proof>
-   <proof prover="2" timelimit="30" memlimit="4000"><result status="timeout" time="30.00" steps="171822"/></proof>
-   <proof prover="3" timelimit="30" memlimit="4000"><result status="timeout" time="30.00"/></proof>
-   <proof prover="4" timelimit="30" memlimit="4000"><result status="timeout" time="30.00" steps="5494308"/></proof>
+   <goal name="to_cnf&#39;vc.4.1" expl="precondition">
+   <proof prover="3"><result status="valid" time="0.04" steps="10032"/></proof>
+   </goal>
+   <goal name="to_cnf&#39;vc.4.2" expl="precondition">
+   <transf name="compute_hyp" >
+    <goal name="to_cnf&#39;vc.4.2.0" expl="precondition">
+    <proof prover="2"><result status="valid" time="0.73"/></proof>
+    <proof prover="3"><result status="highfailure" time="0.79" steps="1191148"/></proof>
+    </goal>
+   </transf>
+   </goal>
+  </transf>
+  </goal>
+  <goal name="to_cnf&#39;vc.5" expl="postcondition">
+  <transf name="split_vc" >
+   <goal name="to_cnf&#39;vc.5.0" expl="postcondition">
+   <proof prover="6"><path name="cnf2_T_to_cnfqtvc_1.v"/><result status="valid" time="0.52"/></proof>
+   </goal>
+   <goal name="to_cnf&#39;vc.5.1" expl="postcondition">
+   <proof prover="4"><result status="valid" time="0.11"/></proof>
    </goal>
   </transf>
   </goal>
  </transf>
  </goal>
  <goal name="to_formula_aux&#39;vc" expl="VC for to_formula_aux">
- <proof prover="1" obsolete="true"><result status="highfailure" time="0.01"/></proof>
- <proof prover="2" obsolete="true"><result status="timeout" time="1.00" steps="53857"/></proof>
- <proof prover="3" obsolete="true"><result status="timeout" time="1.00"/></proof>
- <proof prover="4" obsolete="true"><result status="timeout" time="1.00" steps="768061"/></proof>
  <transf name="split_vc" >
   <goal name="to_formula_aux&#39;vc.0" expl="variant decrease">
-  <proof prover="4" obsolete="true"><result status="valid" time="0.14" steps="155638"/></proof>
+  <proof prover="3"><result status="valid" time="0.16" steps="171263"/></proof>
   </goal>
-  <goal name="to_formula_aux&#39;vc.1" expl="variant decrease">
-  <proof prover="4" obsolete="true"><result status="valid" time="0.13" steps="155638"/></proof>
+  <goal name="to_formula_aux&#39;vc.1" expl="precondition">
+  <proof prover="3"><result status="valid" time="0.13" steps="151497"/></proof>
   </goal>
   <goal name="to_formula_aux&#39;vc.2" expl="variant decrease">
-  <proof prover="4" obsolete="true"><result status="valid" time="0.13" steps="155638"/></proof>
+  <proof prover="3"><result status="valid" time="0.14" steps="171263"/></proof>
   </goal>
-  <goal name="to_formula_aux&#39;vc.3" expl="postcondition">
-  <proof prover="1" obsolete="true"><result status="highfailure" time="0.01"/></proof>
-  <proof prover="2" obsolete="true"><result status="timeout" time="1.00" steps="35243"/></proof>
-  <proof prover="3" obsolete="true"><result status="timeout" time="1.00"/></proof>
-  <proof prover="4" obsolete="true"><result status="highfailure" time="0.79" steps="938490"/></proof>
+  <goal name="to_formula_aux&#39;vc.3" expl="precondition">
+  <proof prover="3"><result status="valid" time="0.14" steps="151497"/></proof>
+  </goal>
+  <goal name="to_formula_aux&#39;vc.4" expl="variant decrease">
+  <proof prover="3"><result status="valid" time="0.15" steps="171263"/></proof>
+  </goal>
+  <goal name="to_formula_aux&#39;vc.5" expl="precondition">
+  <proof prover="3"><result status="valid" time="0.14" steps="151497"/></proof>
+  </goal>
+  <goal name="to_formula_aux&#39;vc.6" expl="variant decrease">
+  <proof prover="3"><result status="valid" time="0.15" steps="171263"/></proof>
+  </goal>
+  <goal name="to_formula_aux&#39;vc.7" expl="precondition">
+  <proof prover="3"><result status="valid" time="0.13" steps="151497"/></proof>
+  </goal>
+  <goal name="to_formula_aux&#39;vc.8" expl="unreachable point">
+  <proof prover="3"><result status="valid" time="0.13" steps="146642"/></proof>
+  </goal>
+  <goal name="to_formula_aux&#39;vc.9" expl="postcondition">
   <transf name="split_vc" >
-   <goal name="to_formula_aux&#39;vc.3.0" expl="postcondition">
-   <proof prover="4" obsolete="true"><result status="valid" time="0.13" steps="139905"/></proof>
-   </goal>
-   <goal name="to_formula_aux&#39;vc.3.1" expl="postcondition">
-   <proof prover="4" obsolete="true"><result status="valid" time="0.12" steps="139971"/></proof>
-   </goal>
-   <goal name="to_formula_aux&#39;vc.3.2" expl="postcondition">
-   <proof prover="4" obsolete="true"><result status="valid" time="0.12" steps="139971"/></proof>
-   </goal>
-   <goal name="to_formula_aux&#39;vc.3.3" expl="postcondition">
-   <proof prover="4" obsolete="true"><result status="valid" time="0.13" steps="144734"/></proof>
-   </goal>
-   <goal name="to_formula_aux&#39;vc.3.4" expl="postcondition">
-   <proof prover="1" timelimit="30" memlimit="4000" obsolete="true"><result status="highfailure" time="0.01"/></proof>
-   <proof prover="2" timelimit="30" memlimit="4000" obsolete="true"><result status="timeout" time="30.00" steps="34872"/></proof>
-   <proof prover="3" timelimit="30" memlimit="4000" obsolete="true"><result status="timeout" time="30.00"/></proof>
-   <proof prover="4" timelimit="30" memlimit="4000" obsolete="true"><result status="timeout" time="30.00" steps="49539543"/></proof>
-   <transf name="compute_hyp" >
-    <goal name="to_formula_aux&#39;vc.3.4.0" expl="postcondition">
-    <proof prover="1" obsolete="true"><result status="highfailure" time="0.01"/></proof>
-    <proof prover="2" obsolete="true"><result status="timeout" time="1.00" steps="78724"/></proof>
-    <proof prover="3" obsolete="true"><result status="timeout" time="1.00"/></proof>
-    <proof prover="4" obsolete="true"><result status="timeout" time="1.00" steps="1674585"/></proof>
-    <transf name="split_vc" >
-     <goal name="to_formula_aux&#39;vc.3.4.0.0" expl="postcondition">
-     <proof prover="1" obsolete="true"><result status="highfailure" time="0.01"/></proof>
-     <proof prover="2" obsolete="true"><result status="timeout" time="1.00" steps="37609"/></proof>
-     <proof prover="3" obsolete="true"><result status="timeout" time="1.00"/></proof>
-     <proof prover="4" obsolete="true"><result status="timeout" time="1.00" steps="1292908"/></proof>
-     <transf name="split_vc" >
-      <goal name="to_formula_aux&#39;vc.3.4.0.0.0" expl="postcondition">
-      <proof prover="4" obsolete="true"><result status="valid" time="0.13" steps="156817"/></proof>
-      </goal>
-      <goal name="to_formula_aux&#39;vc.3.4.0.0.1" expl="postcondition">
-      <proof prover="1" timelimit="30" memlimit="4000" obsolete="true"><result status="highfailure" time="0.01"/></proof>
-      <proof prover="2" timelimit="30" memlimit="4000" obsolete="true"><result status="timeout" time="30.00" steps="35895"/></proof>
-      <proof prover="3" timelimit="30" memlimit="4000" obsolete="true"><result status="timeout" time="26.37"/></proof>
-      <proof prover="4" timelimit="30" memlimit="4000" obsolete="true"><result status="timeout" time="30.00" steps="36391831"/></proof>
-      </goal>
-      <goal name="to_formula_aux&#39;vc.3.4.0.0.2" expl="postcondition">
-      <proof prover="4" obsolete="true"><result status="valid" time="0.14" steps="163547"/></proof>
-      </goal>
-      <goal name="to_formula_aux&#39;vc.3.4.0.0.3" expl="postcondition">
-      <proof prover="4" obsolete="true"><result status="valid" time="0.12" steps="156351"/></proof>
-      </goal>
-      <goal name="to_formula_aux&#39;vc.3.4.0.5.1" expl="postcondition">
-      <proof prover="4"><result status="valid" time="0.13" steps="156316"/></proof>
-      </goal>
-     </transf>
-     </goal>
-     <goal name="to_formula_aux&#39;vc.3.4.0.1" expl="postcondition">
-     <proof prover="4" obsolete="true"><result status="valid" time="0.13" steps="147994"/></proof>
-     </goal>
-     <goal name="to_formula_aux&#39;vc.3.4.0.2" expl="postcondition">
-     <proof prover="4" obsolete="true"><result status="valid" time="0.13" steps="148189"/></proof>
-     </goal>
-     <goal name="to_formula_aux&#39;vc.3.4.0.3" expl="postcondition">
-     <proof prover="4" obsolete="true"><result status="valid" time="0.13" steps="148189"/></proof>
-     </goal>
-     <goal name="to_formula_aux&#39;vc.3.4.0.4" expl="postcondition">
-     <proof prover="4" obsolete="true"><result status="valid" time="0.14" steps="156352"/></proof>
-     </goal>
-     <goal name="to_formula_aux&#39;vc.3.4.0.5" expl="postcondition">
-     <proof prover="4" obsolete="true"><result status="valid" time="0.13" steps="149066"/></proof>
-     </goal>
-     <goal name="to_formula_aux&#39;vc.3.4.0.6" expl="postcondition">
-     <proof prover="4" obsolete="true"><result status="valid" time="0.14" steps="156532"/></proof>
-     </goal>
-     <goal name="to_formula_aux&#39;vc.3.4.0.7" expl="postcondition">
-     <proof prover="4" obsolete="true"><result status="valid" time="0.13" steps="153537"/></proof>
-     </goal>
-     <goal name="to_formula_aux&#39;vc.3.4.0.8" expl="postcondition">
-     <proof prover="4" obsolete="true"><result status="valid" time="0.12" steps="153534"/></proof>
-     </goal>
-    </transf>
+   <goal name="to_formula_aux&#39;vc.9.0" expl="postcondition">
+   <proof prover="1" timelimit="1" memlimit="1000"><result status="timeout" time="1.00" steps="36011"/></proof>
+   <proof prover="2"><result status="timeout" time="0.79"/></proof>
+   <proof prover="3"><result status="highfailure" time="0.70" steps="1022011"/></proof>
+   <proof prover="5"><result status="highfailure" time="0.01"/></proof>
+   <transf name="split_vc" >
+    <goal name="to_formula_aux&#39;vc.9.0.0" expl="postcondition">
+    <proof prover="3"><result status="valid" time="0.13" steps="147253"/></proof>
+    </goal>
+    <goal name="to_formula_aux&#39;vc.9.0.1" expl="postcondition">
+    <proof prover="3"><result status="valid" time="0.13" steps="147253"/></proof>
+    </goal>
+    <goal name="to_formula_aux&#39;vc.9.0.2" expl="postcondition">
+    <proof prover="3"><result status="valid" time="0.13" steps="148151"/></proof>
+    </goal>
+    <goal name="to_formula_aux&#39;vc.9.0.3" expl="postcondition">
+    <proof prover="3"><result status="valid" time="0.13" steps="148151"/></proof>
+    </goal>
+    <goal name="to_formula_aux&#39;vc.9.0.4" expl="postcondition">
+    <proof prover="3"><result status="valid" time="0.14" steps="153301"/></proof>
+    </goal>
+    <goal name="to_formula_aux&#39;vc.9.0.5" expl="postcondition">
+    <proof prover="3"><result status="valid" time="0.14" steps="153301"/></proof>
+    </goal>
+    <goal name="to_formula_aux&#39;vc.9.0.6" expl="postcondition">
+    <proof prover="3"><result status="valid" time="0.13" steps="154566"/></proof>
+    </goal>
+    <goal name="to_formula_aux&#39;vc.9.0.7" expl="postcondition">
+    <proof prover="3"><result status="valid" time="0.14" steps="154566"/></proof>
     </goal>
    </transf>
    </goal>
-   <goal name="to_formula_aux&#39;vc.3.5" expl="postcondition">
-   <proof prover="1" timelimit="30" memlimit="4000" obsolete="true"><result status="highfailure" time="0.01"/></proof>
-   <proof prover="2" timelimit="30" memlimit="4000" obsolete="true"><result status="unknown" time="1.25" steps="63824"/></proof>
-   <proof prover="3" timelimit="30" memlimit="4000" obsolete="true"><result status="timeout" time="30.00"/></proof>
-   <proof prover="4" timelimit="30" memlimit="4000" obsolete="true"><result status="highfailure" time="26.80" steps="38338169"/></proof>
+   <goal name="to_formula_aux&#39;vc.9.1" expl="postcondition">
+   <proof prover="1" timelimit="1" memlimit="1000"><result status="timeout" time="1.00" steps="35985"/></proof>
+   <proof prover="2"><result status="timeout" time="0.79"/></proof>
+   <proof prover="3"><result status="timeout" time="1.00" steps="1184830"/></proof>
+   <proof prover="5"><result status="highfailure" time="0.01"/></proof>
+   <transf name="split_vc" >
+    <goal name="to_formula_aux&#39;vc.9.1.0" expl="postcondition">
+    <proof prover="3"><result status="valid" time="0.13" steps="147236"/></proof>
+    </goal>
+    <goal name="to_formula_aux&#39;vc.9.1.1" expl="postcondition">
+    <proof prover="3"><result status="valid" time="0.14" steps="147236"/></proof>
+    </goal>
+    <goal name="to_formula_aux&#39;vc.9.1.2" expl="postcondition">
+    <proof prover="3"><result status="valid" time="0.15" steps="171011"/></proof>
+    </goal>
+    <goal name="to_formula_aux&#39;vc.9.1.3" expl="postcondition">
+    <proof prover="3"><result status="valid" time="0.15" steps="171119"/></proof>
+    </goal>
+    <goal name="to_formula_aux&#39;vc.9.1.4" expl="postcondition">
+    <proof prover="3"><result status="valid" time="0.13" steps="153286"/></proof>
+    </goal>
+    <goal name="to_formula_aux&#39;vc.9.1.5" expl="postcondition">
+    <proof prover="3"><result status="valid" time="0.14" steps="153286"/></proof>
+    </goal>
+    <goal name="to_formula_aux&#39;vc.9.1.6" expl="postcondition">
+    <proof prover="3"><result status="valid" time="0.16" steps="187769"/></proof>
+    </goal>
+    <goal name="to_formula_aux&#39;vc.9.1.7" expl="postcondition">
+    <proof prover="3"><result status="valid" time="0.16" steps="187877"/></proof>
+    </goal>
+   </transf>
    </goal>
-   <goal name="to_formula_aux&#39;vc.3.6" expl="postcondition">
-   <proof prover="1" timelimit="30" memlimit="4000" obsolete="true"><result status="highfailure" time="0.01"/></proof>
-   <proof prover="2" timelimit="30" memlimit="4000" obsolete="true"><result status="unknown" time="1.24" steps="63967"/></proof>
-   <proof prover="3" timelimit="30" memlimit="4000" obsolete="true"><result status="timeout" time="30.00"/></proof>
-   <proof prover="4" timelimit="30" memlimit="4000" obsolete="true"><result status="timeout" time="30.00" steps="29805897"/></proof>
+   <goal name="to_formula_aux&#39;vc.9.2" expl="postcondition">
+   <proof prover="1" timelimit="1" memlimit="1000"><result status="timeout" time="1.00" steps="35954"/></proof>
+   <proof prover="2"><result status="timeout" time="1.00"/></proof>
+   <proof prover="3"><result status="timeout" time="1.00" steps="1316479"/></proof>
+   <proof prover="5"><result status="highfailure" time="0.01"/></proof>
+   <transf name="split_vc" >
+    <goal name="to_formula_aux&#39;vc.9.2.0" expl="postcondition">
+    <proof prover="3"><result status="valid" time="0.13" steps="147203"/></proof>
+    </goal>
+    <goal name="to_formula_aux&#39;vc.9.2.1" expl="postcondition">
+    <proof prover="3"><result status="valid" time="0.13" steps="147203"/></proof>
+    </goal>
+    <goal name="to_formula_aux&#39;vc.9.2.2" expl="postcondition">
+    <proof prover="3"><result status="valid" time="0.15" steps="175678"/></proof>
+    </goal>
+    <goal name="to_formula_aux&#39;vc.9.2.3" expl="postcondition">
+    <proof prover="3"><result status="valid" time="0.15" steps="175696"/></proof>
+    </goal>
+    <goal name="to_formula_aux&#39;vc.9.2.4" expl="postcondition">
+    <proof prover="3"><result status="valid" time="0.13" steps="153259"/></proof>
+    </goal>
+    <goal name="to_formula_aux&#39;vc.9.2.5" expl="postcondition">
+    <proof prover="3"><result status="valid" time="0.12" steps="153259"/></proof>
+    </goal>
+    <goal name="to_formula_aux&#39;vc.9.2.6" expl="postcondition">
+    <proof prover="3"><result status="valid" time="0.17" steps="196649"/></proof>
+    </goal>
+    <goal name="to_formula_aux&#39;vc.9.2.7" expl="postcondition">
+    <proof prover="3"><result status="valid" time="0.17" steps="196657"/></proof>
+    </goal>
+   </transf>
    </goal>
   </transf>
   </goal>
  </transf>
  </goal>
  <goal name="to_formula&#39;vc" expl="VC for to_formula">
- <proof prover="1" obsolete="true"><result status="highfailure" time="0.01"/></proof>
- <proof prover="2" obsolete="true"><result status="timeout" time="1.00" steps="41939"/></proof>
- <proof prover="3" obsolete="true"><result status="timeout" time="1.00"/></proof>
- <proof prover="4" obsolete="true"><result status="timeout" time="1.00" steps="854422"/></proof>
  <transf name="split_vc" >
-  <goal name="to_formula&#39;vc.0" expl="variant decrease">
-  <proof prover="4" obsolete="true"><result status="valid" time="0.14" steps="161593"/></proof>
+  <goal name="to_formula&#39;vc.0" expl="precondition">
+  <proof prover="6"><path name="cnf2_T_to_formulaqtvc_3.v"/><result status="valid" time="0.51"/></proof>
   </goal>
-  <goal name="to_formula&#39;vc.1" expl="postcondition">
-  <proof prover="1" obsolete="true"><result status="highfailure" time="0.01"/></proof>
-  <proof prover="2" obsolete="true"><result status="timeout" time="1.00" steps="34621"/></proof>
-  <proof prover="3" obsolete="true"><result status="timeout" time="1.00"/></proof>
-  <proof prover="4" obsolete="true"><result status="highfailure" time="0.77" steps="1004011"/></proof>
-  <transf name="split_vc" >
-   <goal name="to_formula&#39;vc.1.0" expl="postcondition">
-   <proof prover="1" obsolete="true"><result status="highfailure" time="0.01"/></proof>
-   <proof prover="2" obsolete="true"><result status="timeout" time="1.00" steps="34678"/></proof>
-   <proof prover="3" obsolete="true"><result status="timeout" time="1.00"/></proof>
-   <proof prover="4" obsolete="true"><result status="timeout" time="1.00" steps="816637"/></proof>
-   <transf name="split_vc" >
-    <goal name="to_formula&#39;vc.1.0.0" expl="postcondition">
-    <proof prover="3" obsolete="true"><result status="valid" time="0.12"/></proof>
-    <proof prover="4" obsolete="true"><result status="timeout" time="1.00" steps="960770"/></proof>
-    </goal>
-    <goal name="to_formula&#39;vc.1.0.1" expl="postcondition">
-    <proof prover="1" timelimit="30" memlimit="4000" obsolete="true"><result status="highfailure" time="0.01"/></proof>
-    <proof prover="2" timelimit="30" memlimit="4000" obsolete="true"><result status="timeout" time="30.00" steps="104808"/></proof>
-    <proof prover="3" timelimit="30" memlimit="4000" obsolete="true"><result status="timeout" time="30.00"/></proof>
-    <proof prover="4" timelimit="30" memlimit="4000" obsolete="true"><result status="highfailure" time="26.71" steps="57241776"/></proof>
-    </goal>
-    <goal name="to_formula&#39;vc.1.0.2" expl="postcondition">
-    <proof prover="1" timelimit="30" memlimit="4000" obsolete="true"><result status="highfailure" time="0.01"/></proof>
-    <proof prover="2" timelimit="30" memlimit="4000" obsolete="true"><result status="timeout" time="30.00" steps="1615824"/></proof>
-    <proof prover="3" timelimit="30" memlimit="4000" obsolete="true"><result status="timeout" time="30.00"/></proof>
-    <proof prover="4" timelimit="30" memlimit="4000" obsolete="true"><result status="highfailure" time="26.31" steps="29713308"/></proof>
-    </goal>
-   </transf>
-   </goal>
-   <goal name="to_formula&#39;vc.1.1" expl="postcondition">
-   <proof prover="1" obsolete="true"><result status="highfailure" time="0.01"/></proof>
-   <proof prover="2" obsolete="true"><result status="timeout" time="1.00" steps="34786"/></proof>
-   <proof prover="3" obsolete="true"><result status="timeout" time="1.00"/></proof>
-   <proof prover="4" obsolete="true"><result status="timeout" time="1.00" steps="1284452"/></proof>
-   <transf name="split_vc" >
-    <goal name="to_formula&#39;vc.1.1.0" expl="postcondition">
-    <proof prover="4" obsolete="true"><result status="valid" time="0.12" steps="139909"/></proof>
-    </goal>
-    <goal name="to_formula&#39;vc.1.1.1" expl="postcondition">
-    <proof prover="4" obsolete="true"><result status="valid" time="0.05" steps="9827"/></proof>
-    </goal>
-    <goal name="to_formula&#39;vc.1.1.2" expl="postcondition">
-    <proof prover="3" obsolete="true"><result status="valid" time="0.26"/></proof>
-    <proof prover="4" obsolete="true"><result status="timeout" time="1.00" steps="1331229"/></proof>
+  <goal name="to_formula&#39;vc.1" expl="variant decrease">
+  <proof prover="3"><result status="valid" time="0.16" steps="177353"/></proof>
+  </goal>
+  <goal name="to_formula&#39;vc.2" expl="precondition">
+  <proof prover="3"><result status="valid" time="0.15" steps="157969"/></proof>
+  </goal>
+  <goal name="to_formula&#39;vc.3" expl="precondition">
+  <proof prover="6"><path name="cnf2_T_to_formulaqtvc_2.v"/><result status="valid" time="0.51"/></proof>
+  </goal>
+  <goal name="to_formula&#39;vc.4" expl="unreachable point">
+  <proof prover="3"><result status="valid" time="0.13" steps="147220"/></proof>
+  </goal>
+  <goal name="to_formula&#39;vc.5" expl="postcondition">
+  <proof prover="6"><path name="cnf2_T_to_formulaqtvc_1.v"/><result status="valid" time="0.50"/></proof>
+  </goal>
+ </transf>
+ </goal>
+ <goal name="t_equiv">
+ <proof prover="3"><result status="valid" time="0.11" steps="168128"/></proof>
+ </goal>
+ <goal name="refl0">
+ <proof prover="1" timelimit="1" memlimit="1000" obsolete="true"><result status="timeout" time="1.00" steps="35785"/></proof>
+ <proof prover="2" obsolete="true"><result status="timeout" time="1.00"/></proof>
+ <proof prover="3" obsolete="true"><result status="timeout" time="1.00" steps="2059453"/></proof>
+ <proof prover="5" obsolete="true"><result status="highfailure" time="0.01"/></proof>
+ <transf name="split_vc" >
+  <goal name="refl0.0">
+  <proof prover="1" timelimit="5" memlimit="2000" obsolete="true"><result status="timeout" time="5.00" steps="35720"/></proof>
+  <proof prover="2" timelimit="5" memlimit="2000" obsolete="true"><result status="timeout" time="5.00"/></proof>
+  <proof prover="3" timelimit="5" memlimit="2000" obsolete="true"><result status="timeout" time="5.00" steps="10503020"/></proof>
+  <proof prover="5" timelimit="5" memlimit="2000" obsolete="true"><result status="highfailure" time="0.01"/></proof>
+  <transf name="inline_goal" >
+   <goal name="refl0.0.0">
+   <transf name="split_all_full" >
+    <goal name="refl0.0.0.0">
+    <proof prover="3"><result status="valid" time="0.35" steps="503990"/></proof>
     </goal>
    </transf>
    </goal>
@@ -1125,102 +813,253 @@
   </goal>
  </transf>
  </goal>
-</theory>
-</file>
-<file format="whyml" proved="true">
-<path name=".."/><path name="formula2.mlw"/>
-<theory name="PropositionalFormula" proved="true">
- <goal name="demorgan" proved="true">
- <proof prover="2"><result status="valid" time="0.16" steps="14842"/></proof>
+ <goal name="refl1">
+ <proof prover="1"><result status="valid" time="0.44" steps="34633"/></proof>
+ <proof prover="3"><result status="valid" time="0.20" steps="264362"/></proof>
+ </goal>
+ <goal name="refl2">
+ <proof prover="1"><result status="valid" time="0.26" steps="31323"/></proof>
+ <proof prover="3"><result status="valid" time="0.13" steps="149811"/></proof>
  </goal>
 </theory>
 </file>
 <file format="whyml">
-<path name=".."/><path name="boolean_algebra.mlw"/>
-<theory name="BooleanAlgebra">
- <goal name="lattice_ring">
- </goal>
+<path name=".."/><path name="formula2.mlw"/>
+<theory name="PropositionalFormula">
  <goal name="comm_and">
+ <proof prover="1" obsolete="true"><result status="valid" time="0.23" steps="15741"/></proof>
  </goal>
  <goal name="comm_or">
+ <proof prover="1" obsolete="true"><result status="valid" time="0.24" steps="15781"/></proof>
  </goal>
  <goal name="dist_and">
+ <proof prover="1" obsolete="true"><result status="valid" time="0.33" steps="20580"/></proof>
  </goal>
  <goal name="dist_or">
+ <proof prover="1" obsolete="true"><result status="valid" time="0.36" steps="21926"/></proof>
  </goal>
  <goal name="ident_and">
+ <proof prover="1" obsolete="true"><result status="valid" time="0.26" steps="17593"/></proof>
  </goal>
  <goal name="ident_or">
+ <proof prover="1" obsolete="true"><result status="valid" time="0.26" steps="17770"/></proof>
  </goal>
  <goal name="uniq_compl">
+ <proof prover="1" obsolete="true"><result status="valid" time="0.24" steps="16052"/></proof>
  </goal>
  <goal name="compl_and">
+ <proof prover="1" obsolete="true"><result status="valid" time="0.28" steps="18358"/></proof>
  </goal>
  <goal name="compl_or">
+ <proof prover="1" obsolete="true"><result status="valid" time="0.29" steps="18498"/></proof>
  </goal>
  <goal name="idem_and">
+ <proof prover="1" obsolete="true"><result status="valid" time="0.24" steps="16129"/></proof>
  </goal>
  <goal name="idem_or">
- </goal>
- <goal name="boundbot">
- </goal>
- <goal name="boundtop">
+ <proof prover="1" obsolete="true"><result status="valid" time="0.24" steps="16165"/></proof>
  </goal>
  <goal name="bound_and">
+ <proof prover="1" obsolete="true"><result status="valid" time="0.24" steps="16337"/></proof>
  </goal>
  <goal name="bound_or">
+ <proof prover="1" obsolete="true"><result status="valid" time="0.24" steps="16365"/></proof>
  </goal>
  <goal name="absorp_and">
+ <proof prover="1" obsolete="true"><result status="valid" time="0.31" steps="20508"/></proof>
  </goal>
  <goal name="absorp_or">
+ <proof prover="1" obsolete="true"><result status="valid" time="0.32" steps="21423"/></proof>
  </goal>
  <goal name="assoc_and">
+ <proof prover="1" obsolete="true"><result status="valid" time="0.39" steps="24683"/></proof>
  </goal>
  <goal name="assoc_or">
+ <proof prover="1" obsolete="true"><result status="valid" time="0.39" steps="24648"/></proof>
  </goal>
  <goal name="demorgan_and">
+ <proof prover="1" obsolete="true"><result status="valid" time="0.39" steps="24712"/></proof>
  </goal>
  <goal name="demorgan_or">
+ <proof prover="1" obsolete="true"><result status="valid" time="0.42" steps="27176"/></proof>
  </goal>
  <goal name="negtop">
+ <proof prover="1" obsolete="true"><result status="valid" time="0.26" steps="18332"/></proof>
  </goal>
  <goal name="negbot">
+ <proof prover="1" obsolete="true"><result status="valid" time="0.27" steps="18847"/></proof>
  </goal>
  <goal name="double_neg">
+ <proof prover="1" obsolete="true"><result status="valid" time="0.27" steps="18121"/></proof>
  </goal>
  <goal name="dist_ord">
+ <proof prover="1" obsolete="true"><result status="valid" time="0.20" steps="15439"/></proof>
  </goal>
  <goal name="disj_and">
+ <proof prover="1" obsolete="true"><result status="valid" time="0.24" steps="25920"/></proof>
  </goal>
  <goal name="disj_or">
+ <proof prover="1" obsolete="true"><result status="valid" time="0.27" steps="18526"/></proof>
  </goal>
  <goal name="modus_ponens">
+ <proof prover="1" obsolete="true"><result status="valid" time="0.47" steps="28808"/></proof>
  </goal>
  <goal name="modus_tollens">
+ <proof prover="1" obsolete="true"><result status="valid" time="1.14" steps="40092"/></proof>
  </goal>
  <goal name="implic">
+ <proof prover="1" obsolete="true"><result status="valid" time="0.36" steps="22207"/></proof>
  </goal>
  <goal name="absur">
+ <proof prover="1" obsolete="true"><result status="valid" time="0.84" steps="45190"/></proof>
  </goal>
  <goal name="disj_syl">
+ <proof prover="1" obsolete="true"><result status="valid" time="1.27" steps="41566"/></proof>
  </goal>
  <goal name="impl_chain">
+ <proof prover="1" obsolete="true"><result status="valid" time="4.17" steps="73769"/></proof>
  </goal>
  <goal name="impl_comb">
+ <proof prover="1" obsolete="true"><result status="valid" time="5.45" steps="71616"/></proof>
  </goal>
  <goal name="currying">
+ <proof prover="1" obsolete="true"><result status="valid" time="1.00" steps="43607"/></proof>
  </goal>
  <goal name="contrapos">
+ <proof prover="1" obsolete="true"><result status="valid" time="0.39" steps="24238"/></proof>
  </goal>
- <goal name="g">
+ <goal name="pierce">
+ <proof prover="1" obsolete="true"><result status="valid" time="4.38" steps="70889"/></proof>
  </goal>
 </theory>
-<theory name="SwitchingAlgebra">
- <goal name="ifnottop_thenbot">
+</file>
+<file format="whyml" proved="true">
+<path name=".."/><path name="boolean_algebra.mlw"/>
+<theory name="BooleanAlgebra" proved="true">
+ <goal name="lattice_ring" proved="true">
+ <proof prover="1" timelimit="5" memlimit="1000"><result status="valid" time="0.10" steps="6632"/></proof>
+ <proof prover="3" timelimit="5"><result status="highfailure" time="3.47" steps="2331047"/></proof>
  </goal>
- <goal name="ifnotbot_thentop">
+ <goal name="comm_and" proved="true">
+ <proof prover="3" timelimit="5"><result status="valid" time="0.05" steps="1711"/></proof>
  </goal>
- <goal name="g">
+ <goal name="comm_or" proved="true">
+ <proof prover="3" timelimit="5"><result status="valid" time="0.05" steps="1728"/></proof>
+ </goal>
+ <goal name="dist_and" proved="true">
+ <proof prover="3" timelimit="5"><result status="valid" time="0.05" steps="1757"/></proof>
+ </goal>
+ <goal name="dist_or" proved="true">
+ <proof prover="3" timelimit="5"><result status="valid" time="0.05" steps="1786"/></proof>
+ </goal>
+ <goal name="ident_and" proved="true">
+ <proof prover="3" timelimit="5"><result status="valid" time="0.05" steps="1799"/></proof>
+ </goal>
+ <goal name="ident_or" proved="true">
+ <proof prover="3" timelimit="5"><result status="valid" time="0.05" steps="1812"/></proof>
+ </goal>
+ <goal name="uniq_compl" proved="true">
+ <proof prover="3" timelimit="5"><result status="valid" time="0.06" steps="16894"/></proof>
+ </goal>
+ <goal name="compl_and" proved="true">
+ <proof prover="3" timelimit="5"><result status="valid" time="0.10" steps="55576"/></proof>
+ </goal>
+ <goal name="compl_or" proved="true">
+ <proof prover="2" timelimit="1200" memlimit="8192"><result status="valid" time="0.05"/></proof>
+ </goal>
+ <goal name="idem_and" proved="true">
+ <proof prover="3" timelimit="5"><result status="valid" time="0.05" steps="1888"/></proof>
+ </goal>
+ <goal name="idem_or" proved="true">
+ <proof prover="3" timelimit="5"><result status="valid" time="0.04" steps="1901"/></proof>
+ </goal>
+ <goal name="boundbot" proved="true">
+ <proof prover="3" timelimit="5"><result status="valid" time="0.05" steps="1910"/></proof>
+ </goal>
+ <goal name="boundtop" proved="true">
+ <proof prover="3" timelimit="5"><result status="valid" time="0.05" steps="1919"/></proof>
+ </goal>
+ <goal name="bound_and" proved="true">
+ <proof prover="3" timelimit="5"><result status="valid" time="0.05" steps="1932"/></proof>
+ </goal>
+ <goal name="bound_or" proved="true">
+ <proof prover="3" timelimit="5"><result status="valid" time="0.05" steps="1945"/></proof>
+ </goal>
+ <goal name="absorp_and" proved="true">
+ <proof prover="3" timelimit="5"><result status="valid" time="0.05" steps="1962"/></proof>
+ </goal>
+ <goal name="absorp_or" proved="true">
+ <proof prover="3" timelimit="5"><result status="valid" time="0.05" steps="1979"/></proof>
+ </goal>
+ <goal name="assoc_and" proved="true">
+ <proof prover="3" timelimit="5"><result status="valid" time="0.05" steps="2004"/></proof>
+ </goal>
+ <goal name="assoc_or" proved="true">
+ <proof prover="3" timelimit="5"><result status="valid" time="0.04" steps="2029"/></proof>
+ </goal>
+ <goal name="demorgan_and" proved="true">
+ <proof prover="1" timelimit="5" memlimit="1000"><result status="valid" time="3.02" steps="278114"/></proof>
+ <proof prover="3" timelimit="5"><result status="highfailure" time="3.60" steps="727804"/></proof>
+ </goal>
+ <goal name="demorgan_or" proved="true">
+ <proof prover="2" timelimit="1200" memlimit="8192"><result status="valid" time="1.38"/></proof>
+ </goal>
+ <goal name="negtop" proved="true">
+ <proof prover="3" timelimit="5"><result status="valid" time="0.06" steps="18872"/></proof>
+ </goal>
+ <goal name="negbot" proved="true">
+ <proof prover="3" timelimit="5"><result status="valid" time="0.06" steps="22153"/></proof>
+ </goal>
+ <goal name="double_neg" proved="true">
+ <proof prover="3" timelimit="5"><result status="valid" time="0.26" steps="152268"/></proof>
+ </goal>
+ <goal name="dist_ord" proved="true">
+ <proof prover="3" timelimit="5"><result status="valid" time="0.06" steps="22803"/></proof>
+ </goal>
+ <goal name="disj_and" proved="true">
+ <proof prover="3" timelimit="5"><result status="valid" time="0.07" steps="22681"/></proof>
+ </goal>
+ <goal name="disj_or" proved="true">
+ <proof prover="3" timelimit="5"><result status="valid" time="0.07" steps="26668"/></proof>
+ </goal>
+ <goal name="modus_ponens" proved="true">
+ <proof prover="3" timelimit="5"><result status="valid" time="0.11" steps="58632"/></proof>
+ </goal>
+ <goal name="modus_tollens" proved="true">
+ <proof prover="3" timelimit="5"><result status="valid" time="0.07" steps="32049"/></proof>
+ </goal>
+ <goal name="implic" proved="true">
+ <proof prover="3" timelimit="5"><result status="valid" time="0.04" steps="2330"/></proof>
+ </goal>
+ <goal name="absur" proved="true">
+ <proof prover="3" timelimit="5"><result status="valid" time="0.15" steps="112987"/></proof>
+ </goal>
+ <goal name="disj_syl" proved="true">
+ <proof prover="3" timelimit="5"><result status="valid" time="0.09" steps="55074"/></proof>
+ </goal>
+ <goal name="impl_chain" proved="true">
+ <proof prover="1" timelimit="5" memlimit="1000"><result status="valid" time="0.32" steps="32383"/></proof>
+ <proof prover="3" timelimit="5"><result status="highfailure" time="4.28" steps="784944"/></proof>
+ </goal>
+ <goal name="impl_comb" proved="true">
+ <proof prover="3" timelimit="5"><result status="valid" time="0.45" steps="164818"/></proof>
+ </goal>
+ <goal name="currying" proved="true">
+ <proof prover="3" timelimit="5"><result status="valid" time="0.07" steps="33340"/></proof>
+ </goal>
+ <goal name="contrapos" proved="true">
+ <proof prover="3" timelimit="5"><result status="valid" time="0.07" steps="33051"/></proof>
+ </goal>
+ <goal name="g" proved="true">
+ <proof prover="3" timelimit="5"><result status="valid" time="0.06" steps="15687"/></proof>
+ </goal>
+</theory>
+<theory name="SwitchingAlgebra" proved="true">
+ <goal name="ifnottop_thenbot" proved="true">
+ <proof prover="3" timelimit="5"><result status="valid" time="0.18" steps="189424"/></proof>
+ </goal>
+ <goal name="ifnotbot_thentop" proved="true">
+ <proof prover="3" timelimit="5"><result status="valid" time="0.05" steps="12320"/></proof>
  </goal>
 </theory>
 </file>

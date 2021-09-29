@@ -5,6 +5,9 @@ Require BuiltIn.
 Require HighOrd.
 Require int.Int.
 Require list.List.
+Require list.Length.
+Require list.Mem.
+Require list.Append.
 
 Axiom i : Type.
 Parameter i_WhyType : WhyType i.
@@ -583,8 +586,195 @@ Fixpoint is_nnfc (phi:formula) {struct phi}: Prop :=
   | Impl _ _ => False
   end.
 
-(* Why3 goal *)
-Theorem nnfc_is_implfree :
+Axiom nnfc_is_implfree :
   forall (phi:formula), is_nnfc phi -> is_impl_free phi.
 
-  auto.
+(* Why3 assumption *)
+Fixpoint is_cnf_clause (phi:formula) {struct phi}: Prop :=
+  match phi with
+  | Prop1 _ => True
+  | Var _ => True
+  | Neg (Prop1 _) => True
+  | Neg (Var _) => True
+  | Neg _ => False
+  | Or phi1 phi2 => is_cnf_clause phi1 /\ is_cnf_clause phi2
+  | And _ _ => False
+  | Impl _ _ => False
+  end.
+
+Axiom cnf_clause_is_implfree :
+  forall (phi:formula), is_cnf_clause phi -> is_impl_free phi.
+
+Axiom cnf_clause_is_nnfc :
+  forall (phi:formula), is_cnf_clause phi -> is_nnfc phi.
+
+(* Why3 assumption *)
+Fixpoint is_cnf (phi:formula) {struct phi}: Prop :=
+  match phi with
+  | Prop1 _ => True
+  | Var _ => True
+  | Neg (Prop1 _) => True
+  | Neg (Var _) => True
+  | Neg _ => False
+  | Or phi1 phi2 => is_cnf_clause phi1 /\ is_cnf_clause phi2
+  | And phi1 phi2 => is_cnf phi1 /\ is_cnf phi2
+  | Impl _ _ => False
+  end.
+
+Axiom cnf_clause_is_cnf :
+  forall (phi:formula), is_cnf_clause phi -> is_cnf phi.
+
+Axiom cnf_is_implfree : forall (phi:formula), is_cnf phi -> is_impl_free phi.
+
+Axiom cnf_is_nnfc : forall (phi:formula), is_cnf phi -> is_nnfc phi.
+
+Axiom cnf_clause1 :
+  forall (phi1:formula) (phi2:formula), is_cnf (Or phi1 phi2) ->
+  is_cnf_clause phi1 /\ is_cnf_clause phi2.
+
+(* Why3 assumption *)
+Fixpoint impl_free (phi:formula) {struct phi}: formula :=
+  match phi with
+  | Prop1 t => Prop1 t
+  | Var i1 => Var i1
+  | Neg phi1 => Neg (impl_free phi1)
+  | Or phi1 phi2 => Or (impl_free phi1) (impl_free phi2)
+  | And phi1 phi2 => And (impl_free phi1) (impl_free phi2)
+  | Impl phi1 phi2 => Or (Neg (impl_free phi1)) (impl_free phi2)
+  end.
+
+Axiom impl_free'spec :
+  forall (phi:formula), forall (v:i -> b),
+  ((eval phi v) = (eval (impl_free phi) v)) /\ is_impl_free (impl_free phi).
+
+Parameter nnfc: formula -> formula.
+
+Axiom nnfc'def :
+  forall (phi:formula), is_impl_free phi ->
+  match phi with
+  | Neg (Neg phi1) => ((nnfc phi) = (nnfc phi1))
+  | Neg (And phi1 phi2) =>
+      ((nnfc phi) = (Or (nnfc (Neg phi1)) (nnfc (Neg phi2))))
+  | Neg (Or phi1 phi2) =>
+      ((nnfc phi) = (And (nnfc (Neg phi1)) (nnfc (Neg phi2))))
+  | And phi1 phi2 => ((nnfc phi) = (And (nnfc phi1) (nnfc phi2)))
+  | Or phi1 phi2 => ((nnfc phi) = (Or (nnfc phi1) (nnfc phi2)))
+  | _ => ((nnfc phi) = phi)
+  end.
+
+Axiom nnfc'spec :
+  forall (phi:formula), is_impl_free phi ->
+  (forall (v:i -> b), ((eval phi v) = (eval (nnfc phi) v))) /\
+  is_impl_free phi /\ is_nnfc (nnfc phi).
+
+Parameter distr: formula -> formula -> formula.
+
+Axiom distr'def :
+  forall (phi1:formula) (phi2:formula),
+  is_impl_free phi1 /\
+  is_impl_free phi2 /\
+  is_nnfc phi1 /\ is_nnfc phi2 /\ is_cnf phi1 /\ is_cnf phi2 ->
+  match (phi1, phi2) with
+  | (And phi11 phi12, phi21) =>
+      ((distr phi1 phi2) = (And (distr phi11 phi21) (distr phi12 phi21)))
+  | (phi11, And phi21 phi22) =>
+      ((distr phi1 phi2) = (And (distr phi11 phi21) (distr phi11 phi22)))
+  | (_, _) => ((distr phi1 phi2) = (Or phi1 phi2))
+  end.
+
+Axiom distr'spec :
+  forall (phi1:formula) (phi2:formula),
+  is_impl_free phi1 /\
+  is_impl_free phi2 /\
+  is_nnfc phi1 /\ is_nnfc phi2 /\ is_cnf phi1 /\ is_cnf phi2 ->
+  (forall (v:i -> b),
+   ((infix_bsassl (eval phi1 v) (eval phi2 v)) = (eval (distr phi1 phi2) v))) /\
+  is_impl_free (distr phi1 phi2) /\
+  is_nnfc (distr phi1 phi2) /\ is_cnf (distr phi1 phi2).
+
+Parameter cnfc: formula -> formula.
+
+Axiom cnfc'def :
+  forall (phi:formula), is_impl_free phi /\ is_nnfc phi ->
+  match phi with
+  | Or phi1 phi2 => ((cnfc phi) = (distr (cnfc phi1) (cnfc phi2)))
+  | And phi1 phi2 => ((cnfc phi) = (And (cnfc phi1) (cnfc phi2)))
+  | _ => ((cnfc phi) = phi)
+  end.
+
+Axiom cnfc'spec :
+  forall (phi:formula), is_impl_free phi /\ is_nnfc phi ->
+  (forall (v:i -> b), ((eval phi v) = (eval (cnfc phi) v))) /\
+  is_impl_free phi /\ is_nnfc (cnfc phi) /\ is_cnf (cnfc phi).
+
+(* Why3 assumption *)
+Definition t (phi:formula) : formula := cnfc (nnfc (impl_free phi)).
+
+Axiom t'spec :
+  forall (phi:formula), forall (v:i -> b),
+  ((eval phi v) = (eval (t phi) v)) /\
+  is_impl_free (t phi) /\ is_nnfc (t phi) /\ is_cnf (t phi).
+
+Parameter to_cnf_aux: formula -> Init.Datatypes.list atom.
+
+Axiom to_cnf_aux'spec :
+  forall (phi:formula),
+  is_impl_free phi /\ is_nnfc phi /\ is_cnf_clause phi -> forall (v:i -> b),
+  ((eval phi v) = (eval_cnf_clause (to_cnf_aux phi) v)).
+
+Parameter to_cnf: formula -> Init.Datatypes.list (Init.Datatypes.list atom).
+
+Axiom to_cnf'def :
+  forall (phi:formula), is_impl_free phi /\ is_nnfc phi /\ is_cnf phi ->
+  match phi with
+  | And phi1 phi2 =>
+      ((to_cnf phi) = (Init.Datatypes.app (to_cnf phi1) (to_cnf phi2)))
+  | _ =>
+      ((to_cnf phi) =
+       (Init.Datatypes.cons (to_cnf_aux phi) Init.Datatypes.nil))
+  end.
+
+Axiom to_cnf'spec :
+  forall (phi:formula), is_impl_free phi /\ is_nnfc phi /\ is_cnf phi ->
+  forall (v:i -> b), ((eval phi v) = (eval_cnf (to_cnf phi) v)).
+
+Parameter to_formula_aux: Init.Datatypes.list atom -> formula.
+
+Axiom to_formula_aux'spec :
+  forall (phi:Init.Datatypes.list atom), ~ list.List.is_nil phi ->
+  is_impl_free (to_formula_aux phi) /\
+  is_nnfc (to_formula_aux phi) /\ is_cnf_clause (to_formula_aux phi).
+
+Parameter phi: Init.Datatypes.list (Init.Datatypes.list atom).
+
+Axiom Requires : ~ list.List.is_nil phi.
+
+Parameter result: formula.
+
+Parameter result1: formula.
+
+Axiom H :
+  match phi with
+  | Init.Datatypes.cons x x1 =>
+      match x1 with
+      | Init.Datatypes.nil =>
+          (result = (to_formula_aux x)) /\
+          is_impl_free result /\ is_nnfc result /\ is_cnf_clause result
+      | _ =>
+          (forall (f:i -> b),
+           ((eval_cnf x1 f) = (eval result1 f)) /\
+           is_impl_free result1 /\ is_nnfc result1 /\ is_cnf result1) /\
+          (let result2 := to_formula_aux x in
+           (is_impl_free result2 /\ is_nnfc result2 /\ is_cnf_clause result2) /\
+           (result = (And result2 result1)))
+      end
+  | _ => False
+  end.
+
+Parameter f: i -> b.
+
+(* Why3 goal *)
+Theorem to_formula'vc :
+  ((eval_cnf phi f) = (eval result f)) /\
+  is_impl_free result /\ is_nnfc result /\ is_cnf result.
+auto.

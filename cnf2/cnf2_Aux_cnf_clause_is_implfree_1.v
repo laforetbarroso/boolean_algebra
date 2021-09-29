@@ -583,8 +583,23 @@ Fixpoint is_nnfc (phi:formula) {struct phi}: Prop :=
   | Impl _ _ => False
   end.
 
-(* Why3 goal *)
-Theorem nnfc_is_implfree :
+Axiom nnfc_is_implfree :
   forall (phi:formula), is_nnfc phi -> is_impl_free phi.
 
-  auto.
+(* Why3 assumption *)
+Fixpoint is_cnf_clause (phi:formula) {struct phi}: Prop :=
+  match phi with
+  | Prop1 _ => True
+  | Var _ => True
+  | Neg (Prop1 _) => True
+  | Neg (Var _) => True
+  | Neg _ => False
+  | Or phi1 phi2 => is_cnf_clause phi1 /\ is_cnf_clause phi2
+  | And _ _ => False
+  | Impl _ _ => False
+  end.
+
+(* Why3 goal *)
+Theorem cnf_clause_is_implfree :
+  forall (phi:formula), is_cnf_clause phi -> is_impl_free phi.
+auto.

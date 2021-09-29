@@ -220,9 +220,7 @@ module SwitchingAlgebra
 
   lemma ifnotbot_thentop: forall t. t <> bot -> t = top
 
-  val (==) (t1 t2: b) : bool
+  val (=) (t1 t2: b) : bool
   ensures { result <-> t1 = t2 }
-  
-  goal g : forall a b c : b. (a /*\ b /*\ c = top) -> (b /*\ c = top)
 
 end

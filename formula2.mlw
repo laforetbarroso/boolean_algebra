@@ -3,6 +3,7 @@ theory PropositionalFormula
   use boolean_algebra.SwitchingAlgebra
   use list.List
 
+  (** Formula Type **)
   type formula =
     | Prop b
     | Var i
@@ -11,42 +12,206 @@ theory PropositionalFormula
     | Or formula formula
     | Impl formula formula
 
-  function eval (e : formula) (f : i -> b) : b
+  function eval (e : formula) (v : i -> b) : b
    = match e with
     | Prop b -> b
-    | Var i -> f i
-    | Neg e1 -> neg (eval e1 f)
-    | And e1 e2 -> (eval e1 f) /*\ (eval e2 f)
-    | Or e1 e2 -> (eval e1 f) \*/ (eval e2 f)
-    | Impl e1 e2 -> (eval e1 f) ->* (eval e2 f)
+    | Var i -> v i
+    | Neg e1 -> neg (eval e1 v)
+    | And e1 e2 -> (eval e1 v) /*\ (eval e2 v)
+    | Or e1 e2 -> (eval e1 v) \*/ (eval e2 v)
+    | Impl e1 e2 -> (eval e1 v) ->* (eval e2 v)
     end
-  
-  predicate equiv (f1 f2 : formula) 
+
+  predicate (==) (f1 f2 : formula)
    = forall v : i -> b. eval f1 v = eval f2 v
 
-  lemma demorgan: 
-    forall phi1 phi2 : formula. equiv (Neg (And phi1 phi2)) (Or (Neg phi1) (Neg phi2))
-
+  (** CNF Type **)
   type atom =
     | B b
     | I i
+    | Nb b
     | Ni i
 
   type cnf_clause = list atom
 
-  type cnf = list cnf_clause 
+  type cnf = list cnf_clause
 
-  function eval_cnf_clause (e : cnf_clause) (f : i -> b) : b =
+  function eval_cnf_clause (e : cnf_clause) (v : i -> b) : b =
     match e with
     | Nil -> bot
-    | Cons (B b) tl -> b \*/ (eval_cnf_clause tl f)
-    | Cons (I i) tl -> (f i) \*/ (eval_cnf_clause tl f)
-    | Cons (Ni i) tl -> (neg (f i)) \*/ (eval_cnf_clause tl f)
+    | Cons (B b) Nil -> b
+    | Cons (I i) Nil -> (v i)
+    | Cons (Nb b) Nil -> (neg b)
+    | Cons (Ni i) Nil -> (neg (v i))
+    | Cons (B b) tl -> b \*/ (eval_cnf_clause tl v)
+    | Cons (I i) tl -> (v i) \*/ (eval_cnf_clause tl v)
+    | Cons (Nb b) tl -> (neg b) \*/ (eval_cnf_clause tl v)
+    | Cons (Ni i) tl -> (neg (v i)) \*/ (eval_cnf_clause tl v)
     end
 
-   function eval_cnf (e : cnf) (f : i -> b) : b =
+  function eval_cnf (e : cnf) (v : i -> b) : b =
     match e with
     | Nil -> top
-    | Cons hd tl -> (eval_cnf_clause hd f) /*\ (eval_cnf tl f)
+    | Cons hd tl -> (eval_cnf_clause hd v) /*\ (eval_cnf tl v)
     end
+
+  predicate equiv_cnf (f1 f2 : cnf)
+    = forall v : i -> b. eval_cnf f1 v = eval_cnf f2 v
+
+  predicate (=.=) (f1 : formula) (f2 : cnf)
+    = forall v. eval f1 v = eval_cnf f2 v
+    
+  (*** Property Check - Formula ***)
+
+  (*Commutativity*)
+
+  lemma comm_and:
+    forall x y : formula. And x y == And y x
+
+  lemma comm_or:
+    forall x y : formula. Or x y == Or y x
+
+  (*Distributivity*)
+
+  lemma dist_and:
+    forall x y z : formula. And x (Or y z) == Or (And x y) (And x z)
+
+  lemma dist_or:
+    forall x y z : formula. Or x (And y z) == And (Or x y) (Or x z)
+
+  (*Identity*)
+
+  lemma ident_and:
+    forall x : formula. And x (Prop top) == x (*?*)
+
+  lemma ident_or:
+    forall x : formula. Or x (Prop bot) == x (*?*)
+
+  (*Complement*)
+
+  lemma uniq_compl:
+    forall x y z : formula. (Neg x) == y /\ (Neg x) == z -> y == z
+
+  lemma compl_and:
+    forall x : formula. And x (Neg x) == Prop bot
+
+  lemma compl_or:
+    forall x : formula. Or x (Neg x) == Prop top
+
+  (*Idempotence*)
+
+  lemma idem_and:
+    forall x : formula. And x x == x
+
+  lemma idem_or:
+    forall x : formula. Or x x == x
+
+  (*Boundedness*)
+
+  lemma bound_and:
+    forall x : formula. And x (Prop bot) == Prop bot
+
+  lemma bound_or:
+    forall x : formula. Or x (Prop top) == Prop top
+
+  (*Absorption*)
+
+  lemma absorp_and:
+    forall x y : formula. And x (Or x y) == x
+
+  lemma absorp_or:
+    forall x y : formula. Or x (And x y) == x
+
+  (*Associativity*)
+
+  lemma assoc_and:
+    forall x y z : formula. And x (And y z) == And (And x y) z
+
+  lemma assoc_or:
+    forall x y z : formula. Or x (Or y z) == Or (Or x y) z
+
+  (*DeMorgan's Laws*)
+
+  lemma demorgan_and:
+    forall phi1 phi2 : formula. Neg (And phi1 phi2) == Or (Neg phi1) (Neg phi2)
+
+  lemma demorgan_or:
+    forall phi1 phi2 : formula. Neg (Or phi1 phi2) == And (Neg phi1) (Neg phi2)
+
+
+  (*Negation*)
+
+  lemma negtop:
+    Neg (Prop top) == Prop bot
+
+  lemma negbot:
+    Neg (Prop bot) == Prop top
+
+  (*Double Negation*)
+
+  lemma double_neg:
+    forall x : formula. Neg (Neg x) == x
+
+  (*Distributive and Lub*)
+
+  lemma dist_ord:
+    forall x y z : b. (x <= z) -> (x \*/ (y /*\ z)) = ((x \*/ y) /*\ z) (*??*)
+
+  (*Disjunctive implication*)
+
+  lemma disj_and:
+    forall x y : formula. And x y == Prop top -> x == Prop top
+
+  lemma disj_or:
+    forall x y : formula. x == Prop top -> Or x y == Prop top
+
+  (*Modus Ponens*)
+
+  lemma modus_ponens:
+    forall x y: formula. And x (Impl x y) == Prop top -> y == Prop top
+
+  (*Modus Tollens*)
+
+  lemma modus_tollens:
+    forall x y : formula. And (Impl x y) (Neg y) == Prop top -> Neg x == Prop top
+
+  (*Implication*)
+
+  lemma implic:
+    forall x y : formula. Impl x y == Or (Neg x) y
+
+  (*Absurdity*)
+
+  lemma absur:
+    forall x y : formula. And (Impl x y) (Impl x (Neg y)) == Neg x
+
+  (*Disjunctive Syllogism*)
+
+  lemma disj_syl:
+    forall x y : formula. And (Or x y) (Neg x) == Prop top -> y == Prop top
+
+  (*Implication chain*)
+
+  lemma impl_chain:
+    forall x y z : formula. And (Impl x y) (Impl y z) == Prop top -> Impl x z == Prop top
+
+  (*Implication Combinantion*)
+
+  lemma impl_comb:
+    forall x y z w : formula. And (Impl x y) (Impl z w) == Prop top -> Impl (And x z) (And y w) == Prop top
+
+  (*Currying*)
+
+  lemma currying:
+    forall x y z : formula. Impl (And x y) z == Impl x (Impl y z)
+
+  (*Contrapositive*)
+
+  lemma contrapos:
+    forall x y : formula. Impl x y == Impl (Neg y) (Neg x)
+
+  (*Pierce's Law*)
+  lemma pierce:
+    forall x y : formula. Impl (Impl (Impl x y) x) x == Or x (Neg x)
+
 end

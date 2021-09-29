@@ -347,20 +347,25 @@ Axiom formula_WhyType : WhyType formula.
 Existing Instance formula_WhyType.
 
 (* Why3 assumption *)
-Fixpoint eval (e:formula) (f:i -> b) {struct e}: b :=
+Fixpoint eval (e:formula) (v:i -> b) {struct e}: b :=
   match e with
   | Prop1 b1 => b1
-  | Var i1 => f i1
-  | Neg e1 => neg (eval e1 f)
-  | And e1 e2 => infix_slasbs (eval e1 f) (eval e2 f)
-  | Or e1 e2 => infix_bsassl (eval e1 f) (eval e2 f)
-  | Impl e1 e2 => infix_mngtas (eval e1 f) (eval e2 f)
+  | Var i1 => v i1
+  | Neg e1 => neg (eval e1 v)
+  | And e1 e2 => infix_slasbs (eval e1 v) (eval e2 v)
+  | Or e1 e2 => infix_bsassl (eval e1 v) (eval e2 v)
+  | Impl e1 e2 => infix_mngtas (eval e1 v) (eval e2 v)
   end.
+
+(* Why3 assumption *)
+Definition infix_eqeq (f1:formula) (f2:formula) : Prop :=
+  forall (v:i -> b), ((eval f1 v) = (eval f2 v)).
 
 (* Why3 assumption *)
 Inductive atom :=
   | B : b -> atom
   | I : i -> atom
+  | Nb : b -> atom
   | Ni : i -> atom.
 Axiom atom_WhyType : WhyType atom.
 Existing Instance atom_WhyType.
@@ -373,24 +378,154 @@ Definition cnf := Init.Datatypes.list (Init.Datatypes.list atom).
 
 (* Why3 assumption *)
 Fixpoint eval_cnf_clause (e:Init.Datatypes.list atom)
-  (f:i -> b) {struct e}: b :=
+  (v:i -> b) {struct e}: b :=
   match e with
   | Init.Datatypes.nil => bot
-  | Init.Datatypes.cons (B b1) tl => infix_bsassl b1 (eval_cnf_clause tl f)
+  | Init.Datatypes.cons (B b1) Init.Datatypes.nil => b1
+  | Init.Datatypes.cons (I i1) Init.Datatypes.nil => v i1
+  | Init.Datatypes.cons (Nb b1) Init.Datatypes.nil => neg b1
+  | Init.Datatypes.cons (Ni i1) Init.Datatypes.nil => neg (v i1)
+  | Init.Datatypes.cons (B b1) tl => infix_bsassl b1 (eval_cnf_clause tl v)
   | Init.Datatypes.cons (I i1) tl =>
-      infix_bsassl (f i1) (eval_cnf_clause tl f)
+      infix_bsassl (v i1) (eval_cnf_clause tl v)
+  | Init.Datatypes.cons (Nb b1) tl =>
+      infix_bsassl (neg b1) (eval_cnf_clause tl v)
   | Init.Datatypes.cons (Ni i1) tl =>
-      infix_bsassl (neg (f i1)) (eval_cnf_clause tl f)
+      infix_bsassl (neg (v i1)) (eval_cnf_clause tl v)
   end.
 
 (* Why3 assumption *)
 Fixpoint eval_cnf (e:Init.Datatypes.list (Init.Datatypes.list atom))
-  (f:i -> b) {struct e}: b :=
+  (v:i -> b) {struct e}: b :=
   match e with
   | Init.Datatypes.nil => top
   | Init.Datatypes.cons hd tl =>
-      infix_slasbs (eval_cnf_clause hd f) (eval_cnf tl f)
+      infix_slasbs (eval_cnf_clause hd v) (eval_cnf tl v)
   end.
+
+(* Why3 assumption *)
+Definition equiv_cnf (f1:Init.Datatypes.list (Init.Datatypes.list atom))
+    (f2:Init.Datatypes.list (Init.Datatypes.list atom)) : Prop :=
+  forall (v:i -> b), ((eval_cnf f1 v) = (eval_cnf f2 v)).
+
+Axiom comm_and1 :
+  forall (x:formula) (y:formula), infix_eqeq (And x y) (And y x).
+
+Axiom comm_or1 :
+  forall (x:formula) (y:formula), infix_eqeq (Or x y) (Or y x).
+
+Axiom dist_and1 :
+  forall (x:formula) (y:formula) (z:formula),
+  infix_eqeq (And x (Or y z)) (Or (And x y) (And x z)).
+
+Axiom dist_or1 :
+  forall (x:formula) (y:formula) (z:formula),
+  infix_eqeq (Or x (And y z)) (And (Or x y) (Or x z)).
+
+Axiom ident_and1 : forall (x:formula), infix_eqeq (And x (Prop1 top)) x.
+
+Axiom ident_or1 : forall (x:formula), infix_eqeq (Or x (Prop1 bot)) x.
+
+Axiom uniq_compl1 :
+  forall (x:formula) (y:formula) (z:formula),
+  infix_eqeq (Neg x) y /\ infix_eqeq (Neg x) z -> infix_eqeq y z.
+
+Axiom compl_and1 :
+  forall (x:formula), infix_eqeq (And x (Neg x)) (Prop1 bot).
+
+Axiom compl_or1 : forall (x:formula), infix_eqeq (Or x (Neg x)) (Prop1 top).
+
+Axiom idem_and1 : forall (x:formula), infix_eqeq (And x x) x.
+
+Axiom idem_or1 : forall (x:formula), infix_eqeq (Or x x) x.
+
+Axiom bound_and1 :
+  forall (x:formula), infix_eqeq (And x (Prop1 bot)) (Prop1 bot).
+
+Axiom bound_or1 :
+  forall (x:formula), infix_eqeq (Or x (Prop1 top)) (Prop1 top).
+
+Axiom absorp_and1 :
+  forall (x:formula) (y:formula), infix_eqeq (And x (Or x y)) x.
+
+Axiom absorp_or1 :
+  forall (x:formula) (y:formula), infix_eqeq (Or x (And x y)) x.
+
+Axiom assoc_and1 :
+  forall (x:formula) (y:formula) (z:formula),
+  infix_eqeq (And x (And y z)) (And (And x y) z).
+
+Axiom assoc_or1 :
+  forall (x:formula) (y:formula) (z:formula),
+  infix_eqeq (Or x (Or y z)) (Or (Or x y) z).
+
+Axiom demorgan_and1 :
+  forall (phi1:formula) (phi2:formula),
+  infix_eqeq (Neg (And phi1 phi2)) (Or (Neg phi1) (Neg phi2)).
+
+Axiom demorgan_or1 :
+  forall (phi1:formula) (phi2:formula),
+  infix_eqeq (Neg (Or phi1 phi2)) (And (Neg phi1) (Neg phi2)).
+
+Axiom negtop1 : infix_eqeq (Neg (Prop1 top)) (Prop1 bot).
+
+Axiom negbot1 : infix_eqeq (Neg (Prop1 bot)) (Prop1 top).
+
+Axiom double_neg1 : forall (x:formula), infix_eqeq (Neg (Neg x)) x.
+
+Axiom dist_ord1 :
+  forall (x:b) (y:b) (z:b), infix_lseq x z ->
+  ((infix_bsassl x (infix_slasbs y z)) = (infix_slasbs (infix_bsassl x y) z)).
+
+Axiom disj_and1 :
+  forall (x:formula) (y:formula), infix_eqeq (And x y) (Prop1 top) ->
+  infix_eqeq x (Prop1 top).
+
+Axiom disj_or1 :
+  forall (x:formula) (y:formula), infix_eqeq x (Prop1 top) ->
+  infix_eqeq (Or x y) (Prop1 top).
+
+Axiom modus_ponens1 :
+  forall (x:formula) (y:formula),
+  infix_eqeq (And x (Impl x y)) (Prop1 top) -> infix_eqeq y (Prop1 top).
+
+Axiom modus_tollens1 :
+  forall (x:formula) (y:formula),
+  infix_eqeq (And (Impl x y) (Neg y)) (Prop1 top) ->
+  infix_eqeq (Neg x) (Prop1 top).
+
+Axiom implic1 :
+  forall (x:formula) (y:formula), infix_eqeq (Impl x y) (Or (Neg x) y).
+
+Axiom absur1 :
+  forall (x:formula) (y:formula),
+  infix_eqeq (And (Impl x y) (Impl x (Neg y))) (Neg x).
+
+Axiom disj_syl1 :
+  forall (x:formula) (y:formula),
+  infix_eqeq (And (Or x y) (Neg x)) (Prop1 top) -> infix_eqeq y (Prop1 top).
+
+Axiom impl_chain1 :
+  forall (x:formula) (y:formula) (z:formula),
+  infix_eqeq (And (Impl x y) (Impl y z)) (Prop1 top) ->
+  infix_eqeq (Impl x z) (Prop1 top).
+
+Axiom impl_comb1 :
+  forall (x:formula) (y:formula) (z:formula) (w:formula),
+  infix_eqeq (And (Impl x y) (Impl z w)) (Prop1 top) ->
+  infix_eqeq (Impl (And x z) (And y w)) (Prop1 top).
+
+Axiom currying1 :
+  forall (x:formula) (y:formula) (z:formula),
+  infix_eqeq (Impl (And x y) z) (Impl x (Impl y z)).
+
+Axiom contrapos1 :
+  forall (x:formula) (y:formula),
+  infix_eqeq (Impl x y) (Impl (Neg y) (Neg x)).
+
+Axiom pierce :
+  forall (x:formula) (y:formula),
+  infix_eqeq (Impl (Impl (Impl x y) x) x) (Or x (Neg x)).
 
 (* Why3 assumption *)
 Fixpoint size (phi:formula) {struct phi}: Numbers.BinNums.Z :=
@@ -408,7 +543,7 @@ Fixpoint size_cnf_clause
   (phi:Init.Datatypes.list atom) {struct phi}: Numbers.BinNums.Z :=
   match phi with
   | Init.Datatypes.nil => 0%Z
-  | Init.Datatypes.cons hd tl => (1%Z + (size_cnf_clause tl))%Z
+  | Init.Datatypes.cons _ tl => (1%Z + (size_cnf_clause tl))%Z
   end.
 
 Axiom size_cnf_clause'spec :
@@ -429,30 +564,46 @@ Axiom size_cnf'spec :
 (* Why3 assumption *)
 Fixpoint is_impl_free (phi:formula) {struct phi}: Prop :=
   match phi with
-  | Prop1 t => True
-  | Var i1 => True
+  | Prop1 _ => True
+  | Var _ => True
   | Neg phi1 => is_impl_free phi1
   | (Or phi1 phi2)|(And phi1 phi2) => is_impl_free phi1 /\ is_impl_free phi2
-  | Impl phi1 phi2 => False
+  | Impl _ _ => False
   end.
 
 (* Why3 assumption *)
 Fixpoint is_nnfc (phi:formula) {struct phi}: Prop :=
   match phi with
-  | Prop1 t => True
-  | Var i1 => True
-  | Neg (Prop1 t) => True
-  | Neg (Var i1) => True
+  | Prop1 _ => True
+  | Var _ => True
+  | Neg (Prop1 _) => True
+  | Neg (Var _) => True
   | Neg _ => False
   | (Or phi1 phi2)|(And phi1 phi2) => is_nnfc phi1 /\ is_nnfc phi2
-  | Impl phi1 phi2 => False
+  | Impl _ _ => False
   end.
 
-(* Why3 goal *)
-Theorem nnfc_is_implfree :
+Axiom nnfc_is_implfree :
   forall (phi:formula), is_nnfc phi -> is_impl_free phi.
-Proof.
-intros phi h1.
 
-Qed.
+(* Why3 assumption *)
+Fixpoint is_cnf_clause (phi:formula) {struct phi}: Prop :=
+  match phi with
+  | Prop1 _ => True
+  | Var _ => True
+  | Neg (Prop1 _) => True
+  | Neg (Var _) => True
+  | Neg _ => False
+  | Or phi1 phi2 => is_cnf_clause phi1 /\ is_cnf_clause phi2
+  | And _ _ => False
+  | Impl _ _ => False
+  end.
 
+Axiom cnf_clause_is_implfree :
+  forall (phi:formula), is_cnf_clause phi -> is_impl_free phi.
+
+(* Why3 goal *)
+Theorem cnf_clause_is_nnfc :
+  forall (phi:formula), is_cnf_clause phi -> is_nnfc phi.
+
+  auto.
