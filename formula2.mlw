@@ -1,7 +1,7 @@
 theory PropositionalFormula
 
   use boolean_algebra.SwitchingAlgebra
-  use list.List
+  use list.List, list.Append, list.Reverse
 
   (** Formula Type **)
   type formula =
@@ -33,22 +33,26 @@ theory PropositionalFormula
     | Ni i
 
   type cnf_clause = list atom
-
+  
   type cnf = list cnf_clause
+  
+  function eval_atom (e : atom) (v : i -> b) : b =
+    match e with
+    | B b -> b
+    | I i -> v i
+    | Nb b -> neg b
+    | Ni i -> neg (v i)
+    end
 
   function eval_cnf_clause (e : cnf_clause) (v : i -> b) : b =
     match e with
     | Nil -> bot
-    | Cons (B b) Nil -> b
-    | Cons (I i) Nil -> (v i)
-    | Cons (Nb b) Nil -> (neg b)
-    | Cons (Ni i) Nil -> (neg (v i))
-    | Cons (B b) tl -> b \*/ (eval_cnf_clause tl v)
-    | Cons (I i) tl -> (v i) \*/ (eval_cnf_clause tl v)
-    | Cons (Nb b) tl -> (neg b) \*/ (eval_cnf_clause tl v)
-    | Cons (Ni i) tl -> (neg (v i)) \*/ (eval_cnf_clause tl v)
+    | Cons hd tl -> (eval_atom hd v) \*/ (eval_cnf_clause tl v)
     end
-
+  
+  predicate equiv_cnf_clause (f1 f2 : cnf_clause) 
+    = forall v : i -> b. eval_cnf_clause f1 v = eval_cnf_clause f2 v
+    
   function eval_cnf (e : cnf) (v : i -> b) : b =
     match e with
     | Nil -> top
@@ -213,5 +217,26 @@ theory PropositionalFormula
   (*Pierce's Law*)
   lemma pierce:
     forall x y : formula. Impl (Impl (Impl x y) x) x == Or x (Neg x)
+  
+  
+  (*** Property Check - CNF ***)
+  
+   (*Commutativity*)
+  
+  lemma comm_cnf_clause:
+    forall x y : cnf_clause. equiv_cnf_clause (x ++ y) (y ++ x)
+    
+  lemma comm_cnf:
+    forall x y : cnf. equiv_cnf (x ++ y) (y ++ x)
+  
+   lemma assoc_cnf_clause:
+    forall x y z : cnf_clause. 
+    forall v : i -> b.
+     (eval_cnf_clause x v) \*/ (eval_cnf_clause (y ++ z) v) = (eval_cnf_clause (x ++ y) v) \*/ (eval_cnf_clause z v)
 
-end
+  lemma assoc_cnf:
+    forall x y z : cnf. 
+    forall v : i -> b.
+    (eval_cnf x v) \*/ (eval_cnf (y ++ z) v) = (eval_cnf (x ++ y) v) \*/ (eval_cnf z v)
+  
+ end

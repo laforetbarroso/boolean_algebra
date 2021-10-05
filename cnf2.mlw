@@ -23,7 +23,7 @@ module Aux
     ensures{ result >= 0 }
   = match phi with
     | Nil -> 0
-    | Cons hd tl -> 1 + size_cnf tl
+    | Cons _ tl -> 1 + size_cnf tl
     end
   
   predicate is_impl_free (phi : formula)
@@ -36,7 +36,8 @@ module Aux
   end
   
   predicate is_nnfc (phi : formula)
-  = match phi with
+  = is_impl_free phi /\ 
+  match phi with
   | Prop _ -> True
   | Var _ -> True
   | Neg (Prop _) -> True
@@ -51,7 +52,8 @@ module Aux
     forall phi: formula. is_nnfc phi -> is_impl_free phi 
   
   predicate is_cnf_clause (phi : formula)
-  = match phi with
+   = is_impl_free phi /\ is_nnfc phi /\
+  match phi with
     | Prop _ -> true
     | Var _ -> true
     | Neg (Prop _) -> true
@@ -69,7 +71,8 @@ module Aux
     forall phi: formula. is_cnf_clause phi -> is_nnfc phi
   
   predicate is_cnf (phi : formula)
-  = match phi with
+  = is_impl_free phi /\ is_nnfc phi /\
+  match phi with
   | Prop _ -> true
   | Var _ -> true
   | Neg (Prop _) -> true
@@ -96,8 +99,8 @@ end
 module T
 
   use boolean_algebra.SwitchingAlgebra, formula2.PropositionalFormula,Aux 
-  use int.Int, list.List, list.Append
-
+  use int.Int, list.List, list.Append, list.Mem
+  
   let rec function impl_free (phi : formula) : formula
     variant{ size phi }
     ensures{ forall v. eval phi v = eval result v /\ is_impl_free result}
@@ -150,7 +153,7 @@ module T
   
   (*** Translantion Functions ***)
   
-  let rec function to_cnf_aux (phi: formula) : cnf_clause
+  let rec function to_cnf_type_aux (phi: formula) : cnf_clause
     requires{ is_impl_free phi /\ is_nnfc phi /\ is_cnf_clause phi }
     variant{size phi}
     ensures{ forall v. eval phi v = eval_cnf_clause result v }
@@ -159,23 +162,23 @@ module T
     | Var i -> Cons (I i) Nil
     | Neg (Prop b) -> Cons (Nb b) Nil
     | Neg (Var i)  -> Cons (Ni i) Nil
-    | Or phi1 phi2 -> (to_cnf_aux phi1) ++ (to_cnf_aux phi2)
+    | Or phi1 phi2 -> (to_cnf_type_aux phi1) ++ (to_cnf_type_aux phi2)
     end
     
-  let rec function to_cnf (phi: formula) : cnf
+  let rec function to_cnf_type (phi: formula) : cnf
     requires{ is_impl_free phi /\ is_nnfc phi /\ is_cnf phi }
     variant{size phi}
     ensures{ forall v. eval phi v = eval_cnf result v }
   = match phi with
-    | And phi1 phi2 -> (to_cnf phi1) ++ (to_cnf phi2)
-    | _ -> Cons (to_cnf_aux phi) Nil
+    | And phi1 phi2 -> (to_cnf_type phi1) ++ (to_cnf_type phi2)
+    | _ -> Cons (to_cnf_type_aux phi) Nil
     end
   
   let rec function to_formula_aux (phi: cnf_clause) : formula
-    requires{ not is_nil phi }
     variant{ size_cnf_clause phi }
-    ensures{ is_impl_free result /\ is_nnfc result /\ is_cnf_clause result }
+    ensures{ forall v. eval_cnf_clause phi v = eval result v /\ is_impl_free result /\ is_nnfc result /\ is_cnf_clause result }
   = match phi with
+    | Nil -> Prop bot
     | Cons (B b) Nil -> Prop b
     | Cons (I i) Nil -> Var i
     | Cons (Nb b) Nil -> Neg (Prop b)
@@ -189,7 +192,7 @@ module T
   let rec function to_formula (phi: cnf) : formula
     requires{ not is_nil phi}
     variant{ size_cnf phi }
-    ensures{ forall f. eval_cnf phi f = eval result f /\ is_impl_free result /\ is_nnfc result /\ is_cnf result }
+    ensures{ forall v. eval_cnf phi v = eval result v /\ is_impl_free result /\ is_nnfc result /\ is_cnf result }
   = match phi with
     | Cons hd Nil -> (to_formula_aux hd)
     | Cons hd tl -> And (to_formula_aux hd) (to_formula tl)
@@ -199,15 +202,23 @@ module T
     forall f : formula. f == t f
   
   lemma equiv_to_cnf :
-    forall f : formula. f =.= to_cnf f
+    forall f : formula. is_cnf f -> f =.= to_cnf_type f
+  
+  lemma equiv_to_cnf2 :
+    forall f : formula. f =.= to_cnf_type (t f)
   
   lemma refl0 :
-    forall f1 f2 : formula. f1 == f2 -> equiv_cnf (to_cnf (t f1)) (to_cnf (t f2))
+    forall f1 f2 : formula. f1 == f2 -> equiv_cnf (to_cnf_type (t f1)) (to_cnf_type (t f2))
     
   lemma refl1 :
-    forall f1 f2 : formula. is_cnf f1 /\ is_cnf f2 /\ f1 == f2 -> equiv_cnf (to_cnf f1) (to_cnf f2)
+    forall f1 f2 : formula. is_cnf f1 /\ is_cnf f2 /\ f1 == f2 -> equiv_cnf (to_cnf_type f1) (to_cnf_type f2)
   
   lemma refl2 :
     forall f1 f2: cnf. equiv_cnf f1 f2 -> (to_formula f2) == (to_formula f2)
+  
+  lemma absurd_cnf:
+    forall f : cnf.
+    forall v : i -> b.
+      exists x. mem x f /\ (eval_cnf_clause x v) = bot <-> (eval_cnf f v) = bot
   
  end

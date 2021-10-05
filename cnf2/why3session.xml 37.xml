@@ -6,7 +6,7 @@
 <prover id="2" name="Spass" version="3.7" timelimit="1" steplimit="0" memlimit="1000"/>
 <prover id="3" name="Z3" version="4.8.6" timelimit="1" steplimit="0" memlimit="1000"/>
 <prover id="4" name="Eprover" version="2.6" timelimit="1200" steplimit="0" memlimit="8192"/>
-<file format="whyml">
+<file format="whyml" proved="true">
 <path name=".."/><path name="cnf2.mlw"/>
 <theory name="Aux" proved="true">
  <goal name="size&#39;vc" expl="VC for size" proved="true">
@@ -57,7 +57,7 @@
  <proof prover="3"><result status="valid" time="0.11" steps="119619"/></proof>
  </goal>
 </theory>
-<theory name="T">
+<theory name="T" proved="true">
  <goal name="impl_free&#39;vc" expl="VC for impl_free" proved="true">
  <transf name="split_vc" proved="true" >
   <goal name="impl_free&#39;vc.0" expl="variant decrease" proved="true">
@@ -668,12 +668,6 @@
  <proof prover="2" timelimit="1200" memlimit="8192"><result status="valid" time="0.06"/></proof>
  <proof prover="3"><result status="valid" time="0.13" steps="162497"/></proof>
  </goal>
- <goal name="absurd_cnf_clause" proved="true">
- <proof prover="4"><result status="valid" time="1.54"/></proof>
- </goal>
- <goal name="absurd_cnf">
- <proof prover="4" obsolete="true"><result status="valid" time="1.46"/></proof>
- </goal>
 </theory>
 </file>
 <file format="whyml">
@@ -785,10 +779,6 @@
  <proof prover="1"><result status="valid" time="6.33" steps="71278"/></proof>
  </goal>
  <goal name="comm_cnf_clause">
- <transf name="split_vc" >
-  <goal name="comm_cnf_clause.0">
-  </goal>
- </transf>
  </goal>
  <goal name="comm_cnf">
  </goal>

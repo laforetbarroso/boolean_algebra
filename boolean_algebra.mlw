@@ -190,7 +190,7 @@ module BooleanAlgebra
     forall x y z : b. ((x ->* y) /*\ (y ->* z)) = top ->
                       (x ->* z) = top
 
-  (*Implication Combinantion*)
+  (*Implication Combination*)
 
   lemma impl_comb:
     forall x y z w : b. ((x ->* y) /*\ (z ->* w)) = top ->
