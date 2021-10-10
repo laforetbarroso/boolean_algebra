@@ -135,11 +135,11 @@
     <goal name="nnfc&#39;vc.13.0.0" expl="precondition">
     <proof prover="1" timelimit="1" memlimit="1000" obsolete="true"><result status="valid" time="0.56" steps="35965"/></proof>
     </goal>
-    <goal name="nnfc&#39;vc.18.0.5" expl="postcondition">
-    <proof prover="1" timelimit="1" memlimit="1000" obsolete="true"><result status="valid" time="0.41" steps="27635"/></proof>
-    </goal>
     <goal name="nnfc&#39;vc.18.0.4" expl="postcondition">
     <proof prover="1" timelimit="1" memlimit="1000" obsolete="true"><result status="valid" time="0.40" steps="27595"/></proof>
+    </goal>
+    <goal name="nnfc&#39;vc.18.0.5" expl="postcondition">
+    <proof prover="1" timelimit="1" memlimit="1000" obsolete="true"><result status="valid" time="0.41" steps="27635"/></proof>
     </goal>
     <goal name="nnfc&#39;vc.18.0.6" expl="postcondition">
     <proof prover="3" obsolete="true"><result status="valid" time="0.05" steps="25380"/></proof>
@@ -381,11 +381,11 @@
    <goal name="to_cnf_type_aux&#39;vc.4.0" expl="precondition">
    <proof prover="4" obsolete="true"><result status="valid" time="0.83"/></proof>
    </goal>
-   <goal name="to_cnf_type_aux&#39;vc.3.0" expl="variant decrease">
-   <proof prover="4" obsolete="true"><result status="valid" time="0.79"/></proof>
-   </goal>
    <goal name="to_cnf_type_aux&#39;vc.6.2" expl="postcondition">
    <proof prover="4" obsolete="true"><result status="valid" time="0.78"/></proof>
+   </goal>
+   <goal name="to_cnf_type_aux&#39;vc.3.0" expl="variant decrease">
+   <proof prover="4" obsolete="true"><result status="valid" time="0.79"/></proof>
    </goal>
   </transf>
   </goal>
@@ -455,17 +455,17 @@
     <goal name="to_formula_aux&#39;vc.4.1.4" expl="postcondition">
     <proof prover="4" obsolete="true"><result status="valid" time="0.09"/></proof>
     </goal>
+    <goal name="to_formula_aux&#39;vc.4.1.0" expl="postcondition">
+    <proof prover="4" obsolete="true"><result status="valid" time="0.09"/></proof>
+    </goal>
     <goal name="to_formula_aux&#39;vc.4.1.6" expl="postcondition">
     <proof prover="4" obsolete="true"><result status="valid" time="0.07"/></proof>
     </goal>
-    <goal name="to_formula_aux&#39;vc.4.1.0" expl="postcondition">
+    <goal name="to_formula_aux&#39;vc.4.1.2" expl="postcondition">
     <proof prover="4" obsolete="true"><result status="valid" time="0.09"/></proof>
     </goal>
     <goal name="to_formula_aux&#39;vc.4.1.5" expl="postcondition">
     <proof prover="4" obsolete="true"><result status="valid" time="0.08"/></proof>
-    </goal>
-    <goal name="to_formula_aux&#39;vc.4.1.2" expl="postcondition">
-    <proof prover="4" obsolete="true"><result status="valid" time="0.09"/></proof>
     </goal>
     <goal name="to_formula_aux&#39;vc.4.1.7" expl="postcondition">
     <proof prover="4" obsolete="true"><result status="valid" time="0.08"/></proof>
@@ -784,94 +784,6 @@
  <proof prover="2"><result status="valid" time="0.05"/></proof>
  <proof prover="3"><result status="timeout" time="1.00" steps="543683"/></proof>
  </goal>
- <goal name="eval_double">
- <proof prover="1" timelimit="1" memlimit="1000"><result status="valid" time="0.79" steps="65857"/></proof>
- <proof prover="2"><result status="timeout" time="1.00"/></proof>
- <proof prover="3"><result status="timeout" time="1.00" steps="547085"/></proof>
- </goal>
- <goal name="eval_n">
- <transf name="split_vc" >
-  <goal name="eval_n.0">
-  <transf name="induction_arg_ty_lex" arg1="y">
-   <goal name="eval_n.0.0">
-   <transf name="split_vc" >
-    <goal name="eval_n.0.0.0">
-    <proof prover="3" timelimit="5"><result status="valid" time="0.08" steps="92328"/></proof>
-    </goal>
-    <goal name="eval_n.0.0.1">
-    <transf name="replace" arg1="(eval_cnf_clause (Cons x1 x) v)" arg2="(eval_cnf_clause x v \*/ eval_cnf_clause (Cons x1 Nil) v)">
-     <goal name="eval_n.0.0.1.0">
-     <transf name="replace" arg1="(eval_cnf_clause x2 v \*/ (eval_cnf_clause x v
-\*/ eval_cnf_clause (Cons x1 (Nil: list atom)) v))" arg2="((eval_cnf_clause x2 v
-\*/ eval_cnf_clause x v) \*/ eval_cnf_clause (Cons x1 (Nil: list atom)) v)">
-      <goal name="eval_n.0.0.1.0.0">
-      <transf name="replace" arg1="(eval_cnf_clause x2 v \*/ eval_cnf_clause x v)" arg2="(eval_cnf_clause (x2++x) v)">
-       <goal name="eval_n.0.0.1.0.0.0">
-       <transf name="replace" arg1="(eval_cnf_clause (x2 ++ x) v \*/ eval_cnf_clause (Cons x1 Nil) v)" arg2="(eval_cnf_clause (x2 ++ x ++ (Cons x1 Nil)) v)">
-        <goal name="eval_n.0.0.1.0.0.0.0">
-        <proof prover="1" timelimit="30" memlimit="4000"><result status="timeout" time="30.00" steps="1290543"/></proof>
-        <proof prover="2" timelimit="30" memlimit="4000"><result status="timeout" time="30.00"/></proof>
-        <proof prover="3" timelimit="30" memlimit="4000"><result status="timeout" time="30.00" steps="20518363"/></proof>
-        <proof prover="5"><result status="highfailure" time="0.01"/></proof>
-        <transf name="replace" arg1="((x2 ++ x) ++ Cons x1 Nil)" arg2="(x2 ++ (x ++ (Cons x1 Nil)))">
-         <goal name="eval_n.0.0.1.0.0.0.0.0">
-         </goal>
-         <goal name="eval_n.0.0.1.0.0.0.0.1" expl="equality hypothesis">
-         <proof prover="3"><result status="valid" time="0.08" steps="90508"/></proof>
-         </goal>
-        </transf>
-        </goal>
-        <goal name="eval_n.0.0.1.0.0.0.1" expl="equality hypothesis">
-        <proof prover="3"><result status="valid" time="0.06" steps="90636"/></proof>
-        </goal>
-       </transf>
-       <transf name="replace" arg1="(eval_cnf_clause (x2 ++ x) v \*/ eval_cnf_clause (Cons x1 (Nil: list atom)) v)" arg2="(eval_cnf_clause (Cons x1 (Nil: list atom)) v \*/ eval_cnf_clause (x2 ++ x) v)">
-        <goal name="eval_n.0.0.1.0.0.0.0">
-        <transf name="replace" arg1="(eval_cnf_clause (Cons x1 (Nil: list atom)) v
-\*/ eval_cnf_clause (x2 ++ x) v)" arg2="(eval_cnf_clause ((Cons x1 Nil) ++ x2 ++ x) v)">
-         <goal name="eval_n.0.0.1.0.0.0.0.0">
-         <transf name="replace" arg1="(Cons x1 Nil ++ x2)" arg2="(x2 ++ Cons x1 Nil)">
-          <goal name="eval_n.0.0.1.0.0.0.0.0.0">
-          </goal>
-          <goal name="eval_n.0.0.1.0.0.0.0.0.1" expl="equality hypothesis">
-          <proof prover="1" timelimit="30" memlimit="4000"><result status="timeout" time="30.00" steps="1256484"/></proof>
-          <proof prover="2" timelimit="30" memlimit="4000"><result status="timeout" time="30.00"/></proof>
-          <proof prover="3" timelimit="30" memlimit="4000"><result status="timeout" time="30.00" steps="6610796"/></proof>
-          <proof prover="5"><result status="highfailure" time="0.01"/></proof>
-          </goal>
-         </transf>
-         </goal>
-         <goal name="eval_n.0.0.1.0.0.0.0.1" expl="equality hypothesis">
-         <proof prover="3"><result status="valid" time="0.07" steps="99454"/></proof>
-         </goal>
-        </transf>
-        </goal>
-        <goal name="eval_n.0.0.1.0.0.0.1" expl="equality hypothesis">
-        <proof prover="3"><result status="valid" time="0.07" steps="90574"/></proof>
-        </goal>
-       </transf>
-       </goal>
-       <goal name="eval_n.0.0.1.0.0.1" expl="equality hypothesis">
-       <proof prover="3"><result status="valid" time="0.05" steps="47690"/></proof>
-       </goal>
-      </transf>
-      </goal>
-      <goal name="eval_n.0.0.1.0.1" expl="equality hypothesis">
-      <proof prover="3"><result status="valid" time="0.06" steps="88899"/></proof>
-      </goal>
-     </transf>
-     </goal>
-     <goal name="eval_n.0.0.1.1" expl="equality hypothesis">
-     <proof prover="3" timelimit="5"><result status="valid" time="0.07" steps="98396"/></proof>
-     </goal>
-    </transf>
-    </goal>
-   </transf>
-   </goal>
-  </transf>
-  </goal>
- </transf>
- </goal>
  <goal name="comm_cnf_clause">
  <transf name="split_vc" >
   <goal name="comm_cnf_clause.0">
@@ -879,22 +791,22 @@
    <goal name="comm_cnf_clause.0.0">
    <transf name="split_vc" >
     <goal name="comm_cnf_clause.0.0.0">
-    <proof prover="3" obsolete="true"><result status="valid" time="0.06" steps="89659"/></proof>
+    <proof prover="3"><result status="valid" time="0.06" steps="89659"/></proof>
     </goal>
     <goal name="comm_cnf_clause.0.0.1">
     <transf name="assert" arg1="(equiv_cnf_clause (Cons x1 x) (x ++ (Cons x1 Nil)))">
      <goal name="comm_cnf_clause.0.0.1.0" expl="asserted formula">
-     <proof prover="3" obsolete="true"><result status="valid" time="0.07" steps="89588"/></proof>
+     <proof prover="3"><result status="valid" time="0.07" steps="89588"/></proof>
      </goal>
      <goal name="comm_cnf_clause.0.0.1.1">
      <transf name="replace" arg1="(Cons x1 x)" arg2="(x ++ (Cons x1 Nil))">
       <goal name="comm_cnf_clause.0.0.1.1.0">
       </goal>
       <goal name="comm_cnf_clause.0.0.1.1.1" expl="equality hypothesis">
-      <proof prover="1" timelimit="5" memlimit="2000" obsolete="true"><result status="timeout" time="5.00" steps="195727"/></proof>
-      <proof prover="2" timelimit="30" memlimit="4000" obsolete="true"><undone/></proof>
-      <proof prover="3" timelimit="30" memlimit="4000" obsolete="true"><result status="timeout" time="30.00" steps="22555015"/></proof>
-      <proof prover="5" timelimit="5" memlimit="2000" obsolete="true"><result status="highfailure" time="0.01"/></proof>
+      <proof prover="1" timelimit="5" memlimit="2000"><result status="timeout" time="5.00" steps="195727"/></proof>
+      <proof prover="2" timelimit="30" memlimit="4000"><undone/></proof>
+      <proof prover="3" timelimit="30" memlimit="4000"><result status="timeout" time="30.00" steps="22555015"/></proof>
+      <proof prover="5" timelimit="5" memlimit="2000"><result status="highfailure" time="0.01"/></proof>
       </goal>
      </transf>
      </goal>
@@ -903,28 +815,10 @@
      <goal name="comm_cnf_clause.0.0.1.0">
      </goal>
      <goal name="comm_cnf_clause.0.0.1.1" expl="equality hypothesis">
-     <proof prover="1" timelimit="30" memlimit="4000" obsolete="true"><result status="timeout" time="30.00" steps="1017202"/></proof>
-     <proof prover="2" timelimit="30" memlimit="4000" obsolete="true"><result status="timeout" time="30.00"/></proof>
-     <proof prover="3" timelimit="30" memlimit="4000" obsolete="true"><result status="timeout" time="30.00" steps="25431262"/></proof>
-     <proof prover="5" obsolete="true"><result status="highfailure" time="0.01"/></proof>
-     </goal>
-    </transf>
-    <transf name="unfold" arg1="equiv_cnf_clause">
-     <goal name="comm_cnf_clause.0.0.1.0">
-     <transf name="split_vc" >
-      <goal name="comm_cnf_clause.0.0.1.0.0">
-      <transf name="replace" arg1="(eval_cnf_clause (x2 ++ Cons x1 x) v)" arg2="((eval_cnf_clause x2 v) \*/ (eval_cnf_clause (Cons x1 x) v))">
-       <goal name="comm_cnf_clause.0.0.1.0.0.0">
-       </goal>
-       <goal name="comm_cnf_clause.0.0.1.0.0.1" expl="equality hypothesis">
-       <proof prover="1" timelimit="1" memlimit="1000" obsolete="true"><result status="timeout" time="1.00" steps="68907"/></proof>
-       <proof prover="2" timelimit="5" memlimit="2000" obsolete="true"><undone/></proof>
-       <proof prover="3" timelimit="5" memlimit="2000" obsolete="true"><result status="timeout" time="5.00" steps="597045"/></proof>
-       <proof prover="5" timelimit="1" memlimit="1000" obsolete="true"><result status="highfailure" time="0.01"/></proof>
-       </goal>
-      </transf>
-      </goal>
-     </transf>
+     <proof prover="1" timelimit="30" memlimit="4000"><result status="timeout" time="30.00" steps="1017202"/></proof>
+     <proof prover="2" timelimit="30" memlimit="4000"><result status="timeout" time="30.00"/></proof>
+     <proof prover="3" timelimit="30" memlimit="4000"><result status="timeout" time="30.00" steps="25431262"/></proof>
+     <proof prover="5"><result status="highfailure" time="0.01"/></proof>
      </goal>
     </transf>
     </goal>

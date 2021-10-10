@@ -7,7 +7,7 @@
 <prover id="3" name="Z3" version="4.8.6" timelimit="1" steplimit="0" memlimit="1000"/>
 <prover id="4" name="Eprover" version="2.6" timelimit="1200" steplimit="0" memlimit="8192"/>
 <prover id="5" name="Alt-Ergo" version="2.4.0" timelimit="30" steplimit="0" memlimit="4000"/>
-<file format="whyml" proved="true">
+<file format="whyml">
 <path name=".."/><path name="cnf2.mlw"/>
 <theory name="Aux">
  <goal name="size&#39;vc" expl="VC for size">
@@ -639,137 +639,137 @@
  </goal>
 </theory>
 </file>
-<file format="whyml" proved="true">
+<file format="whyml">
 <path name=".."/><path name="formula2.mlw"/>
 <theory name="PropositionalFormula">
- <goal name="comm_and">
+ <goal name="comm_and" proved="true">
  <proof prover="1"><result status="valid" time="0.23" steps="15986"/></proof>
  </goal>
- <goal name="comm_or">
+ <goal name="comm_or" proved="true">
  <proof prover="1"><result status="valid" time="0.24" steps="16026"/></proof>
  </goal>
- <goal name="dist_and">
+ <goal name="dist_and" proved="true">
  <proof prover="1"><result status="valid" time="0.33" steps="20897"/></proof>
  </goal>
- <goal name="dist_or">
+ <goal name="dist_or" proved="true">
  <proof prover="1"><result status="valid" time="0.36" steps="22246"/></proof>
  </goal>
- <goal name="ident_and">
+ <goal name="ident_and" proved="true">
  <proof prover="1"><result status="valid" time="0.26" steps="17856"/></proof>
  </goal>
- <goal name="ident_or">
+ <goal name="ident_or" proved="true">
  <proof prover="1"><result status="valid" time="0.26" steps="18042"/></proof>
  </goal>
- <goal name="uniq_compl">
+ <goal name="uniq_compl" proved="true">
  <proof prover="1"><result status="valid" time="0.24" steps="16288"/></proof>
  </goal>
- <goal name="compl_and">
+ <goal name="compl_and" proved="true">
  <proof prover="1"><result status="valid" time="0.28" steps="18486"/></proof>
  </goal>
- <goal name="compl_or">
+ <goal name="compl_or" proved="true">
  <proof prover="1"><result status="valid" time="0.29" steps="18669"/></proof>
  </goal>
- <goal name="idem_and">
+ <goal name="idem_and" proved="true">
  <proof prover="1"><result status="valid" time="0.24" steps="16383"/></proof>
  </goal>
- <goal name="idem_or">
+ <goal name="idem_or" proved="true">
  <proof prover="1"><result status="valid" time="0.24" steps="16410"/></proof>
  </goal>
- <goal name="bound_and">
+ <goal name="bound_and" proved="true">
  <proof prover="1"><result status="valid" time="0.24" steps="16606"/></proof>
  </goal>
- <goal name="bound_or">
+ <goal name="bound_or" proved="true">
  <proof prover="1"><result status="valid" time="0.24" steps="16636"/></proof>
  </goal>
- <goal name="absorp_and">
+ <goal name="absorp_and" proved="true">
  <proof prover="1"><result status="valid" time="0.31" steps="20798"/></proof>
  </goal>
- <goal name="absorp_or">
+ <goal name="absorp_or" proved="true">
  <proof prover="1"><result status="valid" time="0.32" steps="21713"/></proof>
  </goal>
- <goal name="assoc_and">
+ <goal name="assoc_and" proved="true">
  <proof prover="1"><result status="valid" time="0.39" steps="25009"/></proof>
  </goal>
- <goal name="assoc_or">
+ <goal name="assoc_or" proved="true">
  <proof prover="1"><result status="valid" time="0.39" steps="24983"/></proof>
  </goal>
- <goal name="demorgan_and">
+ <goal name="demorgan_and" proved="true">
  <proof prover="1"><result status="valid" time="0.39" steps="24984"/></proof>
  </goal>
- <goal name="demorgan_or">
+ <goal name="demorgan_or" proved="true">
  <proof prover="1"><result status="valid" time="0.42" steps="27457"/></proof>
  </goal>
- <goal name="negtop">
+ <goal name="negtop" proved="true">
  <proof prover="1"><result status="valid" time="0.26" steps="18586"/></proof>
  </goal>
- <goal name="negbot">
+ <goal name="negbot" proved="true">
  <proof prover="1"><result status="valid" time="0.27" steps="19103"/></proof>
  </goal>
- <goal name="double_neg">
+ <goal name="double_neg" proved="true">
  <proof prover="1"><result status="valid" time="0.27" steps="18366"/></proof>
  </goal>
- <goal name="dist_ord">
+ <goal name="dist_ord" proved="true">
  <proof prover="1"><result status="valid" time="0.20" steps="15419"/></proof>
  </goal>
- <goal name="disj_and">
+ <goal name="disj_and" proved="true">
  <proof prover="1"><result status="valid" time="0.39" steps="26214"/></proof>
  </goal>
- <goal name="disj_or">
+ <goal name="disj_or" proved="true">
  <proof prover="1"><result status="valid" time="0.27" steps="18780"/></proof>
  </goal>
- <goal name="modus_ponens">
+ <goal name="modus_ponens" proved="true">
  <proof prover="1"><result status="valid" time="0.47" steps="29080"/></proof>
  </goal>
- <goal name="modus_tollens">
+ <goal name="modus_tollens" proved="true">
  <proof prover="1"><result status="valid" time="1.14" steps="40413"/></proof>
  </goal>
- <goal name="implic">
+ <goal name="implic" proved="true">
  <proof prover="1"><result status="valid" time="0.36" steps="22479"/></proof>
  </goal>
- <goal name="absur">
+ <goal name="absur" proved="true">
  <proof prover="1"><result status="valid" time="1.03" steps="45516"/></proof>
  </goal>
- <goal name="disj_syl">
+ <goal name="disj_syl" proved="true">
  <proof prover="1"><result status="valid" time="1.27" steps="41904"/></proof>
  </goal>
- <goal name="impl_chain">
+ <goal name="impl_chain" proved="true">
  <proof prover="1"><result status="valid" time="5.06" steps="74189"/></proof>
  </goal>
- <goal name="impl_comb">
+ <goal name="impl_comb" proved="true">
  <proof prover="1"><result status="valid" time="6.64" steps="72036"/></proof>
  </goal>
- <goal name="currying">
+ <goal name="currying" proved="true">
  <proof prover="1"><result status="valid" time="1.00" steps="43942"/></proof>
  </goal>
- <goal name="contrapos">
+ <goal name="contrapos" proved="true">
  <proof prover="1"><result status="valid" time="0.39" steps="24537"/></proof>
  </goal>
- <goal name="pierce">
+ <goal name="pierce" proved="true">
  <proof prover="1"><result status="valid" time="6.33" steps="71278"/></proof>
  </goal>
- <goal name="eval_nil">
+ <goal name="eval_nil" proved="true">
  <proof prover="3"><result status="valid" time="0.09" steps="86370"/></proof>
  </goal>
- <goal name="eval_single_comm">
+ <goal name="eval_single_comm" proved="true">
  <proof prover="2"><result status="valid" time="0.58"/></proof>
  <proof prover="3"><result status="timeout" time="1.00" steps="536967"/></proof>
  </goal>
- <goal name="asserting">
+ <goal name="asserting" proved="true">
  <proof prover="3"><result status="valid" time="0.09" steps="136180"/></proof>
  </goal>
- <goal name="asserting_concat">
+ <goal name="asserting_concat" proved="true">
  <proof prover="3"><result status="valid" time="0.08" steps="105525"/></proof>
  </goal>
- <goal name="eval_single">
- <transf name="split_vc" >
-  <goal name="eval_single.0">
-  <transf name="induction_arg_ty_lex" arg1="x">
-   <goal name="eval_single.0.0">
-   <transf name="split_vc" >
-    <goal name="eval_single.0.0.0">
+ <goal name="eval_single" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="eval_single.0" proved="true">
+  <transf name="induction_arg_ty_lex" proved="true" arg1="x">
+   <goal name="eval_single.0.0" proved="true">
+   <transf name="split_vc" proved="true" >
+    <goal name="eval_single.0.0.0" proved="true">
     <proof prover="3"><result status="valid" time="0.10" steps="88473"/></proof>
     </goal>
-    <goal name="eval_single.0.0.1">
+    <goal name="eval_single.0.0.1" proved="true">
     <proof prover="1" timelimit="1" memlimit="1000"><result status="valid" time="0.54" steps="36227"/></proof>
     <proof prover="2"><result status="timeout" time="1.00"/></proof>
     <proof prover="3"><result status="timeout" time="1.00" steps="1191843"/></proof>
@@ -780,11 +780,11 @@
   </goal>
  </transf>
  </goal>
- <goal name="eval_single_comm_2">
+ <goal name="eval_single_comm_2" proved="true">
  <proof prover="2"><result status="valid" time="0.05"/></proof>
  <proof prover="3"><result status="timeout" time="1.00" steps="543683"/></proof>
  </goal>
- <goal name="eval_double">
+ <goal name="eval_double" proved="true">
  <proof prover="1" timelimit="1" memlimit="1000"><result status="valid" time="0.79" steps="65857"/></proof>
  <proof prover="2"><result status="timeout" time="1.00"/></proof>
  <proof prover="3"><result status="timeout" time="1.00" steps="547085"/></proof>
@@ -795,7 +795,7 @@
   <transf name="induction_arg_ty_lex" arg1="y">
    <goal name="eval_n.0.0">
    <transf name="split_vc" >
-    <goal name="eval_n.0.0.0">
+    <goal name="eval_n.0.0.0" proved="true">
     <proof prover="3" timelimit="5"><result status="valid" time="0.08" steps="92328"/></proof>
     </goal>
     <goal name="eval_n.0.0.1">
@@ -816,12 +816,12 @@
         <transf name="replace" arg1="((x2 ++ x) ++ Cons x1 Nil)" arg2="(x2 ++ (x ++ (Cons x1 Nil)))">
          <goal name="eval_n.0.0.1.0.0.0.0.0">
          </goal>
-         <goal name="eval_n.0.0.1.0.0.0.0.1" expl="equality hypothesis">
+         <goal name="eval_n.0.0.1.0.0.0.0.1" expl="equality hypothesis" proved="true">
          <proof prover="3"><result status="valid" time="0.08" steps="90508"/></proof>
          </goal>
         </transf>
         </goal>
-        <goal name="eval_n.0.0.1.0.0.0.1" expl="equality hypothesis">
+        <goal name="eval_n.0.0.1.0.0.0.1" expl="equality hypothesis" proved="true">
         <proof prover="3"><result status="valid" time="0.06" steps="90636"/></proof>
         </goal>
        </transf>
@@ -841,27 +841,27 @@
           </goal>
          </transf>
          </goal>
-         <goal name="eval_n.0.0.1.0.0.0.0.1" expl="equality hypothesis">
+         <goal name="eval_n.0.0.1.0.0.0.0.1" expl="equality hypothesis" proved="true">
          <proof prover="3"><result status="valid" time="0.07" steps="99454"/></proof>
          </goal>
         </transf>
         </goal>
-        <goal name="eval_n.0.0.1.0.0.0.1" expl="equality hypothesis">
+        <goal name="eval_n.0.0.1.0.0.0.1" expl="equality hypothesis" proved="true">
         <proof prover="3"><result status="valid" time="0.07" steps="90574"/></proof>
         </goal>
        </transf>
        </goal>
-       <goal name="eval_n.0.0.1.0.0.1" expl="equality hypothesis">
+       <goal name="eval_n.0.0.1.0.0.1" expl="equality hypothesis" proved="true">
        <proof prover="3"><result status="valid" time="0.05" steps="47690"/></proof>
        </goal>
       </transf>
       </goal>
-      <goal name="eval_n.0.0.1.0.1" expl="equality hypothesis">
+      <goal name="eval_n.0.0.1.0.1" expl="equality hypothesis" proved="true">
       <proof prover="3"><result status="valid" time="0.06" steps="88899"/></proof>
       </goal>
      </transf>
      </goal>
-     <goal name="eval_n.0.0.1.1" expl="equality hypothesis">
+     <goal name="eval_n.0.0.1.1" expl="equality hypothesis" proved="true">
      <proof prover="3" timelimit="5"><result status="valid" time="0.07" steps="98396"/></proof>
      </goal>
     </transf>

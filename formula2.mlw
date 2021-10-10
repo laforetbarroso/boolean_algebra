@@ -1,7 +1,7 @@
 theory PropositionalFormula
 
   use boolean_algebra.SwitchingAlgebra
-  use list.List, list.Append, list.Reverse
+  use list.List, list.Append, list.Reverse, list.FoldLeft, list.Map
 
   (** Formula Type **)
   type formula =
@@ -47,16 +47,16 @@ theory PropositionalFormula
   function eval_cnf_clause (e : cnf_clause) (v : i -> b) : b =
     match e with
     | Nil -> bot
-    | Cons hd tl -> (eval_atom hd v) \*/ (eval_cnf_clause tl v)
+    | Cons h t -> (eval_atom h v) \*/ (eval_cnf_clause t v)
     end
   
   predicate equiv_cnf_clause (f1 f2 : cnf_clause) 
     = forall v : i -> b. eval_cnf_clause f1 v = eval_cnf_clause f2 v
-    
+  
   function eval_cnf (e : cnf) (v : i -> b) : b =
     match e with
     | Nil -> top
-    | Cons hd tl -> (eval_cnf_clause hd v) /*\ (eval_cnf tl v)
+    | Cons h t -> (eval_cnf_clause h v) /*\ (eval_cnf t v)
     end
 
   predicate equiv_cnf (f1 f2 : cnf)
@@ -222,6 +222,72 @@ theory PropositionalFormula
   (*** Property Check - CNF ***)
   
    (*Commutativity*)
+  
+  lemma eval_nil:
+    forall x : cnf_clause.
+    equiv_cnf_clause x (x ++ Nil)
+  
+  lemma eval_single_comm:
+    forall a : atom.
+    forall x : cnf_clause.
+    forall v : i -> b.
+    eval_cnf_clause ((Cons a Nil) ++ x) v = (eval_cnf_clause x v) \*/ (eval_cnf_clause (Cons a Nil) v)
+   
+   lemma asserting:
+    forall a b : atom.
+    forall v : i -> b.
+    equiv_cnf_clause (Cons a (Cons b Nil)) (Cons b (Cons a Nil))
+    
+   lemma asserting_concat:
+    forall a b : atom.
+    forall v : i -> b.
+    equiv_cnf_clause ((Cons a Nil) ++ (Cons b Nil)) ((Cons b Nil) ++ (Cons a Nil))
+    
+  lemma eval_single:
+    forall x : cnf_clause.
+    forall y : atom.
+    equiv_cnf_clause (Cons y x) (x ++ (Cons y Nil))
+    
+   lemma eval_single_comm_2:
+    forall a : atom.
+    forall x : cnf_clause.
+    forall v : i -> b.
+    eval_cnf_clause (x ++ (Cons a Nil)) v = (eval_cnf_clause x v) \*/ (eval_cnf_clause (Cons a Nil) v)
+  
+  lemma eval_double:
+    forall a b : atom.
+    forall x : cnf_clause.
+    forall v : i -> b.
+    eval_cnf_clause (x ++ (Cons a (Cons b Nil))) v = (eval_cnf_clause x v) \*/ (eval_cnf_clause (Cons a (Cons b Nil)) v)
+  
+  lemma eval_fold:
+    forall x : cnf_clause.
+    forall v : i -> b.
+    eval_cnf_clause x v = fold_left (\*/) bot (map eval_atom x)
+  
+  lemma eval_n:
+    forall x y: cnf_clause.
+    forall v : i -> b.
+    eval_cnf_clause (x ++ y) v = (eval_cnf_clause x v) \*/ (eval_cnf_clause y v)
+  
+  (*lemma assert3:
+    forall x1 x2 : cnf_clause.
+    forall x : atom.
+    forall v : i -> b.
+    eval_cnf_clause (x2 ++ Cons x x1) v
+  = eval_cnf_clause ((x2 ++ x1) ++ Cons x (Nil: list atom)) v*)
+  
+  (*lemma assert4:
+    forall x1 x2 : cnf_clause.
+    forall x : atom.
+    forall v : i -> b.
+    eval_cnf_clause ((x1 ++ Cons x (Nil: list atom)) ++ x2) v
+  = eval_cnf_clause ((Cons x (Nil: list atom) ++ x1) ++ x2) v*)
+  
+  (*lemma eval_dist:
+    forall x y : cnf_clause.
+    forall v : i -> b.
+    eval_cnf_clause (x ++ y) v = (eval_cnf_clause x v) \*/ (eval_cnf_clause y v)*)
   
   lemma comm_cnf_clause:
     forall x y : cnf_clause. equiv_cnf_clause (x ++ y) (y ++ x)

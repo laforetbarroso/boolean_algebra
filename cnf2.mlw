@@ -183,10 +183,10 @@ module T
     | Cons (I i) Nil -> Var i
     | Cons (Nb b) Nil -> Neg (Prop b)
     | Cons (Ni i) Nil -> Neg (Var i)
-    | Cons (B b) tl -> Or (Prop b) (to_formula_aux tl)
-    | Cons (I i) tl -> Or (Var i) (to_formula_aux tl)
-    | Cons (Nb b) tl -> Or (Neg (Prop b)) (to_formula_aux tl)
-    | Cons (Ni i) tl -> Or (Neg (Var i)) (to_formula_aux tl)
+    | Cons (B b) t -> Or (Prop b) (to_formula_aux t)
+    | Cons (I i) t -> Or (Var i) (to_formula_aux t)
+    | Cons (Nb b) t -> Or (Neg (Prop b)) (to_formula_aux t)
+    | Cons (Ni i) t -> Or (Neg (Var i)) (to_formula_aux t)
     end
    
   let rec function to_formula (phi: cnf) : formula
@@ -194,8 +194,8 @@ module T
     variant{ size_cnf phi }
     ensures{ forall v. eval_cnf phi v = eval result v /\ is_impl_free result /\ is_nnfc result /\ is_cnf result }
   = match phi with
-    | Cons hd Nil -> (to_formula_aux hd)
-    | Cons hd tl -> And (to_formula_aux hd) (to_formula tl)
+    | Cons h Nil -> (to_formula_aux h)
+    | Cons h t -> And (to_formula_aux h) (to_formula t)
     end
   
   lemma t_equiv :

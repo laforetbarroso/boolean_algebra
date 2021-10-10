@@ -1,0 +1,1 @@
+replace ((eval_cnf_clause x2 v \*/ (eval_cnf_clause x v \*/ eval_atom x1 v)) ((eval_cnf_clause x2 v \*/ eval_cnf_clause x v) \*/ eval_atom x1 v)))
