@@ -260,10 +260,10 @@ theory PropositionalFormula
     forall v : i -> b.
     eval_cnf_clause (x ++ (Cons a (Cons b Nil))) v = (eval_cnf_clause x v) \*/ (eval_cnf_clause (Cons a (Cons b Nil)) v)
   
-  lemma eval_fold:
+(*  lemma eval_fold:
     forall x : cnf_clause.
     forall v : i -> b.
-    eval_cnf_clause x v = fold_left (\*/) bot (map eval_atom x)
+    eval_cnf_clause x v = fold_left (\*/) bot (map eval_atom x) *)
   
   lemma eval_n:
     forall x y: cnf_clause.
@@ -289,20 +289,58 @@ theory PropositionalFormula
     forall v : i -> b.
     eval_cnf_clause (x ++ y) v = (eval_cnf_clause x v) \*/ (eval_cnf_clause y v)*)
   
+  lemma add_top_eval_cnf:
+    forall x y v.
+      not eval_cnf_clause x v = bot ->
+      (eval_cnf (Cons x y) v) = (eval_cnf y v)
+      
+  lemma add_top_eval_cnf_append:
+    forall x y z v.
+      not eval_cnf_clause x v = bot ->
+      (eval_cnf (y ++ (Cons x z)) v) = (eval_cnf (y ++ z) v)
+           
+  lemma add_bot_eval_cnf:
+    forall x y v.
+      eval_cnf_clause x v = bot ->
+      (eval_cnf (Cons x y) v) = bot
+      
+  lemma add_bot_eval_cnf_append:
+    forall x y z v.
+      eval_cnf_clause x v = bot ->
+      (eval_cnf (y ++ (Cons x z)) v) = bot
+ 
   lemma comm_cnf_clause:
     forall x y : cnf_clause. equiv_cnf_clause (x ++ y) (y ++ x)
     
   lemma comm_cnf:
     forall x y : cnf. equiv_cnf (x ++ y) (y ++ x)
   
-   lemma assoc_cnf_clause:
+  lemma assoc_cnf_clause:
     forall x y z : cnf_clause. 
     forall v : i -> b.
      (eval_cnf_clause x v) \*/ (eval_cnf_clause (y ++ z) v) = (eval_cnf_clause (x ++ y) v) \*/ (eval_cnf_clause z v)
 
+  lemma eval_cnf_append:
+    forall x y: cnf.
+    forall v : i -> b.
+    (eval_cnf (x ++ y) v) = eval_cnf x v /*\ eval_cnf y v
+  
+  lemma add_bot_eval_cnf_t:
+    forall x y: cnf.
+    forall v : i -> b.
+    (eval_cnf x v) = bot ->
+    (eval_cnf (x ++ y) v) = bot
+    
+  lemma add_top_eval_cnf_t:
+    forall x y: cnf.
+    forall v : i -> b.
+    not (eval_cnf x v) = bot ->
+    (eval_cnf (x ++ y) v) = eval_cnf y v
+    
+  (* x /\ ( y /\ z) = (x /\ y) /\ z *)
   lemma assoc_cnf:
     forall x y z : cnf. 
     forall v : i -> b.
-    (eval_cnf x v) \*/ (eval_cnf (y ++ z) v) = (eval_cnf (x ++ y) v) \*/ (eval_cnf z v)
+    (eval_cnf x v) /*\ (eval_cnf (y ++ z) v) = (eval_cnf (x ++ y) v) /*\ (eval_cnf z v)
   
  end

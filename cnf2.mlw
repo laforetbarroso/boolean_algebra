@@ -103,7 +103,8 @@ module T
   
   let rec function impl_free (phi : formula) : formula
     variant{ size phi }
-    ensures{ forall v. eval phi v = eval result v /\ is_impl_free result}
+    ensures{ forall v. eval phi v = eval result v }
+    ensures{ is_impl_free result }
   = match phi with
     | Prop t -> Prop t
     | Var i -> Var i
@@ -116,7 +117,9 @@ module T
   let rec function nnfc (phi: formula)
     requires{ is_impl_free phi }
     variant{ size phi }
-    ensures{ (forall v. eval phi v = eval result v) /\ is_impl_free phi /\ is_nnfc result }
+    ensures{ (forall v. eval phi v = eval result v) }
+    ensures{ is_impl_free phi }
+    ensures{ is_nnfc result }
   = match phi with
     | Neg (Neg phi1) -> nnfc phi1
     | Neg (And phi1 phi2) -> Or (nnfc (Neg phi1)) (nnfc (Neg phi2))
@@ -129,7 +132,10 @@ module T
   let rec function distr (phi1 phi2: formula)
     requires{ is_impl_free phi1 /\ is_impl_free phi2 /\ is_nnfc phi1 /\ is_nnfc phi2 /\ is_cnf phi1 /\ is_cnf phi2}
     variant{ size phi1 + size phi2 }
-    ensures{ (forall v. ((eval phi1 v \*/ eval phi2 v) = eval result v)) /\ is_impl_free result /\ is_nnfc result /\ is_cnf result }
+    ensures{ (forall v. ((eval phi1 v \*/ eval phi2 v) = eval result v)) }
+    ensures{ is_impl_free result }
+    ensures{ is_nnfc result }
+    ensures{ is_cnf result }
   = match phi1, phi2 with
     | And phi11 phi12, phi2 -> And (distr phi11 phi2) (distr phi12 phi2)
     | phi1, And phi21 phi22 -> And (distr phi1 phi21) (distr phi1 phi22)
@@ -140,7 +146,10 @@ module T
   let rec function cnfc (phi: formula)
     requires{ is_impl_free phi /\ is_nnfc phi }
     variant{ phi }
-    ensures{ (forall v. eval phi v = eval result v) /\ is_impl_free phi /\ is_nnfc result /\ is_cnf result }
+    ensures{ (forall v. eval phi v = eval result v) }
+    ensures{ is_impl_free result }
+    ensures{ is_nnfc result }
+    ensures{ is_cnf result }
   = match phi with
     | Or phi1 phi2 -> distr (cnfc phi1) (cnfc phi2)
     | And phi1 phi2 -> And (cnfc phi1) (cnfc phi2)
@@ -166,7 +175,9 @@ module T
     end
     
   let rec function to_cnf_type (phi: formula) : cnf
-    requires{ is_impl_free phi /\ is_nnfc phi /\ is_cnf phi }
+    requires{ is_impl_free phi }
+    requires{ is_nnfc phi }
+    requires{ is_cnf phi }
     variant{size phi}
     ensures{ forall v. eval phi v = eval_cnf result v }
   = match phi with
@@ -176,7 +187,10 @@ module T
   
   let rec function to_formula_aux (phi: cnf_clause) : formula
     variant{ size_cnf_clause phi }
-    ensures{ forall v. eval_cnf_clause phi v = eval result v /\ is_impl_free result /\ is_nnfc result /\ is_cnf_clause result }
+    ensures{ forall v. eval_cnf_clause phi v = eval result v }
+    ensures{ is_impl_free result }
+    ensures{ is_nnfc result }
+    ensures{ is_cnf_clause result }
   = match phi with
     | Nil -> Prop bot
     | Cons (B b) Nil -> Prop b
@@ -192,7 +206,10 @@ module T
   let rec function to_formula (phi: cnf) : formula
     requires{ not is_nil phi}
     variant{ size_cnf phi }
-    ensures{ forall v. eval_cnf phi v = eval result v /\ is_impl_free result /\ is_nnfc result /\ is_cnf result }
+    ensures{ forall v. eval_cnf phi v = eval result v }
+    ensures{ is_impl_free result }
+    ensures{ is_nnfc result }
+    ensures{ is_cnf result }
   = match phi with
     | Cons h Nil -> (to_formula_aux h)
     | Cons h t -> And (to_formula_aux h) (to_formula t)
@@ -216,9 +233,14 @@ module T
   lemma refl2 :
     forall f1 f2: cnf. equiv_cnf f1 f2 -> (to_formula f2) == (to_formula f2)
   
-  lemma absurd_cnf:
+  lemma absurd_cnf1:
     forall f : cnf.
     forall v : i -> b.
-      exists x. mem x f /\ (eval_cnf_clause x v) = bot <-> (eval_cnf f v) = bot
+      (eval_cnf f v) = bot -> exists x. mem x f /\ (eval_cnf_clause x v) = bot
+  
+  lemma absurd_cnf2:
+    forall f : cnf.
+    forall v : i -> b.
+      (exists x. mem x f /\ (eval_cnf_clause x v) = bot) -> (eval_cnf f v) = bot
   
  end
